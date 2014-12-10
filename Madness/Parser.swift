@@ -40,7 +40,7 @@ public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> P
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
 public func ++ <T> (left: Parser<T>.Function, right: Parser<()>.Function) -> Parser<T>.Function {
-	return concatenate(left, right) --> { x, _ in return x }
+	return concatenate(left, right) --> { x, _ in x }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `left`’s parse tree.
