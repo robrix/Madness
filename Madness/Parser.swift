@@ -104,8 +104,8 @@ postfix operator + {}
 
 /// Map operator.
 infix operator --> {
-	/// No associativity.
-	associativity none
+	/// Associates to the left.
+	associativity left
 
 	/// Lower precedence than |.
 	precedence 100
