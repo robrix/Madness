@@ -23,6 +23,18 @@ public func literal(string: String) -> Parser<String>.Function {
 
 // MARK: - Nonterminals
 
+/// Parses the concatenation of `left` and `right`, pairing their parse trees.
+public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<(T, U)>.Function {
+	return {
+		left($0).map { x, rest in
+			right(rest).map { y, rest in
+				((x, y), rest)
+			}
+		} ?? nil
+	}
+}
+
+
 /// Returns a parser which maps parse trees into another type.
 public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
 	return {

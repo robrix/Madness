@@ -33,4 +33,11 @@ final class MadnessTests: XCTestCase {
 	func testLiteralParsersProduceTheirArgument() {
 		assertEqual(literal("foo")("foot")?.0, "foo")
 	}
+
+
+	// MARK: Nonterminals
+
+	func testConcatenationRejectsPartialParses() {
+		assertNil((literal("x") ++ literal("y"))("x"))
+	}
 }
