@@ -29,3 +29,16 @@ public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Functi
 		parser($0).map { (f($0), $1) }
 	}
 }
+
+
+
+/// MARK: - Operators
+
+/// Concatenation operator.
+infix operator ++ {
+	/// Associates to the right, linked-list style.
+	associativity right
+
+	/// Similar associativity to addition.
+	precedence 160
+}
