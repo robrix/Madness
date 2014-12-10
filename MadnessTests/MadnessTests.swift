@@ -37,7 +37,7 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: Nonterminals
 
-	let concatenation = (literal("x") ++ literal("y"))
+	let concatenation = literal("x") ++ literal("y")
 
 	func testConcatenationRejectsPartialParses() {
 		assertNil(concatenation("x"))
