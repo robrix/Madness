@@ -128,6 +128,14 @@ final class MadnessTests: XCTestCase {
 		assertEqual((literal("y") ++ ignored)("yx")?.0, "y")
 	}
 
+	func testIgnoredInputIsDroppedFromAltenationsAtLeft() {
+		assertEqual((ignored | literal("y"))("y")?.0, "y")
+	}
+
+	func testIgnoredInputIsDroppedFromAltenationsAtRight() {
+		assertEqual((literal("y") | ignored)("y")?.0, "y")
+	}
+
 
 	// MARK: - Assertions
 

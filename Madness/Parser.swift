@@ -61,6 +61,16 @@ public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parse
 	return alternate(left, right) --> { $0.either(id, id) }
 }
 
+/// Parses either `left` or `right`, dropping `right`’s parse tree.
+public func | <T> (left: Parser<T>.Function, right: Parser<()>.Function) -> Parser<T?>.Function {
+	return alternate(left, right) --> { $0.either(id, const(nil)) }
+}
+
+/// Parses either `left` or `right`, dropping `left`’s parse tree.
+public func | <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Parser<T?>.Function {
+	return alternate(left, right) --> { $0.either(const(nil), id) }
+}
+
 
 // MARK: Repetition
 
