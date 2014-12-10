@@ -84,6 +84,14 @@ public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Funct
 }
 
 
+// MARK: Ignoring input
+
+/// Ignores any parse trees produced by `parser`.
+public func ignore<T>(parser: Parser<T>.Function) -> Parser<()>.Function {
+	return parser --> const(())
+}
+
+
 // MARK: Private
 
 /// Defines concatenation for use in the `++` operator definitions above.
