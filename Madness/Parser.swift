@@ -35,13 +35,7 @@ public func range<I: IntervalType where I.Bound == Character>(interval: I) -> Pa
 
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
 public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<(T, U)>.Function {
-	return {
-		left($0).map { x, rest in
-			right(rest).map { y, rest in
-				((x, y), rest)
-			}
-		} ?? nil
-	}
+	return concatenate(left, right)
 }
 
 
@@ -89,6 +83,19 @@ public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Funct
 	}
 }
 
+
+// MARK: Private
+
+/// Defines concatenation for use in the `++` operator definitions above.
+private func concatenate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<(T, U)>.Function {
+	return {
+		left($0).map { x, rest in
+			right(rest).map { y, rest in
+				((x, y), rest)
+			}
+		} ?? nil
+	}
+}
 
 
 // MARK: - Operators
