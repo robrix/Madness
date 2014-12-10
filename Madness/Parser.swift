@@ -94,6 +94,11 @@ public postfix func + (parser: Parser<()>.Function) -> Parser<()>.Function {
 	return repeat(parser, 1..<Int.max) --> const(())
 }
 
+/// Parses `parser` exactly `n` times.
+public func * <T> (parser: Parser<T>.Function, n: Int) -> Parser<[T]>.Function {
+	return repeat(parser, n..<n)
+}
+
 
 // MARK: Mapping
 

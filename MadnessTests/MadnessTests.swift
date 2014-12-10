@@ -116,6 +116,21 @@ final class MadnessTests: XCTestCase {
 	}
 
 
+	let exactlyN = literal("x") * 3
+
+	func testExactlyNRepetitionParsesNTrees() {
+		assertEqual(exactlyN("xxx")?.0, ["x", "x", "x"])
+	}
+
+	func testExactlyNRepetitionParsesRejectsFewerMatches() {
+		assertNil(exactlyN("xx"))
+	}
+
+	func testExactlyNRepetitionParsesStopsAtN() {
+		assertEqual(exactlyN("xxxx")?.1, "x")
+	}
+
+
 	// MARK: Ignoring
 
 	let ignored = ignore(literal("x"))
