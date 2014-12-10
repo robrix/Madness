@@ -31,8 +31,92 @@ public func range<I: IntervalType where I.Bound == Character>(interval: I) -> Pa
 
 // MARK: - Nonterminals
 
+// MARK: Concatenation
+
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
 public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<(T, U)>.Function {
+	return concatenate(left, right)
+}
+
+/// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
+public func ++ <T> (left: Parser<T>.Function, right: Parser<()>.Function) -> Parser<T>.Function {
+	return concatenate(left, right) --> { x, _ in x }
+}
+
+/// Parses the concatenation of `left` and `right`, dropping `left`’s parse tree.
+public func ++ <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Parser<T>.Function {
+	return concatenate(left, right) --> { $1 }
+}
+
+
+// MARK: Alternation
+
+/// Parses either `left` or `right`.
+public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
+	return alternate(left, right)
+}
+
+/// Parses either `left` or `right` and coalesces their trees.
+public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parser<T>.Function {
+	return alternate(left, right) --> { $0.either(id, id) }
+}
+
+/// Parses either `left` or `right`, dropping `right`’s parse tree.
+public func | <T> (left: Parser<T>.Function, right: Parser<()>.Function) -> Parser<T?>.Function {
+	return alternate(left, right) --> { $0.either(id, const(nil)) }
+}
+
+/// Parses either `left` or `right`, dropping `left`’s parse tree.
+public func | <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Parser<T?>.Function {
+	return alternate(left, right) --> { $0.either(const(nil), id) }
+}
+
+
+// MARK: Repetition
+
+/// Parses `parser` 0 or more times.
+public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
+	return repeat(parser)
+}
+
+/// Parses `parser` 0 or more times and drops its parse trees.
+public postfix func * (parser: Parser<()>.Function) -> Parser<()>.Function {
+	return repeat(parser) --> const(())
+}
+
+/// Parses `parser` 1 or more times.
+public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
+	return repeat(parser, 1)
+}
+
+/// Parses `parser` 0 or more times and drops its parse trees.
+public postfix func + (parser: Parser<()>.Function) -> Parser<()>.Function {
+	return repeat(parser, 1) --> const(())
+}
+
+
+// MARK: Mapping
+
+/// Returns a parser which maps parse trees into another type.
+public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
+	return {
+		parser($0).map { (f($0), $1) }
+	}
+}
+
+
+// MARK: Ignoring input
+
+/// Ignores any parse trees produced by `parser`.
+public func ignore<T>(parser: Parser<T>.Function) -> Parser<()>.Function {
+	return parser --> const(())
+}
+
+
+// MARK: Private
+
+/// Defines concatenation for use in the `++` operator definitions above.
+private func concatenate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<(T, U)>.Function {
 	return {
 		left($0).map { x, rest in
 			right(rest).map { y, rest in
@@ -43,48 +127,31 @@ public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> P
 }
 
 
-/// Parses either `left` or `right`.
-public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
+/// Defines alternation for use in the `|` operator definitions above.
+private func alternate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
 	return {
 		left($0).map { (.left($0), $1) } ?? right($0).map { (.right($0), $1) }
 	}
 }
 
-/// Parses either `left` or `right` and coalesces their trees.
-public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parser<T>.Function {
-	return left | right --> { $0.either(id, id) }
-}
 
+/// Defines repetition for use in the postfix `*` and `+` operator definitions above.
+private func repeat<T>(parser: Parser<T>.Function, _ min: Int = 0, _ max: Int = -1) -> Parser<[T]>.Function {
+	if max >= min && max <= 0 {
+		return { ([], $0) }
+	}
 
-/// Parses `parser` 0 or more times.
-public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
-	return fix { repeat in
-		{
-			parser($0).map {
-				let repeated = repeat($1) ?? ([], $1)
-				return ([$0] + repeated.0, repeated.1)
-			} ?? ([], $0)
-		}
+	return { input in
+		parser(input).map { first, rest in
+			repeat(parser, min - 1, max - 1)(rest).map { (next: [T], rest: String) in
+				([first] + next, rest)
+			}
+		} ?? (min > 0 ? nil : ([], input))
 	}
 }
 
 
-/// Parses `parser` 1 or more times.
-public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
-	return parser ++ parser* --> { [$0] + $1 }
-}
-
-
-/// Returns a parser which maps parse trees into another type.
-public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
-	return {
-		parser($0).map { (f($0), $1) }
-	}
-}
-
-
-
-/// MARK: - Operators
+// MARK: - Operators
 
 /// Concatenation operator.
 infix operator ++ {
@@ -105,8 +172,8 @@ postfix operator + {}
 
 /// Map operator.
 infix operator --> {
-	/// No associativity.
-	associativity none
+	/// Associates to the left.
+	associativity left
 
 	/// Lower precedence than |.
 	precedence 100
