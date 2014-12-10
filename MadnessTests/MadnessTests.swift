@@ -7,7 +7,7 @@ import XCTest
 
 final class MadnessTests: XCTestCase {
 
-	// MARK: Terminals
+	// MARK: - Terminals
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		assertEqual(literal("foo")("foot")?.1, "t")
@@ -33,7 +33,9 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	// MARK: Nonterminals
+	// MARK: - Nonterminals
+
+	// MARK: Concatenation
 
 	let concatenation = literal("x") ++ literal("y")
 
@@ -52,6 +54,8 @@ final class MadnessTests: XCTestCase {
 	}
 
 
+	// MARK: Alternation
+
 	let alternation = literal("x") | (literal("y") --> const(1))
 
 	func testAlternationParsesEitherAlternative() {
@@ -67,6 +71,8 @@ final class MadnessTests: XCTestCase {
 		assertEqual((literal("x") | literal("y"))("xy")?.0, "x")
 	}
 
+
+	// MARK: Repetition
 
 	let zeroOrMore = literal("x")*
 
@@ -110,7 +116,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	// MARK: Assertions
+	// MARK: - Assertions
 
 	func assertEqual<T: Equatable>(expression1: @autoclosure () -> T?, _ expression2: @autoclosure () -> T?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
 		let (actual, expected) = (expression1(), expression2())
