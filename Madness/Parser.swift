@@ -95,6 +95,8 @@ public postfix func + (parser: Parser<()>.Function) -> Parser<()>.Function {
 }
 
 /// Parses `parser` exactly `n` times.
+///
+/// `n` must be > 0 to make any sense.
 public func * <T> (parser: Parser<T>.Function, n: Int) -> Parser<[T]>.Function {
 	return repeat(parser, n..<n)
 }
