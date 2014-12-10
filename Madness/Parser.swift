@@ -51,6 +51,6 @@ infix operator ++ {
 	/// Associates to the right, linked-list style.
 	associativity right
 
-	/// Similar associativity to addition.
+	/// Higher precedence than |.
 	precedence 160
 }
