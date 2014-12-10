@@ -77,7 +77,7 @@ infix operator ++ {
 }
 
 
-/// Repetition operator.
+/// Zero-or-more repetition operator.
 postfix operator * {}
 
 
