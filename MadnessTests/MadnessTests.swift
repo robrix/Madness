@@ -116,4 +116,19 @@ final class MadnessTests: XCTestCase {
 	func testZeroOrMoreRepetitionParsesMatchedStrings() {
 		assertEqual(zeroOrMore("xx")?.0, ["x", "x"])
 	}
+
+
+	let oneOrMore = literal("x")+
+
+	func testOneOrMoreRepetitionRejectsTheEmptyString() {
+		assertNil(oneOrMore(""))
+	}
+
+	func testOneOrMoreRepetitionParsesASingleMatchedString() {
+		assertEqual(oneOrMore("x")?.0, ["x"])
+	}
+
+	func testOneOrMoreRepetitonParsesMultipleMatchedStrings() {
+		assertEqual(oneOrMore("xxy")?.0, ["x", "x"])
+	}
 }

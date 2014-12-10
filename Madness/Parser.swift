@@ -56,6 +56,14 @@ public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 }
 
 
+/// Parses `parser` 1 or more times.
+public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
+	return map(parser ++ parser*) {
+		[$0] + $1
+	}
+}
+
+
 /// Returns a parser which maps parse trees into another type.
 public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
 	return {
@@ -79,6 +87,10 @@ infix operator ++ {
 
 /// Zero-or-more repetition operator.
 postfix operator * {}
+
+
+/// One-or-more repetition operator.
+postfix operator + {}
 
 
 // MARK: - Imports
