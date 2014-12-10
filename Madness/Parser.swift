@@ -52,7 +52,7 @@ public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Pa
 
 /// Parses either `left` or `right` and coalesces their trees.
 public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parser<T>.Function {
-	return map(left | right) { $0.either(id, id) }
+	return left | right --> { $0.either(id, id) }
 }
 
 
@@ -71,14 +71,12 @@ public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 
 /// Parses `parser` 1 or more times.
 public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
-	return map(parser ++ parser*) {
-		[$0] + $1
-	}
+	return parser ++ parser* --> { [$0] + $1 }
 }
 
 
 /// Returns a parser which maps parse trees into another type.
-public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
+public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
 	return {
 		parser($0).map { (f($0), $1) }
 	}
@@ -101,9 +99,18 @@ infix operator ++ {
 /// Zero-or-more repetition operator.
 postfix operator * {}
 
-
 /// One-or-more repetition operator.
 postfix operator + {}
+
+
+/// Map operator.
+infix operator --> {
+	/// No associativity.
+	associativity none
+
+	/// Lower precedence than |.
+	precedence 100
+}
 
 
 // MARK: - Imports
