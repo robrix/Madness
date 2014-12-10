@@ -52,7 +52,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let alternation = literal("x") | map(literal("y"), const(1))
+	let alternation = literal("x") | (literal("y") --> const(1))
 
 	func testAlternationParsesEitherAlternative() {
 		assertEqual(alternation("xy")?.1, "y")

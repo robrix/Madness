@@ -23,9 +23,9 @@ enum Term: Printable {
 let symbol = range("a"..."z")
 
 let term: Parser<Term>.Function = fix { term in
-	let variable = map(symbol) { Term.Variable($0) }
-	let abstraction = map(literal("λ") ++ symbol ++ literal(".") ++ term) { Term.Abstraction($0.1.0, Box($0.1.1.1.0)) }
-	let application = map(literal("(") ++ term ++ literal(" ") ++ term ++ literal(")")) { Term.Application(Box($0.1.0), Box($0.1.1.1.0)) }
+	let variable = symbol --> { Term.Variable($0) }
+	let abstraction = literal("λ") ++ symbol ++ literal(".") ++ term --> { Term.Abstraction($0.1.0, Box($0.1.1.1.0)) }
+	let application = literal("(") ++ term ++ literal(" ") ++ term ++ literal(")") --> { Term.Application(Box($0.1.0), Box($0.1.1.1.0)) }
 	return (variable | abstraction | application)
 }
 
