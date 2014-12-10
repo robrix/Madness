@@ -101,7 +101,6 @@ infix operator ++ {
 /// Zero-or-more repetition operator.
 postfix operator * {}
 
-
 /// One-or-more repetition operator.
 postfix operator + {}
 
