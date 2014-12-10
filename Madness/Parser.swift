@@ -31,6 +31,8 @@ public func range<I: IntervalType where I.Bound == Character>(interval: I) -> Pa
 
 // MARK: - Nonterminals
 
+// MARK: Concatenation
+
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
 public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<(T, U)>.Function {
 	return {
@@ -42,6 +44,8 @@ public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> P
 	}
 }
 
+
+// MARK: Alternation
 
 /// Parses either `left` or `right`.
 public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
@@ -55,6 +59,8 @@ public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parse
 	return left | right --> { $0.either(id, id) }
 }
 
+
+// MARK: Repetition
 
 /// Parses `parser` 0 or more times.
 public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
@@ -73,6 +79,8 @@ public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	return parser ++ parser* --> { [$0] + $1 }
 }
 
+
+// MARK: Mapping
 
 /// Returns a parser which maps parse trees into another type.
 public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
