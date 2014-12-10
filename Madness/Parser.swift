@@ -43,6 +43,19 @@ public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Pa
 }
 
 
+/// Parses `parser` 0 or more times.
+public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
+	return fix { repeat in
+		{
+			parser($0).map {
+				let repeated = repeat($1) ?? ([], $1)
+				return ([$0] + repeated.0, repeated.1)
+			} ?? ([], $0)
+		}
+	}
+}
+
+
 /// Returns a parser which maps parse trees into another type.
 public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
 	return {
@@ -64,6 +77,11 @@ infix operator ++ {
 }
 
 
+/// Repetition operator.
+postfix operator * {}
+
+
 // MARK: - Imports
 
 import Either
+import Prelude
