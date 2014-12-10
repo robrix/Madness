@@ -68,7 +68,6 @@ public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	}
 }
 
-
 /// Parses `parser` 1 or more times.
 public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	return parser ++ parser* --> { [$0] + $1 }
