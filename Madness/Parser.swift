@@ -105,6 +105,16 @@ postfix operator * {}
 postfix operator + {}
 
 
+/// Map operator.
+infix operator --> {
+	/// No associativity.
+	associativity none
+
+	/// Lower precedence than |.
+	precedence 100
+}
+
+
 // MARK: - Imports
 
 import Either
