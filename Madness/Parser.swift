@@ -42,6 +42,11 @@ public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Pa
 	}
 }
 
+/// Parses either `left` or `right` and coalesces their trees.
+public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parser<T>.Function {
+	return map(left | right) { $0.either(id, id) }
+}
+
 
 /// Parses `parser` 0 or more times.
 public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {

@@ -2,6 +2,7 @@
 
 import Either
 import Madness
+import Prelude
 import XCTest
 
 final class MadnessTests: XCTestCase {
@@ -38,7 +39,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let alternation = literal("x") | literal("y")
+	let alternation = literal("x") | map(literal("y"), const(1))
 
 	func testAlternationParsesEitherAlternative() {
 		assertEqual(alternation("xy")?.1, "y")
@@ -47,6 +48,10 @@ final class MadnessTests: XCTestCase {
 
 	func testAlternationProducesTheParsedAlternative() {
 		assertEqual(alternation("xy")?.0, Either.left("x"))
+	}
+
+	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
+		assertEqual((literal("x") | literal("y"))("xy")?.0, "x")
 	}
 
 
