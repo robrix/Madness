@@ -136,6 +136,14 @@ final class MadnessTests: XCTestCase {
 		assertEqual((literal("y") | ignored)("y")?.0, "y")
 	}
 
+	func testRepeatedIgnoredEmptyParsesAreDropped() {
+		assertEqual((ignored* ++ literal("y"))("y")?.0, "y")
+	}
+
+	func testRepeatedIgnoredParsesAreDropped() {
+		assertEqual((ignored* ++ literal("y"))("xxy")?.0, "y")
+	}
+
 
 	// MARK: - Assertions
 
