@@ -35,6 +35,14 @@ public func ++ <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> P
 }
 
 
+/// Parses either `left` or `right`.
+public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
+	return {
+		left($0).map { (.left($0), $1) } ?? right($0).map { (.right($0), $1) }
+	}
+}
+
+
 /// Returns a parser which maps parse trees into another type.
 public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
 	return {
@@ -54,3 +62,8 @@ infix operator ++ {
 	/// Higher precedence than |.
 	precedence 160
 }
+
+
+// MARK: - Imports
+
+import Either

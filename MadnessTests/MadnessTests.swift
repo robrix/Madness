@@ -65,4 +65,16 @@ final class MadnessTests: XCTestCase {
 		assertEqual(parsed?.0.0, "x")
 		assertEqual(parsed?.0.1, "y")
 	}
+
+
+	let alternation = literal("x") | literal("y")
+
+	func testAlternationParsesEitherAlternative() {
+		assertEqual(alternation("xy")?.1, "y")
+		assertEqual(alternation("yx")?.1, "x")
+	}
+
+	func testAlternationProducesTheParsedAlternative() {
+		assertEqual(alternation("xy")?.0, Either.left("x"))
+	}
 }
