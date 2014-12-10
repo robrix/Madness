@@ -72,11 +72,11 @@
 		D4FC47A71A37E47C00D23A6F = {
 			isa = PBXGroup;
 			children = (
-				D4FC47D31A37EFCC00D23A6F /* Box.framework */,
-				D4FC47D41A37EFCC00D23A6F /* Prelude.framework */,
-				D4FC47D11A37EF9800D23A6F /* Either.framework */,
 				D4FC47B31A37E47C00D23A6F /* Madness */,
 				D4FC47C01A37E47C00D23A6F /* MadnessTests */,
+				D4FC47D31A37EFCC00D23A6F /* Box.framework */,
+				D4FC47D11A37EF9800D23A6F /* Either.framework */,
+				D4FC47D41A37EFCC00D23A6F /* Prelude.framework */,
 				D4FC47B21A37E47C00D23A6F /* Products */,
 			);
 			sourceTree = "<group>";
