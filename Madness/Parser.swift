@@ -76,19 +76,12 @@ public func | <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Pars
 
 /// Parses `parser` 0 or more times.
 public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
-	return fix { repeat in
-		{
-			parser($0).map {
-				let repeated = repeat($1) ?? ([], $1)
-				return ([$0] + repeated.0, repeated.1)
-			} ?? ([], $0)
-		}
-	}
+	return repeat(parser)
 }
 
 /// Parses `parser` 1 or more times.
 public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
-	return parser ++ parser* --> { [$0] + $1 }
+	return repeat(parser, 1)
 }
 
 
