@@ -9,8 +9,14 @@ final class MadnessTests: XCTestCase {
 		if actual != expected { XCTFail("\(actual) is not equal to \(expected). " + message, file: file, line: line) }
 	}
 
+	func assertNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
+		let actual = expression()
+		if actual != nil { XCTFail("\(actual) is not nil. " + message, file: file, line: line) }
+	}
+
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		assertEqual(literal("foo")("foot")?.1, "t")
+		assertNil(literal("foo")("fo"))
 	}
 
 	func testLiteralParsersProduceTheirArgument() {
