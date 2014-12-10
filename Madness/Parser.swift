@@ -123,10 +123,27 @@ private func concatenate<T, U>(left: Parser<T>.Function, right: Parser<U>.Functi
 	}
 }
 
+
 /// Defines alternation for use in the `|` operator definitions above.
 private func alternate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
 	return {
 		left($0).map { (.left($0), $1) } ?? right($0).map { (.right($0), $1) }
+	}
+}
+
+
+/// Defines repetition for use in the postfix `*` and `+` operator definitions above.
+private func repeat<T>(parser: Parser<T>.Function, _ min: Int = 0, _ max: Int = -1) -> Parser<[T]>.Function {
+	if max >= min && max <= 0 {
+		return { ([], $0) }
+	}
+
+	return { input in
+		parser(input).map { first, rest in
+			repeat(parser, min - 1, max - 1)(rest).map { (next: [T], rest: String) in
+				([first] + next, rest)
+			}
+		} ?? (min > 0 ? nil : ([], input))
 	}
 }
 
