@@ -91,7 +91,7 @@ public func --> <T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Funct
 
 
 
-/// MARK: - Operators
+// MARK: - Operators
 
 /// Concatenation operator.
 infix operator ++ {

@@ -116,6 +116,19 @@ final class MadnessTests: XCTestCase {
 	}
 
 
+	// MARK: Ignoring
+
+	let ignored = ignore(literal("x"))
+
+	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
+		assertEqual((ignored ++ literal("y"))("xy")?.0, "y")
+	}
+
+	func testIgnoredInputDoesNotGetConcatenatedAtRight() {
+		assertEqual((literal("y") ++ ignored)("yx")?.0, "y")
+	}
+
+
 	// MARK: - Assertions
 
 	func assertEqual<T: Equatable>(expression1: @autoclosure () -> T?, _ expression2: @autoclosure () -> T?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
