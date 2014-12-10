@@ -12,4 +12,8 @@ final class MadnessTests: XCTestCase {
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		assertEqual(literal("foo")("foot")?.1, "t")
 	}
+
+	func testLiteralParsersProduceTheirArgument() {
+		assertEqual(literal("foo")("foot")?.0, "foo")
+	}
 }
