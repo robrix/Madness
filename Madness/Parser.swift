@@ -16,3 +16,12 @@ public func literal(string: String) -> Parser<String>.Function {
 	}
 }
 
+
+// MARK: - Nonterminals
+
+/// Returns a parser which maps parse trees into another type.
+public func map<T, U>(parser: Parser<T>.Function, f: T -> U) -> Parser<U>.Function {
+	return {
+		parser($0).map { (f($0), $1) }
+	}
+}
