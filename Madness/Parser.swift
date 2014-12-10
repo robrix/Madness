@@ -21,6 +21,14 @@ public func literal(string: String) -> Parser<String>.Function {
 }
 
 
+/// Returns a parser which parses any character in `interval`.
+public func range<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String>.Function {
+	return { string in
+		first(string).map { interval.contains($0) ? ("" + [$0], string.fromOffset(1)) : nil } ?? nil
+	}
+}
+
+
 // MARK: - Nonterminals
 
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
