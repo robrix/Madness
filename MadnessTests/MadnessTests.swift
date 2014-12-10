@@ -40,4 +40,10 @@ final class MadnessTests: XCTestCase {
 	func testConcatenationRejectsPartialParses() {
 		assertNil((literal("x") ++ literal("y"))("x"))
 	}
+
+	func testConcatenationProducesPairsOfTerms() {
+		let parsed = (literal("x") ++ literal("y"))("xy")
+		assertEqual(parsed?.0.0, "x")
+		assertEqual(parsed?.0.1, "y")
+	}
 }
