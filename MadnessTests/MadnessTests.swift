@@ -20,6 +20,19 @@ final class MadnessTests: XCTestCase {
 	}
 
 
+	let digits = range("0"..."9")
+
+	func testRangeParsersParseAnyCharacterInTheirRange() {
+		assertEqual(digits("0")?.0, "0")
+		assertEqual(digits("5")?.0, "5")
+		assertEqual(digits("9")?.0, "9")
+	}
+
+	func testRangeParsersRejectCharactersOutsideTheRange() {
+		assertNil(digits("a"))
+	}
+
+
 	// MARK: Nonterminals
 
 	let concatenation = literal("x") ++ literal("y")
