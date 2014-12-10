@@ -15,6 +15,9 @@
 		D4FC47D21A37EF9800D23A6F /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
 		D4FC47D51A37EFCC00D23A6F /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D31A37EFCC00D23A6F /* Box.framework */; };
 		D4FC47D61A37EFCC00D23A6F /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
+		D4FC47D71A37F2BF00D23A6F /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
+		D4FC47D81A37F2C400D23A6F /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D31A37EFCC00D23A6F /* Box.framework */; };
+		D4FC47D91A37F2C400D23A6F /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +59,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4FC47D81A37F2C400D23A6F /* Box.framework in Frameworks */,
+				D4FC47D71A37F2BF00D23A6F /* Either.framework in Frameworks */,
 				D4FC47BD1A37E47C00D23A6F /* Madness.framework in Frameworks */,
+				D4FC47D91A37F2C400D23A6F /* Prelude.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
