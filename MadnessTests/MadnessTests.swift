@@ -43,6 +43,10 @@ final class MadnessTests: XCTestCase {
 		assertNil(concatenation("x"))
 	}
 
+	func testConcatenationParsesBothOperands() {
+		assertEqual(concatenation("xyz")?.1, "z")
+	}
+
 	func testConcatenationProducesPairsOfTerms() {
 		let parsed = concatenation("xy")
 		assertEqual(parsed?.0.0, "x")
