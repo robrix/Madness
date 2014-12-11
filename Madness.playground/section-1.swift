@@ -1,6 +1,11 @@
 import Box
+import Cocoa
+import Darwin
 import Madness
 import Prelude
+
+
+// MARK: Lambda calculus
 
 enum Term: Printable {
 	case Variable(String)
@@ -29,9 +34,37 @@ let term: Parser<Term>.Function = fix { term in
 	return variable | abstraction | application
 }
 
-let parse: String -> Term? = {
+let parseTerm: String -> Term? = {
 	term($0)?.0
 }
 
-parse("λx.(x x)")?.description
-parse("(λx.(x x) λx.(x x))")?.description
+parseTerm("λx.(x x)")?.description
+parseTerm("(λx.(x x) λx.(x x))")?.description
+
+
+// MARK: HTML-ish colours
+
+let toComponent: String -> CGFloat = { CGFloat(strtol($0, nil, 16)) / 255 }
+
+let hex = %("0"..."9") | %("a"..."f") | %("A"..."F")
+let hex2 = (hex ++ hex --> { $0 + $1 })
+let three = hex * 3 --> { $0.map { toComponent($0 + $0) } }
+let six = hex2 * 3 --> { $0.map(toComponent) }
+
+let colour = ignore("#") ++ (six | three) --> {
+	NSColor(calibratedRed: $0[0], green: $0[1], blue: $0[2], alpha: 1)
+}
+
+let parseColour: String -> NSColor? = { colour($0).map { c, rest in rest == "" ? c : nil } ?? nil }
+
+if let reddish = parseColour("#d52a41") {
+	reddish
+}
+
+if let greenish = parseColour("#5a2") {
+	greenish
+}
+
+if let blueish = parseColour("#5e8ca1") {
+	blueish
+}
