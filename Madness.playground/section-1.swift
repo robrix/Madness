@@ -24,8 +24,8 @@ let symbol = range("a"..."z")
 
 let term: Parser<Term>.Function = fix { term in
 	let variable = symbol --> { Term.Variable($0) }
-	let abstraction = ignore(literal("λ")) ++ symbol ++ ignore(literal(".")) ++ term --> { Term.Abstraction($0, Box($1)) }
-	let application = ignore(literal("(")) ++ term ++ ignore(literal(" ")) ++ term ++ ignore(literal(")")) --> { Term.Application(Box($0), Box($1)) }
+	let abstraction = ignore(%"λ") ++ symbol ++ ignore(%".") ++ term --> { Term.Abstraction($0, Box($1)) }
+	let application = ignore(%"(") ++ term ++ ignore(%" ") ++ term ++ ignore(%")") --> { Term.Application(Box($0), Box($1)) }
 	return variable | abstraction | application
 }
 

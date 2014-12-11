@@ -12,7 +12,7 @@ public struct Parser<Tree> {
 // MARK: - Terminals
 
 /// Returns a parser which parses `string`.
-public func literal(string: String) -> Parser<String>.Function {
+public prefix func % (string: String) -> Parser<String>.Function {
 	return {
 		startsWith($0, string) ?
 			(string, $0.fromOffset(countElements(string)))
