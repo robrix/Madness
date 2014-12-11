@@ -131,6 +131,44 @@ final class MadnessTests: XCTestCase {
 	}
 
 
+	let zeroToN = literal("x") * (0..<2)
+
+	func testZeroToNRepetitionParsesZeroTrees() {
+		assertEqual(zeroToN("y")?.0, [])
+	}
+
+	func testZeroToNRepetitionParsesUpToNTrees() {
+		assertEqual(zeroToN("xxx")?.0, ["x", "x"])
+		assertEqual(zeroToN("xxx")?.1, "x")
+	}
+
+
+	let atLeastN = literal("x") * (2..<Int.max)
+
+	func testAtLeastNRepetitionRejectsZeroTrees() {
+		assertNil(atLeastN("y"))
+	}
+
+	func testAtLeastNRepetitionParsesNTrees() {
+		assertEqual(atLeastN("xx")?.0, ["x", "x"])
+	}
+
+	func testAtLeastNRepetitionParsesMoreThanNTrees() {
+		assertEqual(atLeastN("xxxx")?.0, ["x", "x", "x", "x"])
+	}
+
+
+	let mToN = literal("x") * (2..<3)
+
+	func testMToNRepetitionRejectsLessThanM() {
+		assertNil(mToN("x"))
+	}
+
+	func testMToNRepetitionMatchesUpToN() {
+		assertEqual(mToN("xxxx")?.1, "x")
+	}
+
+
 	// MARK: Ignoring
 
 	let ignored = ignore(literal("x"))

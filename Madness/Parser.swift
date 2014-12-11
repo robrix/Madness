@@ -101,6 +101,13 @@ public func * <T> (parser: Parser<T>.Function, n: Int) -> Parser<[T]>.Function {
 	return repeat(parser, n..<n)
 }
 
+/// Parses `parser` the number of times specified in `interval`.
+///
+/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means between `m` and `n` repetitions.
+public func * <T> (parser: Parser<T>.Function, interval: HalfOpenInterval<Int>) -> Parser<[T]>.Function {
+	return repeat(parser, interval)
+}
+
 
 // MARK: Mapping
 
