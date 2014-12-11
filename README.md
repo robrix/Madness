@@ -79,6 +79,12 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 	parses `x` and maps its parse trees using the passed function. Use mapping to build your model objects.
 
+- **Ignoring**
+
+	Some text is just decoration. `ignore` takes a string and returns a parser which will match that string but not produce it in parses. Another form takes an arbitrary parser and drops its parses.
+
+	(Technically it produces `()` instead, but concatenation, alternation, and repetition of `()` will omit it.)
+
 API documentation is in the source.
 
 
