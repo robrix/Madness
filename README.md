@@ -15,6 +15,14 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 ## Use
 
+- Concatenation
+
+	```swift
+	x ++ y ++ z
+	```
+
+	parses `x` followed by `y` and produces parses as `(X, Y)`.
+
 API documentation is in the source.
 
 
