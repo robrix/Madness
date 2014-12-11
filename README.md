@@ -15,7 +15,7 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 ## Use
 
-- Concatenation
+- **Concatenation**
 
 	```swift
 	x ++ y ++ z
