@@ -151,7 +151,7 @@ private func repeat<T>(parser: Parser<T>.Function, _ interval: HalfOpenInterval<
 			repeat(parser, (interval.start - 1)..<(interval.end - (interval.end == Int.max ? 0 : 1)))(rest).map { (next: [T], rest: String) in
 				([first] + next, rest)
 			}
-		} ?? (interval.start > 0 ? nil : ([], input))
+		} ?? (interval.start <= 0 ? ([], input) : nil)
 	}
 }
 
