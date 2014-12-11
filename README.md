@@ -15,6 +15,22 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 ## Use
 
+- **Strings**
+
+	```swift
+	%"hello"
+	```
+
+	parses the string “hello”.
+
+- **Ranges**
+
+	```swift
+	%("a"..."z")
+	```
+
+	parses any lowercase letter from “a” to “z” inclusive.
+
 - **Concatenation**
 
 	```swift
