@@ -73,6 +73,12 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 	parses `x` three to five times. Use `Int.max` for the upper bound to parse three or more times.
 
+- **Mapping**
+
+	x --> { $0 }
+
+	parses `x` and maps its parse trees using the passed function. Use mapping to build your model objects.
+
 API documentation is in the source.
 
 
