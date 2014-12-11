@@ -34,3 +34,4 @@ let parse: String -> Term? = {
 }
 
 parse("λx.(x x)")?.description
+parse("(λx.(x x) λx.(x x))")?.description
