@@ -31,6 +31,32 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 	parses `x`, and if it fails, `y`, and produces parses as `Either<X, Y>`. If `x` and `y` are of the same type, then it produces parses as `X`.
 
+- **Repetition**
+
+	```swift
+	x*
+	```
+
+	parses `x` 0 or more times, producing parses as `[X]`.
+
+	```swift
+	x+
+	```
+
+	parses `x` one or more times.
+
+	```swift
+	x * 3
+	```
+
+	parses `x` exactly three times.
+
+	```swift
+	x * (3..<6)
+	```
+
+	parses `x` three to five times. Use `Int.max` for the upper bound to parse three or more times.
+
 API documentation is in the source.
 
 
