@@ -192,6 +192,10 @@ infix operator --> {
 }
 
 
+/// Literal operator.
+prefix operator % {}
+
+
 // MARK: - Imports
 
 import Either
