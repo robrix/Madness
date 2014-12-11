@@ -148,8 +148,8 @@ private func repeat<T>(parser: Parser<T>.Function, _ interval: HalfOpenInterval<
 
 	return { input in
 		parser(input).map { first, rest in
-			repeat(parser, (interval.start - 1)..<(interval.end - (interval.end == Int.max ? 0 : 1)))(rest).map { (next: [T], rest: String) in
-				([first] + next, rest)
+			repeat(parser, (interval.start - 1)..<(interval.end - (interval.end == Int.max ? 0 : 1)))(rest).map {
+				([first] + $0, $1)
 			}
 		} ?? (interval.start <= 0 ? ([], input) : nil)
 	}
