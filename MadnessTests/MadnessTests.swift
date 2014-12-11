@@ -10,17 +10,18 @@ final class MadnessTests: XCTestCase {
 	// MARK: - Terminals
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
-		assertEqual(literal("foo")("foot")?.1, "t")
-		assertNil(literal("foo")("fo"))
-		assertNil(literal("foo")("fo"))
+		let parser = %"foo"
+		assertEqual(parser("foot")?.1, "t")
+		assertNil(parser("fo"))
+		assertNil(parser("fo"))
 	}
 
 	func testLiteralParsersProduceTheirArgument() {
-		assertEqual(literal("foo")("foot")?.0, "foo")
+		assertEqual((%"foo")("foot")?.0, "foo")
 	}
 
 
-	let digits = range("0"..."9")
+	let digits = %("0"..."9")
 
 	func testRangeParsersParseAnyCharacterInTheirRange() {
 		assertEqual(digits("0")?.0, "0")
@@ -37,7 +38,7 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: Concatenation
 
-	let concatenation = literal("x") ++ literal("y")
+	let concatenation = %"x" ++ %"y"
 
 	func testConcatenationRejectsPartialParses() {
 		assertNil(concatenation("x"))
@@ -56,7 +57,7 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: Alternation
 
-	let alternation = literal("x") | (literal("y") --> const(1))
+	let alternation = %"x" | (%"y" --> const(1))
 
 	func testAlternationParsesEitherAlternative() {
 		assertEqual(alternation("xy")?.1, "y")
@@ -68,13 +69,13 @@ final class MadnessTests: XCTestCase {
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertEqual((literal("x") | literal("y"))("xy")?.0, "x")
+		assertEqual((%"x" | %"y")("xy")?.0, "x")
 	}
 
 
 	// MARK: Repetition
 
-	let zeroOrMore = literal("x")*
+	let zeroOrMore = (%"x")*
 
 	func testZeroOrMoreRepetitionAcceptsTheEmptyString() {
 		assertNotNil(zeroOrMore(""))
@@ -101,7 +102,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let oneOrMore = literal("x")+
+	let oneOrMore = (%"x")+
 
 	func testOneOrMoreRepetitionRejectsTheEmptyString() {
 		assertNil(oneOrMore(""))
@@ -116,7 +117,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let exactlyN = literal("x") * 3
+	let exactlyN = %"x" * 3
 
 	func testExactlyNRepetitionParsesNTrees() {
 		assertEqual(exactlyN("xxx")?.0, ["x", "x", "x"])
@@ -131,7 +132,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let zeroToN = literal("x") * (0..<2)
+	let zeroToN = %"x" * (0..<2)
 
 	func testZeroToNRepetitionParsesZeroTrees() {
 		assertEqual(zeroToN("y")?.0, [])
@@ -143,7 +144,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let atLeastN = literal("x") * (2..<Int.max)
+	let atLeastN = %"x" * (2..<Int.max)
 
 	func testAtLeastNRepetitionRejectsZeroTrees() {
 		assertNil(atLeastN("y"))
@@ -158,7 +159,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let mToN = literal("x") * (2..<3)
+	let mToN = %"x" * (2..<3)
 
 	func testMToNRepetitionRejectsLessThanM() {
 		assertNil(mToN("x"))
@@ -171,30 +172,30 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: Ignoring
 
-	let ignored = ignore(literal("x"))
+	let ignored = ignore(%"x")
 
 	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
-		assertEqual((ignored ++ literal("y"))("xy")?.0, "y")
+		assertEqual((ignored ++ %"y")("xy")?.0, "y")
 	}
 
 	func testIgnoredInputDoesNotGetConcatenatedAtRight() {
-		assertEqual((literal("y") ++ ignored)("yx")?.0, "y")
+		assertEqual((%"y" ++ ignored)("yx")?.0, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAltenationsAtLeft() {
-		assertEqual((ignored | literal("y"))("y")?.0, "y")
+		assertEqual((ignored | %"y")("y")?.0, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAltenationsAtRight() {
-		assertEqual((literal("y") | ignored)("y")?.0, "y")
+		assertEqual((%"y" | ignored)("y")?.0, "y")
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
-		assertEqual((ignored* ++ literal("y"))("y")?.0, "y")
+		assertEqual((ignored* ++ %"y")("y")?.0, "y")
 	}
 
 	func testRepeatedIgnoredParsesAreDropped() {
-		assertEqual((ignored* ++ literal("y"))("xxy")?.0, "y")
+		assertEqual((ignored* ++ %"y")("xxy")?.0, "y")
 	}
 
 

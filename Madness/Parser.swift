@@ -12,7 +12,7 @@ public struct Parser<Tree> {
 // MARK: - Terminals
 
 /// Returns a parser which parses `string`.
-public func literal(string: String) -> Parser<String>.Function {
+public prefix func % (string: String) -> Parser<String>.Function {
 	return {
 		startsWith($0, string) ?
 			(string, $0.fromOffset(countElements(string)))
@@ -22,7 +22,7 @@ public func literal(string: String) -> Parser<String>.Function {
 
 
 /// Returns a parser which parses any character in `interval`.
-public func range<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String>.Function {
+public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String>.Function {
 	return { string in
 		first(string).map { interval.contains($0) ? ("" + [$0], string.fromOffset(1)) : nil } ?? nil
 	}
@@ -190,6 +190,10 @@ infix operator --> {
 	/// Lower precedence than |.
 	precedence 100
 }
+
+
+/// Literal operator.
+prefix operator % {}
 
 
 // MARK: - Imports
