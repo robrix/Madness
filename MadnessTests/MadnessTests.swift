@@ -172,7 +172,7 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: Ignoring
 
-	let ignored = ignore(%"x")
+	let ignored = ignore("x")
 
 	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
 		assertEqual((ignored ++ %"y")("xy")?.0, "y")

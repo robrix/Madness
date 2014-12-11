@@ -126,6 +126,11 @@ public func ignore<T>(parser: Parser<T>.Function) -> Parser<()>.Function {
 	return parser --> const(())
 }
 
+/// Ignores any parse trees produced by a parser which parses `string`.
+public func ignore(string: String) -> Parser<()>.Function {
+	return ignore(%string)
+}
+
 
 // MARK: Private
 
