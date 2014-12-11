@@ -21,7 +21,7 @@ final class MadnessTests: XCTestCase {
 	}
 
 
-	let digits = range("0"..."9")
+	let digits = %("0"..."9")
 
 	func testRangeParsersParseAnyCharacterInTheirRange() {
 		assertEqual(digits("0")?.0, "0")

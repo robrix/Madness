@@ -20,7 +20,7 @@ enum Term: Printable {
 }
 
 
-let symbol = range("a"..."z")
+let symbol = %("a"..."z")
 
 let term: Parser<Term>.Function = fix { term in
 	let variable = symbol --> { Term.Variable($0) }
