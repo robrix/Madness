@@ -86,12 +86,26 @@ public postfix func * (parser: Parser<()>.Function) -> Parser<()>.Function {
 
 /// Parses `parser` 1 or more times.
 public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
-	return repeat(parser, 1)
+	return repeat(parser, 1..<Int.max)
 }
 
 /// Parses `parser` 0 or more times and drops its parse trees.
 public postfix func + (parser: Parser<()>.Function) -> Parser<()>.Function {
-	return repeat(parser, 1) --> const(())
+	return repeat(parser, 1..<Int.max) --> const(())
+}
+
+/// Parses `parser` exactly `n` times.
+///
+/// `n` must be > 0 to make any sense.
+public func * <T> (parser: Parser<T>.Function, n: Int) -> Parser<[T]>.Function {
+	return repeat(parser, n..<n)
+}
+
+/// Parses `parser` the number of times specified in `interval`.
+///
+/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means between `m` and `n` repetitions.
+public func * <T> (parser: Parser<T>.Function, interval: HalfOpenInterval<Int>) -> Parser<[T]>.Function {
+	return repeat(parser, interval)
 }
 
 
@@ -136,17 +150,15 @@ private func alternate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function
 
 
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
-private func repeat<T>(parser: Parser<T>.Function, _ min: Int = 0, _ max: Int = -1) -> Parser<[T]>.Function {
-	if max >= min && max <= 0 {
-		return { ([], $0) }
-	}
+private func repeat<T>(parser: Parser<T>.Function, _ interval: HalfOpenInterval<Int> = 0..<Int.max) -> Parser<[T]>.Function {
+	if interval.end <= 0 { return { ([], $0) } }
 
 	return { input in
 		parser(input).map { first, rest in
-			repeat(parser, min - 1, max - 1)(rest).map { (next: [T], rest: String) in
-				([first] + next, rest)
+			repeat(parser, (interval.start - 1)..<(interval.end - (interval.end == Int.max ? 0 : 1)))(rest).map {
+				([first] + $0, $1)
 			}
-		} ?? (min > 0 ? nil : ([], input))
+		} ?? (interval.start <= 0 ? ([], input) : nil)
 	}
 }
 
