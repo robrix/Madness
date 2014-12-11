@@ -75,7 +75,9 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 - **Mapping**
 
+	```swift
 	x --> { $0 }
+	```
 
 	parses `x` and maps its parse trees using the passed function. Use mapping to build your model objects.
 
