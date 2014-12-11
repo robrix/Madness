@@ -23,6 +23,14 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 	parses `x` followed by `y` and produces parses as `(X, Y)`.
 
+- **Alternation**
+
+	```swift
+	x | y
+	```
+
+	parses `x`, and if it fails, `y`, and produces parses as `Either<X, Y>`. If `x` and `y` are of the same type, then it produces parses as `X`.
+
 API documentation is in the source.
 
 
