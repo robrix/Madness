@@ -234,6 +234,16 @@ final class MadnessTests: XCTestCase {
 		}
 	}
 
+	func assertEqual(expression1: @autoclosure () -> ()?, _ expected: ()?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) -> Bool {
+		let actual: ()? = expression1()
+		switch (actual, expected) {
+		case (.None, .None), (.Some, .Some):
+			return true
+		default:
+			return failure("\(actual) is not equal to \(expected). " + message, file: file, line: line)
+		}
+	}
+
 	func assertNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> Bool {
 		return expression().map { self.failure("\($0) is not nil. " + message, file: file, line: line) } ?? true
 	}
