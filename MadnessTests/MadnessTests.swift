@@ -234,9 +234,8 @@ final class MadnessTests: XCTestCase {
 		}
 	}
 
-	func assertNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
-		let actual = expression()
-		if actual != nil { XCTFail("\(actual) is not nil. " + message, file: file, line: line) }
+	func assertNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> Bool {
+		return expression().map { self.failure("\($0) is not nil. " + message, file: file, line: line) } ?? true
 	}
 
 	func assertNotNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
