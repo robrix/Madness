@@ -5,6 +5,7 @@ Madness is a Swift µframework for parsing strings in simple context-free gramma
 ```swift
 let digit = %("0"..."9") | %("a"..."f") | %("A"..."F")
 let hex = digit+ --> { strtol(join("", $0), nil, 16) }
+parse(ignore("0x") ++ hex, "0xdeadbeef") // => 3,735,928,559
 ```
 
 
