@@ -205,9 +205,9 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: - Assertions
 
-	func assertEqual<T: Equatable>(expression1: @autoclosure () -> T?, _ expression2: @autoclosure () -> T?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
+	func assertEqual<T: Equatable>(expression1: @autoclosure () -> T?, _ expression2: @autoclosure () -> T?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) -> Bool {
 		let (actual, expected) = (expression1(), expression2())
-		if actual != expected { XCTFail("\(actual) is not equal to \(expected). " + message, file: file, line: line) }
+		return actual == expected || failure("\(actual) is not equal to \(expected). " + message, file: file, line: line)
 	}
 
 	func assertEqual<T: Equatable, U: Equatable>(expression1: @autoclosure () -> Either<T, U>?, _ expression2: @autoclosure () -> Either<T, U>?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
