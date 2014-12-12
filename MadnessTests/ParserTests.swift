@@ -200,11 +200,11 @@ final class ParserTests: XCTestCase {
 		assertEqual((ignored ++ ignored)("xx")?.1, "")
 	}
 
-	func testIgnoredInputIsDroppedFromAltenationsAtLeft() {
+	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
 		assertEqual((ignored | %"y")("y")?.0, "y")
 	}
 
-	func testIgnoredInputIsDroppedFromAltenationsAtRight() {
+	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
 		assertEqual((%"y" | ignored)("y")?.0, "y")
 	}
 
