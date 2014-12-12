@@ -9,6 +9,12 @@ public struct Parser<Tree> {
 }
 
 
+/// Parses `string` with `parser`, returning the parse trees or `nil` if nothing could be parsed or if parsing did not consume the entire input.
+public func parse<Tree>(parser: Parser<Tree>.Function, string: String) -> Tree? {
+	return parser(string).map { $1 == "" ? $0 : nil } ?? nil
+}
+
+
 // MARK: - Terminals
 
 /// Returns a parser which parses any single character.

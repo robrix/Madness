@@ -5,7 +5,18 @@ import Madness
 import Prelude
 import XCTest
 
-final class MadnessTests: XCTestCase {
+final class ParserTests: XCTestCase {
+	// MARK: - Operations
+
+	func testParseRejectsPartialParses() {
+		assertNil(parse(%"x", "xy"))
+	}
+
+	func testParseProducesParseTreesForFullParses() {
+		assertEqual(parse(%"x", "x"), "x")
+	}
+
+
 	// MARK: - Terminals
 
 	// MARK: Literals
@@ -200,11 +211,11 @@ final class MadnessTests: XCTestCase {
 		assertEqual((ignored ++ ignored)("xx")?.1, "")
 	}
 
-	func testIgnoredInputIsDroppedFromAltenationsAtLeft() {
+	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
 		assertEqual((ignored | %"y")("y")?.0, "y")
 	}
 
-	func testIgnoredInputIsDroppedFromAltenationsAtRight() {
+	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
 		assertEqual((%"y" | ignored)("y")?.0, "y")
 	}
 
