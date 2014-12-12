@@ -1,6 +1,6 @@
 # Recursive Descent into Madness
 
-Madness is a Swift µframework for parsing strings in simple context-free grammars. Combine parsers from simple Swift expressions and parse away.
+Madness is a Swift µframework for parsing strings in simple context-free grammars. Combine parsers from simple Swift expressions and parse away:
 
 ```swift
 let digit = %("0"..."9") | %("a"..."f") | %("A"..."F")
@@ -8,12 +8,11 @@ let hex = digit+ --> { strtol(join("", $0), nil, 16) }
 parse(ignore("0x") ++ hex, "0xdeadbeef") // => 3,735,928,559
 ```
 
+Your parsers can produce your own model objects directly, making Madness ideal for experimenting with grammars, for example in a playground.
+
 ![screenshot of parsing HTML colours in an Xcode playground: `let reddish = parse(colour, "#d52a41")!`](https://cloud.githubusercontent.com/assets/59671/5415280/1453c774-81f4-11e4-8726-b51423bb06f9.png)
 
-
-## Examples
-
-See `Madness.playground` for some examples of parsing and building parse trees with Madness.
+See `Madness.playground` for some examples of parsing with Madness.
 
 
 ## Use
