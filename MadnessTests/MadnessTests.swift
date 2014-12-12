@@ -194,6 +194,10 @@ final class MadnessTests: XCTestCase {
 		assertEqual((%"y" | ignored)("y")?.0, "y")
 	}
 
+	func testIgnoringDistributesOverAlternation() {
+		assertEqual((ignored | ignored)("x")?.0, ())
+	}
+
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
 		assertEqual((ignored* ++ %"y")("y")?.0, "y")
 	}
