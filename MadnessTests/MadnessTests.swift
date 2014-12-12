@@ -243,4 +243,9 @@ final class MadnessTests: XCTestCase {
 		let actual = expression()
 		if actual == nil { XCTFail("\(actual) is nil. " + message, file: file, line: line) }
 	}
+
+	func failure(message: String, file: String = __FILE__, line: UInt = __LINE__) -> Bool {
+		XCTFail(message, file: file, line: line)
+		return false
+	}
 }
