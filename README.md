@@ -16,6 +16,14 @@ See `Madness.playground` for some examples of parsing and building parse trees w
 
 ## Use
 
+- **Any**
+
+	```swift
+	any
+	```
+
+	parses any single character.
+
 - **Strings**
 
 	```swift
