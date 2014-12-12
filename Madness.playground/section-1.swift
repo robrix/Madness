@@ -51,16 +51,14 @@ let colour = ignore("#") ++ (six | three) --> {
 	NSColor(calibratedRed: $0[0], green: $0[1], blue: $0[2], alpha: 1)
 }
 
-let parseColour: String -> NSColor? = { colour($0).map { c, rest in rest == "" ? c : nil } ?? nil }
-
-if let reddish = parseColour("#d52a41") {
+if let reddish = parse(colour, "#d52a41") {
 	reddish
 }
 
-if let greenish = parseColour("#5a2") {
+if let greenish = parse(colour, "#5a2") {
 	greenish
 }
 
-if let blueish = parseColour("#5e8ca1") {
+if let blueish = parse(colour, "#5e8ca1") {
 	blueish
 }
