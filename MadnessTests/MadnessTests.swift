@@ -182,6 +182,10 @@ final class MadnessTests: XCTestCase {
 		assertEqual((%"y" ++ ignored)("yx")?.0, "y")
 	}
 
+	func testConcatenationOfIgnoredInputIsIgnored() {
+		assertEqual((ignored ++ ignored)("xx")?.1, "")
+	}
+
 	func testIgnoredInputIsDroppedFromAltenationsAtLeft() {
 		assertEqual((ignored | %"y")("y")?.0, "y")
 	}

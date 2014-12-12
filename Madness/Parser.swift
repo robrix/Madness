@@ -48,6 +48,12 @@ public func ++ <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Par
 	return concatenate(left, right) --> { $1 }
 }
 
+/// Parses the concatenation of `left` and `right, dropping all parse trees.
+public func ++ (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser<()>.Function {
+	return ignore(concatenate(left, right))
+}
+
+
 
 // MARK: Alternation
 
