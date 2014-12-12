@@ -11,6 +11,12 @@ public struct Parser<Tree> {
 
 // MARK: - Terminals
 
+/// Returns a parser which parses any single character.
+public let any: Parser<String>.Function = {
+	return $0.isEmpty ? nil : ($0.toOffset(1), $0.fromOffset(1))
+}
+
+
 /// Returns a parser which parses `string`.
 public prefix func % (string: String) -> Parser<String>.Function {
 	return {

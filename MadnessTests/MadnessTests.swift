@@ -37,6 +37,17 @@ final class MadnessTests: XCTestCase {
 	}
 
 
+	// MARK: Any
+
+	func testAnyRejectsTheEmptyString() {
+		assertNil(any(""))
+	}
+
+	func testAnyParsesAnySingleCharacter() {
+		assertEqual(any("🔥")?.0, "🔥")
+	}
+
+
 	// MARK: - Nonterminals
 
 	// MARK: Concatenation
