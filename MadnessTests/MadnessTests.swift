@@ -182,12 +182,20 @@ final class MadnessTests: XCTestCase {
 		assertEqual((%"y" ++ ignored)("yx")?.0, "y")
 	}
 
+	func testIgnoringDistributesOverConcatenation() {
+		assertEqual((ignored ++ ignored)("xx")?.1, "")
+	}
+
 	func testIgnoredInputIsDroppedFromAltenationsAtLeft() {
 		assertEqual((ignored | %"y")("y")?.0, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAltenationsAtRight() {
 		assertEqual((%"y" | ignored)("y")?.0, "y")
+	}
+
+	func testIgnoringDistributesOverAlternation() {
+		assertEqual((ignored | ignored)("x")?.0, ())
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
@@ -201,42 +209,55 @@ final class MadnessTests: XCTestCase {
 
 	// MARK: - Assertions
 
-	func assertEqual<T: Equatable>(expression1: @autoclosure () -> T?, _ expression2: @autoclosure () -> T?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
+	func assertEqual<T: Equatable>(expression1: @autoclosure () -> T?, _ expression2: @autoclosure () -> T?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) -> Bool {
 		let (actual, expected) = (expression1(), expression2())
-		if actual != expected { XCTFail("\(actual) is not equal to \(expected). " + message, file: file, line: line) }
+		return actual == expected || failure("\(actual) is not equal to \(expected). " + message, file: file, line: line)
 	}
 
-	func assertEqual<T: Equatable, U: Equatable>(expression1: @autoclosure () -> Either<T, U>?, _ expression2: @autoclosure () -> Either<T, U>?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
-		let (actual, expected) = (expression1(), expression2())
-		switch (actual, expected) {
-		case (.None, .None):
-			break
-		case let (.Some(x), .Some(y)) where x == y:
-			break
-		default:
-			XCTFail("\(actual) is not equal to \(expected). " + message, file: file, line: line)
-		}
-	}
-
-	func assertEqual<T: Equatable>(expression1: @autoclosure () -> [T]?, _ expression2: @autoclosure () -> [T]?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) {
+	func assertEqual<T: Equatable, U: Equatable>(expression1: @autoclosure () -> Either<T, U>?, _ expression2: @autoclosure () -> Either<T, U>?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) -> Bool {
 		let (actual, expected) = (expression1(), expression2())
 		switch (actual, expected) {
 		case (.None, .None):
-			break
+			return true
 		case let (.Some(x), .Some(y)) where x == y:
-			break
+			return true
 		default:
-			XCTFail("\(actual) is not equal to \(expected). " + message, file: file, line: line)
+			return failure("\(actual) is not equal to \(expected). " + message, file: file, line: line)
 		}
 	}
 
-	func assertNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
-		let actual = expression()
-		if actual != nil { XCTFail("\(actual) is not nil. " + message, file: file, line: line) }
+	func assertEqual<T: Equatable>(expression1: @autoclosure () -> [T]?, _ expression2: @autoclosure () -> [T]?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) -> Bool {
+		let (actual, expected) = (expression1(), expression2())
+		switch (actual, expected) {
+		case (.None, .None):
+			return true
+		case let (.Some(x), .Some(y)) where x == y:
+			return true
+		default:
+			return failure("\(actual) is not equal to \(expected). " + message, file: file, line: line)
+		}
 	}
 
-	func assertNotNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
-		let actual = expression()
-		if actual == nil { XCTFail("\(actual) is nil. " + message, file: file, line: line) }
+	func assertEqual(expression1: @autoclosure () -> ()?, _ expected: ()?, _ message: String = "", _ file: String = __FILE__, _ line: UInt = __LINE__) -> Bool {
+		let actual: ()? = expression1()
+		switch (actual, expected) {
+		case (.None, .None), (.Some, .Some):
+			return true
+		default:
+			return failure("\(actual) is not equal to \(expected). " + message, file: file, line: line)
+		}
+	}
+
+	func assertNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> Bool {
+		return expression().map { self.failure("\($0) is not nil. " + message, file: file, line: line) } ?? true
+	}
+
+	func assertNotNil<T>(expression: @autoclosure () -> T?, _ message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> Bool {
+		return expression().map(const(true)) ?? failure("is nil. " + message, file: file, line: line)
+	}
+
+	func failure(message: String, file: String = __FILE__, line: UInt = __LINE__) -> Bool {
+		XCTFail(message, file: file, line: line)
+		return false
 	}
 }

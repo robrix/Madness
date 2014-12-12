@@ -48,6 +48,12 @@ public func ++ <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Par
 	return concatenate(left, right) --> { $1 }
 }
 
+/// Parses the concatenation of `left` and `right, dropping both parse trees.
+public func ++ (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser<()>.Function {
+	return ignore(concatenate(left, right))
+}
+
+
 
 // MARK: Alternation
 
@@ -69,6 +75,11 @@ public func | <T> (left: Parser<T>.Function, right: Parser<()>.Function) -> Pars
 /// Parses either `left` or `right`, dropping `left`’s parse tree.
 public func | <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Parser<T?>.Function {
 	return alternate(left, right) --> { $0.either(const(nil), id) }
+}
+
+/// Parses either `left` or `right`, dropping both parse trees.
+public func | (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser<()>.Function {
+	return alternate(left, right) --> { $0.either(id, id) }
 }
 
 
