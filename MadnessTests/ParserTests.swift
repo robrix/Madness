@@ -5,7 +5,7 @@ import Madness
 import Prelude
 import XCTest
 
-final class MadnessTests: XCTestCase {
+final class ParserTests: XCTestCase {
 	// MARK: - Terminals
 
 	// MARK: Literals
