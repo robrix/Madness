@@ -34,12 +34,8 @@ let term: Parser<Term>.Function = fix { term in
 	return variable | abstraction | application
 }
 
-let parseTerm: String -> Term? = {
-	term($0)?.0
-}
-
-parseTerm("λx.(x x)")?.description
-parseTerm("(λx.(x x) λx.(x x))")?.description
+parse(term, "λx.(x x)")?.description
+parse(term, "(λx.(x x) λx.(x x))")?.description
 
 
 // MARK: HTML-ish colours
