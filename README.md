@@ -8,6 +8,8 @@ let hex = digit+ --> { strtol(join("", $0), nil, 16) }
 parse(ignore("0x") ++ hex, "0xdeadbeef") // => 3,735,928,559
 ```
 
+![screenshot of parsing HTML colours in an Xcode playground: `let reddish = parse(colour, "#d52a41")!`](https://cloud.githubusercontent.com/assets/59671/5415280/1453c774-81f4-11e4-8726-b51423bb06f9.png)
+
 
 ## Examples
 
