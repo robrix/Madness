@@ -6,8 +6,9 @@ import Prelude
 import XCTest
 
 final class MadnessTests: XCTestCase {
-
 	// MARK: - Terminals
+
+	// MARK: Literals
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		let parser = %"foo"
@@ -20,6 +21,8 @@ final class MadnessTests: XCTestCase {
 		assertEqual((%"foo")("foot")?.0, "foo")
 	}
 
+
+	// MARK: Ranges
 
 	let digits = %("0"..."9")
 
