@@ -6,6 +6,17 @@ import Prelude
 import XCTest
 
 final class ParserTests: XCTestCase {
+	// MARK: - Operations
+
+	func testParseRejectsPartialParses() {
+		assertNil(parse(%"x", "xy"))
+	}
+
+	func testParseProducesParseTreesForFullParses() {
+		assertEqual(parse(%"x", "x"), "x")
+	}
+
+
 	// MARK: - Terminals
 
 	// MARK: Literals
