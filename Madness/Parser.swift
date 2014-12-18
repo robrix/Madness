@@ -18,8 +18,8 @@ public func parse<Tree>(parser: Parser<Tree>.Function, string: String) -> Tree? 
 // MARK: - Terminals
 
 /// Returns a parser which parses any single character.
-public let any: Parser<String>.Function = {
-	$0.isEmpty ? nil : ($0.toOffset(1), $0.fromOffset(1))
+public func any(input: String) -> (String, String)? {
+	return input.isEmpty ? nil : (input.toOffset(1), input.fromOffset(1))
 }
 
 
