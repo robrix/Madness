@@ -19,7 +19,7 @@ public func parse<Tree>(parser: Parser<Tree>.Function, string: String) -> Tree? 
 
 /// Returns a parser which parses any single character.
 public let any: Parser<String>.Function = {
-	return $0.isEmpty ? nil : ($0.toOffset(1), $0.fromOffset(1))
+	$0.isEmpty ? nil : ($0.toOffset(1), $0.fromOffset(1))
 }
 
 
