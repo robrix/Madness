@@ -224,6 +224,13 @@ infix operator --> {
 prefix operator % {}
 
 
+/// Bind operator.
+infix operator >>= {
+	associativity left
+	precedence 100
+}
+
+
 // MARK: - Imports
 
 import Either
