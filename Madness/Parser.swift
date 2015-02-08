@@ -102,6 +102,11 @@ public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	return repeat(parser)
 }
 
+/// Creates a parser from `string`, and parses it 0 or more times.
+public postfix func * (string: String) -> Parser<[String]>.Function {
+	return repeat(%(string))
+}
+
 /// Parses `parser` 0 or more times and drops its parse trees.
 public postfix func * (parser: Parser<()>.Function) -> Parser<()>.Function {
 	return repeat(parser) --> const(())
@@ -110,6 +115,11 @@ public postfix func * (parser: Parser<()>.Function) -> Parser<()>.Function {
 /// Parses `parser` 1 or more times.
 public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	return repeat(parser, 1..<Int.max)
+}
+
+/// Creates a parser from `string`, and parses it 1 or more times.
+public postfix func + (string: String) -> Parser<[String]>.Function {
+	return repeat(%(string), 1..<Int.max)
 }
 
 /// Parses `parser` 0 or more times and drops its parse trees.
