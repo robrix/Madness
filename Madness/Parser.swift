@@ -239,7 +239,7 @@ prefix operator % {}
 /// Bind operator.
 infix operator >>- {
 	associativity left
-	precedence 100
+	precedence 150
 }
 
 
