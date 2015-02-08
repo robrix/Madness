@@ -31,21 +31,21 @@ func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 
 final class BindTests: XCTestCase {
 	func testBind() {
-		let item = %"-\n"
-		let tree: Int -> Parser<Tree<Int>>.Function = fix { tree in
+		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
+		let tree: Int -> Parser<Tree<String>>.Function = fix { tree in
 			{ n in
 				let line: Parser<String>.Function = ignore(%"\t" * n) ++ item
-				return line >>- { _ in
-					(tree(n + 1)* --> { children in Tree(n, children) })
+				return line >>- { itemContent in
+					(tree(n + 1)* --> { children in Tree(itemContent, children) })
 				}
 			}
 		}
 
-		let fixtures: [String: Tree<Int>] = [
-			"-\n": Tree(0),
-			"-\n\t-\n": Tree(0, [ Tree(1) ]),
-			"-\n\t-\n\t-\n": Tree(0, [ Tree(1), Tree(1) ]),
-			"-\n\t-\n\t\t-\n\t-\n": Tree(0, [ Tree(1, [ Tree(2) ]), Tree(1) ]),
+		let fixtures: [String: Tree<String>] = [
+			"-a\n": Tree("a"),
+			"-a\n\t-b\n": Tree("a", [ Tree("b") ]),
+			"-a\n\t-b\n\t-c\n": Tree("a", [ Tree("b"), Tree("c") ]),
+			"-a\n\t-b\n\t\t-c\n\t-d\n": Tree("a", [ Tree("b", [ Tree("c") ]), Tree("d") ]),
 		]
 
 		for (input, actual) in fixtures {
@@ -57,9 +57,9 @@ final class BindTests: XCTestCase {
 		}
 
 		let failures: [String] = [
-			"-\n-\n",
-			"-\n\t\t-\n",
-			"-\n\t-\n-\n"
+			"-a\n-a\n",
+			"-a\n\t\t-b\n",
+			"-a\n\t-b\n-c\n"
 		]
 
 		for input in failures {
