@@ -4,8 +4,6 @@ import Madness
 import Prelude
 import XCTest
 
-infix operator >>= { associativity left }
-
 struct Tree<T: Equatable>: Equatable, Printable {
 	init(_ value: T, _ children: [Tree] = []) {
 		self.values = [ value ]
@@ -37,7 +35,7 @@ final class BindTests: XCTestCase {
 		let tree: Int -> Parser<Tree<Int>>.Function = fix { tree in
 			{ n in
 				let line: Parser<String>.Function = ignore(%"\t" * n) ++ item
-				return line >>= { _ in
+				return line >>- { _ in
 					(tree(n + 1)* --> { children in Tree(n, children) })
 				}
 			}
