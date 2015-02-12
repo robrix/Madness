@@ -27,7 +27,7 @@ public func any(input: String) -> (String, String)? {
 public prefix func % (string: String) -> Parser<String>.Function {
 	return {
 		startsWith($0, string) ?
-			(string, $0.fromOffset(countElements(string)))
+			(string, $0.fromOffset(count(string)))
 		:	nil
 	}
 }
