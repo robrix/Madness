@@ -5,6 +5,9 @@
       location = "group:Madness.playground">
    </FileRef>
    <FileRef
+      location = "group:Documentation/Significant Indentation.playground">
+   </FileRef>
+   <FileRef
       location = "group:Madness.xcodeproj">
    </FileRef>
    <FileRef
