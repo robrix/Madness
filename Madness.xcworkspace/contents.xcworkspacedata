@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <FileRef
-      location = "group:Madness.playground">
-   </FileRef>
-   <FileRef
-      location = "group:Documentation/Significant Indentation.playground">
-   </FileRef>
+   <Group
+      location = "container:Documentation"
+      name = "Documentation">
+      <FileRef
+         location = "group:Madness.playground">
+      </FileRef>
+      <FileRef
+         location = "group:Significant Indentation.playground">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:Madness.xcodeproj">
    </FileRef>
