@@ -30,17 +30,22 @@ enum Node: Printable {
 
 	var description: String {
 		return analysis(
-			ifBlockquote: { "<blockquote>\n\t" + "\n\t".join(lazy($0).map(toString)) + "\n</blockquote>" },
+			ifBlockquote: { "<blockquote>\n\t" + "\n\t".join(lazy($0).map { $0.description }) + "\n</blockquote>" },
 			ifHeader: { "<h\($0)>\($1)</h\($0)>" },
-			ifParagraph: { "<p>\($0)</p>" })
+			ifParagraph: id)
 	}
 }
 
 
 // MARK: - Parsing rules
 
-let paragraph = restOfLine --> { Node.Paragraph($0) }
-let header = ((%"#" * (1..<7)) --> { $0.count }) ++ ignore(" ") ++ restOfLine --> { Node.Header($0, $1) }
-let blockquote = ignore(">") ++ ignore(" ") ++ restOfLine
+let element: Parser<Node>.Function = fix { element in
+	let header = ((%"#" * (1..<7)) --> { $0.count }) ++ ignore(" ") ++ restOfLine --> { Node.Header($0, $1) }
+	let paragraph = restOfLine --> { Node.Paragraph($0) }
+	let blockquote = (ignore(%">" ++ %" ") ++ element)+ --> { Node.Blockquote($0) }
+	return header | paragraph | blockquote
+}
 
-let s = header("# Words\n")?.0
+if let translated = element("> # Words\n> paragraph\n")?.0 {
+	translated.description
+}
