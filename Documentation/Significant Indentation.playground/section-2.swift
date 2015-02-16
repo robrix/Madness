@@ -8,7 +8,7 @@ let restOfLine = (text+ --> { "".join($0) }) ++ newline
 
 // MARK: - AST
 
-enum Node {
+enum Node: Printable {
 	case Header(Int, String)
 
 
@@ -17,6 +17,14 @@ enum Node {
 		case let Header(level, text):
 			return ifHeader(level, text)
 		}
+	}
+
+
+	// MARK: Printable
+
+	var description: String {
+		return analysis(
+			ifHeader: { "<h\($0)>\($1)</h\($0)>" })
 	}
 }
 
