@@ -121,12 +121,12 @@ public postfix func + (parser: Parser<()>.Function) -> Parser<()>.Function {
 ///
 /// `n` must be > 0 to make any sense.
 public func * <T> (parser: Parser<T>.Function, n: Int) -> Parser<[T]>.Function {
-	return repeat(parser, n..<n)
+	return repeat(parser, n...n)
 }
 
 /// Parses `parser` the number of times specified in `interval`.
 ///
-/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means between `m` and `n` repetitions.
+/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means at least `m` and fewer than `n` repetitions.
 public func * <T> (parser: Parser<T>.Function, interval: HalfOpenInterval<Int>) -> Parser<[T]>.Function {
 	return repeat(parser, interval)
 }
