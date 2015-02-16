@@ -10,6 +10,14 @@ let restOfLine = (text+ --> { "".join($0) }) ++ newline
 
 enum Node {
 	case Header(Int, String)
+
+
+	func analysis<T>(#ifHeader: (Int, String) -> T) -> T {
+		switch self {
+		case let Header(level, text):
+			return ifHeader(level, text)
+		}
+	}
 }
 
 
