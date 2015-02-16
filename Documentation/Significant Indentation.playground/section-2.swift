@@ -39,15 +39,25 @@ enum Node: Printable {
 
 // MARK: - Parsing rules
 
-let element: Parser<Node>.Function = fix { element in
-	let header = ((%"#" * (1..<7)) --> { $0.count }) ++ ignore(" ") ++ restOfLine --> { Node.Header($0, $1) }
-	let paragraph = restOfLine --> { Node.Paragraph($0) }
-	let blockquote: Parser<Node>.Function = (ignore(%">" ++ %" ") ++ (element | newline))+ --> {
-		Node.Blockquote(reduce($0, []) { $0 + ($1.map { [ $0 ] } ?? []) })
+typealias NodeParser = Parser<()>.Function -> Parser<Node>.Function
+
+let element: NodeParser = fix { element in
+	{ prefix in
+		let prefixedElements: NodeParser = {
+			let each = (element(prefix ++ $0) | (prefix ++ $0 ++ newline)) --> { $0.map { [ $0 ] } ?? [] }
+			return (each)+ --> { Node.Blockquote(join([], $0)) }
+		}
+
+		let header = prefix ++ ((%"#" * (1..<7)) --> { $0.count }) ++ ignore(" ") ++ restOfLine --> { Node.Header($0, $1) }
+		let paragraph = (prefix ++ restOfLine)+ --> { Node.Paragraph("\n".join($0)) }
+		let blockquote = prefix ++ { prefixedElements(ignore("> "))($0) }
+
+		return header | paragraph | blockquote
 	}
-	return header | paragraph | blockquote
 }
 
-if let translated = element("> # Words\n> \n> paragraph\n")?.0 {
+let ok: Parser<()>.Function = { ((), $0) }
+let parsed = parse(element(ok), "> # hello\n> \n> hello\n> there\n> \n> \n")
+if let translated = parsed?.0 {
 	translated.description
 }
