@@ -32,7 +32,7 @@ enum Node: Printable {
 		return analysis(
 			ifBlockquote: { "<blockquote>\n\t" + "\n\t".join(lazy($0).map { $0.description }) + "\n</blockquote>" },
 			ifHeader: { "<h\($0)>\($1)</h\($0)>" },
-			ifParagraph: id)
+			ifParagraph: { "<p>\($0)</p>" })
 	}
 }
 
