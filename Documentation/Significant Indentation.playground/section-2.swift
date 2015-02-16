@@ -42,10 +42,12 @@ enum Node: Printable {
 let element: Parser<Node>.Function = fix { element in
 	let header = ((%"#" * (1..<7)) --> { $0.count }) ++ ignore(" ") ++ restOfLine --> { Node.Header($0, $1) }
 	let paragraph = restOfLine --> { Node.Paragraph($0) }
-	let blockquote = (ignore(%">" ++ %" ") ++ element)+ --> { Node.Blockquote($0) }
+	let blockquote: Parser<Node>.Function = (ignore(%">" ++ %" ") ++ (element | newline))+ --> {
+		Node.Blockquote(reduce($0, []) { $0 + ($1.map { [ $0 ] } ?? []) })
+	}
 	return header | paragraph | blockquote
 }
 
-if let translated = element("> # Words\n> paragraph\n")?.0 {
+if let translated = element("> # Words\n> \n> paragraph\n")?.0 {
 	translated.description
 }
