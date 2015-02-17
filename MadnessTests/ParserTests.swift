@@ -194,6 +194,10 @@ final class ParserTests: XCTestCase {
 		assertEqual(mToN("xxxx")?.1, "xx")
 	}
 	
+	func testMToNRepetitionMatchesUpToN() {
+		assertEqual(mToN("xxxx")?.1, "x")
+	}
+	
 	
 	let nToN = %"x" * (2..<2)
 	
@@ -245,11 +249,6 @@ final class ParserTests: XCTestCase {
 	
 	func testClosedNToNRepetitionMatchesUpToN() {
 		assertEqual(closedNToN("xxx")?.1, "x")
-	}
-	
-
-	func testMToNRepetitionMatchesUpToN() {
-		assertEqual(mToN("xxxx")?.1, "x")
 	}
 	
 	
