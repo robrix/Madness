@@ -163,9 +163,9 @@ final class ParserTests: XCTestCase {
 		assertEqual(zeroToN("y")?.0, [])
 	}
 
-	func testZeroToNRepetitionParsesUpToNTrees() {
-		assertEqual(zeroToN("xxx")?.0, ["x", "x"])
-		assertEqual(zeroToN("xxx")?.1, "x")
+	func testZeroToNRepetitionParsesUpToButNotIncludingNTrees() {
+		assertEqual(zeroToN("xxx")?.0, ["x"])
+		assertEqual(zeroToN("xxx")?.1, "xx")
 	}
 
 
@@ -190,11 +190,106 @@ final class ParserTests: XCTestCase {
 		assertNil(mToN("x"))
 	}
 
-	func testMToNRepetitionMatchesUpToN() {
-		assertEqual(mToN("xxxx")?.1, "x")
+	func testMToNRepetitionMatchesUpToButNotIncludingN() {
+		assertEqual(mToN("xxxx")?.1, "xx")
+	}
+	
+	let nToN = %"x" * (2..<2)
+	
+	func testOpenNToNRepetitionRejectsN() {
+		assertNil(nToN("xx"))
 	}
 
-
+	
+	
+	let zeroToNClosed = %"x" * (0...2)
+	
+	func testZeroToNClosedRepetitionParsesZeroTrees() {
+		assertEqual(zeroToNClosed("y")?.0, [])
+	}
+	
+	func testZeroToNClosedRepetitionParsesUpToNTrees() {
+		assertEqual(zeroToNClosed("xxx")?.0, ["x", "x"])
+		assertEqual(zeroToNClosed("xxx")?.1, "x")
+	}
+	
+	
+	let atLeastNClosed = %"x" * (2...Int.max)
+	
+	func testAtLeastNClosedRepetitionRejectsZeroTrees() {
+		assertNil(atLeastNClosed("y"))
+	}
+	
+	func testAtLeastNClosedRepetitionParsesNTrees() {
+		assertEqual(atLeastNClosed("xx")?.0, ["x", "x"])
+	}
+	
+	func testAtLeastNClosedRepetitionParsesMoreThanNTrees() {
+		assertEqual(atLeastNClosed("xxxx")?.0, ["x", "x", "x", "x"])
+	}
+	
+	
+	let mToNClosed = %"x" * (2...3)
+	
+	func testMToNClosedRepetitionRejectsLessThanM() {
+		assertNil(mToNClosed("x"))
+	}
+	
+	func testMToNClosedRepetitionMatchesUpToN() {
+		assertEqual(mToNClosed("xxxx")?.1, "x")
+	}
+	
+	
+	let closedNToN = %"x" * (2...2)
+	
+	func testClosedNToNRepetitionMatchesUpToN() {
+		assertEqual(closedNToN("xxx")?.1, "x")
+	}
+	
+	
+	// MARK: Repetition shorthand
+	let zeroOrMoreSimple = "x"*
+	
+	func testZeroOrMoreSimpleRepetitionAcceptsTheEmptyString() {
+		assertNotNil(zeroOrMoreSimple(""))
+	}
+	
+	func testZeroOrMoreSimpleRepetitionAcceptsUnmatchedStrings() {
+		assertNotNil(zeroOrMoreSimple("y"))
+	}
+	
+	func testZeroOrMoreSimpleRepetitionDoesNotAdvanceWithUnmatchedStrings() {
+		assertEqual(zeroOrMoreSimple("y")?.1, "y")
+	}
+	
+	func testZeroOrMoreSimpleRepetitionParsesUnmatchedStringsAsEmptyArrays() {
+		assertEqual(zeroOrMoreSimple("y")?.0, [])
+	}
+	
+	func testZeroOrMoreSimpleRepetitionParsesAMatchedString() {
+		assertEqual(zeroOrMoreSimple("x")?.0, ["x"])
+	}
+	
+	func testZeroOrMoreSimpleRepetitionParsesMatchedStrings() {
+		assertEqual(zeroOrMoreSimple("xx")?.0, ["x", "x"])
+	}
+	
+	
+	let oneOrMoreSimple = "x"+
+	
+	func testOneOrMoreSimpleRepetitionRejectsTheEmptyString() {
+		assertNil(oneOrMoreSimple(""))
+	}
+	
+	func testOneOrMoreSimpleRepetitionParsesASingleMatchedString() {
+		assertEqual(oneOrMoreSimple("x")?.0, ["x"])
+	}
+	
+	func testOneOrMoreSimpleRepetitonParsesMultipleMatchedStrings() {
+		assertEqual(oneOrMoreSimple("xxy")?.0, ["x", "x"])
+	}
+	
+	
 	// MARK: Ignoring
 
 	let ignored = ignore("x")
