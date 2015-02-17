@@ -163,9 +163,9 @@ final class ParserTests: XCTestCase {
 		assertEqual(zeroToN("y")?.0, [])
 	}
 
-	func testZeroToNRepetitionParsesUpToNTrees() {
-		assertEqual(zeroToN("xxx")?.0, ["x", "x"])
-		assertEqual(zeroToN("xxx")?.1, "x")
+	func testZeroToNRepetitionParsesUpToButNotIncludingNTrees() {
+		assertEqual(zeroToN("xxx")?.0, ["x"])
+		assertEqual(zeroToN("xxx")?.1, "xx")
 	}
 
 
@@ -190,8 +190,14 @@ final class ParserTests: XCTestCase {
 		assertNil(mToN("x"))
 	}
 
-	func testMToNRepetitionMatchesUpToN() {
-		assertEqual(mToN("xxxx")?.1, "x")
+	func testMToNRepetitionMatchesUpToButNotIncludingN() {
+		assertEqual(mToN("xxxx")?.1, "xx")
+	}
+	
+	let nToN = %"x" * (2..<2)
+	
+	func testOpenNToNRepetitionRejectsN() {
+		assertNil(nToN("xx"))
 	}
 	
 	
