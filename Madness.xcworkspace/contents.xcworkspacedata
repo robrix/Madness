@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <Group
-      location = "container:Documentation"
-      name = "Documentation">
-      <FileRef
-         location = "group:Madness.playground">
-      </FileRef>
-      <FileRef
-         location = "group:Subset of Common Markdown.playground">
-      </FileRef>
-   </Group>
+   <FileRef
+      location = "group:Madness.playground">
+   </FileRef>
    <FileRef
       location = "group:Madness.xcodeproj">
    </FileRef>
