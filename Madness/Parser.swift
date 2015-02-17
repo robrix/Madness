@@ -27,7 +27,7 @@ public func any(input: String) -> (String, String)? {
 public prefix func % (string: String) -> Parser<String>.Function {
 	return {
 		startsWith($0, string) ?
-			(string, $0.fromOffset(countElements(string)))
+			(string, $0.fromOffset(count(string)))
 		:	nil
 	}
 }
@@ -102,6 +102,11 @@ public postfix func * <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	return repeat(parser, 0..<Int.max)
 }
 
+/// Creates a parser from `string`, and parses it 0 or more times.
+public postfix func * (string: String) -> Parser<[String]>.Function {
+	return repeat(%(string), 0..<Int.max)
+}
+
 /// Parses `parser` 0 or more times and drops its parse trees.
 public postfix func * (parser: Parser<()>.Function) -> Parser<()>.Function {
 	return repeat(parser, 0..<Int.max) --> const(())
@@ -110,6 +115,11 @@ public postfix func * (parser: Parser<()>.Function) -> Parser<()>.Function {
 /// Parses `parser` 1 or more times.
 public postfix func + <T> (parser: Parser<T>.Function) -> Parser<[T]>.Function {
 	return repeat(parser, 1..<Int.max)
+}
+
+/// Creates a parser from `string`, and parses it 1 or more times.
+public postfix func + (string: String) -> Parser<[String]>.Function {
+	return repeat(%(string), 1..<Int.max)
 }
 
 /// Parses `parser` 0 or more times and drops its parse trees.
@@ -160,6 +170,18 @@ public func ignore<T>(parser: Parser<T>.Function) -> Parser<()>.Function {
 /// Ignores any parse trees produced by a parser which parses `string`.
 public func ignore(string: String) -> Parser<()>.Function {
 	return ignore(%string)
+}
+
+
+// MARK: Binding
+
+/// Returns a parser which requires `parser` to parse, passes its parsed trees to a function `f`, and then requires the result of `f` to parse.
+///
+/// This can be used to conveniently make a parser which depends on earlier parsed input, for example to parse exactly the same number of characters, or to parse structurally significant indentation.
+public func >>- <T, U> (parser: Parser<T>.Function, f: T -> Parser<U>.Function) -> Parser<U>.Function {
+	return {
+		parser($0).map { f($0)($1) } ?? nil
+	}
 }
 
 
@@ -236,6 +258,13 @@ infix operator --> {
 
 /// Literal operator.
 prefix operator % {}
+
+
+/// Bind operator.
+infix operator >>- {
+	associativity left
+	precedence 150
+}
 
 
 // MARK: - Imports
