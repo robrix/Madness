@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4B693CE1A40EB5200329DCD /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693CD1A40EB5200329DCD /* Tree.swift */; };
+		D4B693D21A41033C00329DCD /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693D11A41033C00329DCD /* TreeTests.swift */; };
 		D4BC5E021A98C8B4008C6851 /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BC5DF71A98C8B4008C6851 /* Madness.framework */; };
 		D4BC5E101A98C978008C6851 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47CD1A37E48800D23A6F /* Parser.swift */; };
 		D4BC5E111A98C978008C6851 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47CF1A37E51500D23A6F /* String.swift */; };
@@ -19,9 +21,9 @@
 		D4BC5E181A98C9C0008C6851 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D31A37EFCC00D23A6F /* Box.framework */; };
 		D4BC5E191A98C9C0008C6851 /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
 		D4BC5E1A1A98C9C0008C6851 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
+		D4C2EDA41A98CE3A00054FAA /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693D11A41033C00329DCD /* TreeTests.swift */; };
+		D4C2EDA51A98CE3E00054FAA /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693CD1A40EB5200329DCD /* Tree.swift */; };
 		D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* BindTests.swift */; };
-		D4B693CE1A40EB5200329DCD /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693CD1A40EB5200329DCD /* Tree.swift */; };
-		D4B693D21A41033C00329DCD /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693D11A41033C00329DCD /* TreeTests.swift */; };
 		D4D955861A3B4447004725E9 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
 		D4FC47B71A37E47C00D23A6F /* Madness.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FC47B61A37E47C00D23A6F /* Madness.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4FC47BD1A37E47C00D23A6F /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47B11A37E47C00D23A6F /* Madness.framework */; };
@@ -54,16 +56,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D4B693CD1A40EB5200329DCD /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
+		D4B693D11A41033C00329DCD /* TreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
 		D4BC5DF71A98C8B4008C6851 /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4BC5E011A98C8B4008C6851 /* Madness-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Madness-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C8B02D1A69B1A900943303 /* BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindTests.swift; sourceTree = "<group>"; };
-		D4B693CD1A40EB5200329DCD /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
-		D4B693D11A41033C00329DCD /* TreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
 		D4D955851A3B4447004725E9 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		D4FC47B11A37E47C00D23A6F /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47B51A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4FC47B61A37E47C00D23A6F /* Madness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Madness.h; sourceTree = "<group>"; };
-		D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MadnessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Madness-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47C21A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4FC47C31A37E47C00D23A6F /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		D4FC47CD1A37E48800D23A6F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				D4FC47B11A37E47C00D23A6F /* Madness.framework */,
-				D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */,
+				D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */,
 				D4BC5DF71A98C8B4008C6851 /* Madness.framework */,
 				D4BC5E011A98C8B4008C6851 /* Madness-iOSTests.xctest */,
 			);
@@ -272,7 +274,7 @@
 			);
 			name = "Madness-MacTests";
 			productName = MadnessTests;
-			productReference = D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */;
+			productReference = D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -354,6 +356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C2EDA51A98CE3E00054FAA /* Tree.swift in Sources */,
 				D4BC5E111A98C978008C6851 /* String.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
 			);
@@ -364,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4BC5E141A98C97C008C6851 /* Assertions.swift in Sources */,
+				D4C2EDA41A98CE3A00054FAA /* TreeTests.swift in Sources */,
 				D4BC5E131A98C97C008C6851 /* BindTests.swift in Sources */,
 				D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */,
 			);
@@ -648,6 +652,7 @@
 				D4BC5E0C1A98C8B4008C6851 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4BC5E0D1A98C8B4008C6851 /* Build configuration list for PBXNativeTarget "Madness-iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -656,6 +661,7 @@
 				D4BC5E0F1A98C8B4008C6851 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4FC47AB1A37E47C00D23A6F /* Build configuration list for PBXProject "Madness" */ = {
 			isa = XCConfigurationList;
