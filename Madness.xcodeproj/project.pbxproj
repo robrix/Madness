@@ -640,6 +640,7 @@
 				D4BC5E0C1A98C8B4008C6851 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4BC5E0D1A98C8B4008C6851 /* Build configuration list for PBXNativeTarget "Madness-iOSTests" */ = {
 			isa = XCConfigurationList;
@@ -648,6 +649,7 @@
 				D4BC5E0F1A98C8B4008C6851 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D4FC47AB1A37E47C00D23A6F /* Build configuration list for PBXProject "Madness" */ = {
 			isa = XCConfigurationList;
