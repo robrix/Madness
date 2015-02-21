@@ -21,6 +21,8 @@ public func ++ (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser
 }
 
 
+// MARK: - Private
+
 /// Defines concatenation for use in the `++` operator definitions above.
 private func concatenate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function)(input: String) -> ((T, U), String)? {
 	return left(input).map { x, rest in
