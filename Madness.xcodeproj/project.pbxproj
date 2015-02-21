@@ -20,6 +20,7 @@
 		D4BC5E191A98C9C0008C6851 /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
 		D4BC5E1A1A98C9C0008C6851 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
 		D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDA61A98D38E00054FAA /* Concatenation.swift */; };
+		D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDA61A98D38E00054FAA /* Concatenation.swift */; };
 		D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* BindTests.swift */; };
 		D4D955861A3B4447004725E9 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
 		D4FC47B71A37E47C00D23A6F /* Madness.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FC47B61A37E47C00D23A6F /* Madness.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -353,6 +354,7 @@
 			files = (
 				D4BC5E111A98C978008C6851 /* String.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
+				D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
