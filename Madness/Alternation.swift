@@ -29,10 +29,8 @@ public func | (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser<
 // MARK: - Private
 
 /// Defines alternation for use in the `|` operator definitions above.
-private func alternate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
-	return {
-		left($0).map { (.left($0), $1) } ?? right($0).map { (.right($0), $1) }
-	}
+private func alternate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function)(input: String) -> (Either<T, U>, String)? {
+	return left(input).map { (.left($0), $1) } ?? right(input).map { (.right($0), $1) }
 }
 
 
