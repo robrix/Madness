@@ -87,7 +87,7 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testIgnoringDistributesOverAlternation() {
-		assertEqual((ignored | ignored)("x")?.0, ())
+		assertNotNil((ignored | ignored)("x")?.0)
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
