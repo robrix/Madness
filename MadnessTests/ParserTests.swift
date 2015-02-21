@@ -30,7 +30,8 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testLiteralParsersProduceTheirArgument() {
-		assertEqual((%"foo")("foot")?.0, "foo")
+		let parsed = (%"foo")("foot")
+		assertEqual(parsed?.0, "foo")
 	}
 
 
@@ -75,7 +76,8 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testIgnoringDistributesOverConcatenation() {
-		assertEqual((ignored ++ ignored)("xx")?.1, "")
+		let parser = (ignored ++ ignored)("xx")
+		assertEqual(parser?.1, "")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
@@ -87,7 +89,8 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testIgnoringDistributesOverAlternation() {
-		assertNotNil((ignored | ignored)("x")?.0)
+		let parser = (ignored | ignored)
+		assertNotNil(parser("x")?.0)
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {

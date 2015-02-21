@@ -13,7 +13,8 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertEqual((%"x" | %"y")("xy")?.0, "x")
+		let parsed = (%"x" | %"y")("xy")
+		assertEqual(parsed?.0, "x")
 	}
 }
 

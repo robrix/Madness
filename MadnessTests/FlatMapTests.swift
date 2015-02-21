@@ -28,9 +28,9 @@ func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 final class FlatMapTests: XCTestCase {
 	func testFlatMap() {
 		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
-		let tree: Int -> Parser<Tree<String>>.Function = fix { tree in
+		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
 			{ n in
-				let line: Parser<String>.Function = ignore(%"\t" * n) ++ item
+				let line: Parser<String, String>.Function = ignore(%"\t" * n) ++ item
 				return line >>- { itemContent in
 					(tree(n + 1)* --> { children in Tree(itemContent, children) })
 				}
