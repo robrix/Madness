@@ -22,7 +22,7 @@ public func parse<Tree>(parser: Parser<String, Tree>.Function, string: String) -
 
 /// Returns a parser which parses any single character.
 public func any(input: String) -> (String, String)? {
-	return input.isEmpty ? nil : (input.toOffset(1), input.fromOffset(1))
+	return input.isEmpty ? nil : divide(input, 1)
 }
 
 
