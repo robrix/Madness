@@ -32,6 +32,7 @@
 		D4C2EDBA1A98D82200054FAA /* RepetitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */; };
 		D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */; };
 		D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */; };
+		D4C2EDFC1A98DEE800054FAA /* Madness.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FC47B61A37E47C00D23A6F /* Madness.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4C8B02E1A69B1A900943303 /* FlatMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */; };
 		D4D5B0ED1A98E03400BE42A2 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D5B0EC1A98E03400BE42A2 /* Assertions.framework */; };
 		D4D5B0EE1A98E2B600BE42A2 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D5B0EC1A98E03400BE42A2 /* Assertions.framework */; };
@@ -213,6 +214,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C2EDFC1A98DEE800054FAA /* Madness.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
