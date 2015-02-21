@@ -11,7 +11,7 @@
 		D4BC5E101A98C978008C6851 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47CD1A37E48800D23A6F /* Parser.swift */; };
 		D4BC5E111A98C978008C6851 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47CF1A37E51500D23A6F /* String.swift */; };
 		D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47C31A37E47C00D23A6F /* ParserTests.swift */; };
-		D4BC5E131A98C97C008C6851 /* BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* BindTests.swift */; };
+		D4BC5E131A98C97C008C6851 /* FlatMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */; };
 		D4BC5E141A98C97C008C6851 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
 		D4BC5E151A98C9A6008C6851 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D31A37EFCC00D23A6F /* Box.framework */; };
 		D4BC5E161A98C9A6008C6851 /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
@@ -31,7 +31,9 @@
 		D4C2EDB71A98D65400054FAA /* Repetition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDB31A98D63600054FAA /* Repetition.swift */; };
 		D4C2EDB91A98D82200054FAA /* RepetitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */; };
 		D4C2EDBA1A98D82200054FAA /* RepetitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */; };
-		D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* BindTests.swift */; };
+		D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */; };
+		D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */; };
+		D4C8B02E1A69B1A900943303 /* FlatMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */; };
 		D4D955861A3B4447004725E9 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
 		D4FC47B71A37E47C00D23A6F /* Madness.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FC47B61A37E47C00D23A6F /* Madness.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4FC47BD1A37E47C00D23A6F /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47B11A37E47C00D23A6F /* Madness.framework */; };
@@ -72,7 +74,8 @@
 		D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternationTests.swift; sourceTree = "<group>"; };
 		D4C2EDB31A98D63600054FAA /* Repetition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repetition.swift; sourceTree = "<group>"; };
 		D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepetitionTests.swift; sourceTree = "<group>"; };
-		D4C8B02D1A69B1A900943303 /* BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindTests.swift; sourceTree = "<group>"; };
+		D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMap.swift; sourceTree = "<group>"; };
+		D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMapTests.swift; sourceTree = "<group>"; };
 		D4D955851A3B4447004725E9 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		D4FC47B11A37E47C00D23A6F /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47B51A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -159,6 +162,7 @@
 				D4FC47B61A37E47C00D23A6F /* Madness.h */,
 				D4FC47CD1A37E48800D23A6F /* Parser.swift */,
 				D4C2EDAD1A98D52B00054FAA /* Alternation.swift */,
+				D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */,
 				D4C2EDA61A98D38E00054FAA /* Concatenation.swift */,
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
 				D4FC47CF1A37E51500D23A6F /* String.swift */,
@@ -183,7 +187,7 @@
 			children = (
 				D4FC47C31A37E47C00D23A6F /* ParserTests.swift */,
 				D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */,
-				D4C8B02D1A69B1A900943303 /* BindTests.swift */,
+				D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */,
 				D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */,
 				D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */,
 				D4D955851A3B4447004725E9 /* Assertions.swift */,
@@ -375,6 +379,7 @@
 				D4BC5E111A98C978008C6851 /* String.swift in Sources */,
 				D4C2EDAF1A98D53400054FAA /* Alternation.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
+				D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */,
 				D4C2EDB61A98D65300054FAA /* Repetition.swift in Sources */,
 			);
@@ -387,7 +392,7 @@
 				D4C2EDAB1A98D4D600054FAA /* ConcatenationTests.swift in Sources */,
 				D4BC5E141A98C97C008C6851 /* Assertions.swift in Sources */,
 				D4C2EDBA1A98D82200054FAA /* RepetitionTests.swift in Sources */,
-				D4BC5E131A98C97C008C6851 /* BindTests.swift in Sources */,
+				D4BC5E131A98C97C008C6851 /* FlatMapTests.swift in Sources */,
 				D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */,
 				D4C2EDB21A98D5DB00054FAA /* AlternationTests.swift in Sources */,
 			);
@@ -400,6 +405,7 @@
 				D4FC47D01A37E51500D23A6F /* String.swift in Sources */,
 				D4C2EDAE1A98D52B00054FAA /* Alternation.swift in Sources */,
 				D4FC47CE1A37E48800D23A6F /* Parser.swift in Sources */,
+				D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */,
 				D4C2EDB71A98D65400054FAA /* Repetition.swift in Sources */,
 			);
@@ -410,7 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C2EDAA1A98D4D400054FAA /* ConcatenationTests.swift in Sources */,
-				D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */,
+				D4C8B02E1A69B1A900943303 /* FlatMapTests.swift in Sources */,
 				D4C2EDB91A98D82200054FAA /* RepetitionTests.swift in Sources */,
 				D4D955861A3B4447004725E9 /* Assertions.swift in Sources */,
 				D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */,

@@ -1,9 +1,5 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-import Madness
-import Prelude
-import XCTest
-
 struct Tree<T: Equatable>: Equatable, Printable {
 	init(_ value: T, _ children: [Tree] = []) {
 		self.values = [ value ]
@@ -29,8 +25,8 @@ func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 	return left.values == right.values && left.children == right.children
 }
 
-final class BindTests: XCTestCase {
-	func testBind() {
+final class FlatMapTests: XCTestCase {
+	func testFlatMap() {
 		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
 		let tree: Int -> Parser<Tree<String>>.Function = fix { tree in
 			{ n in
@@ -67,3 +63,10 @@ final class BindTests: XCTestCase {
 		}
 	}
 }
+
+
+// MARK: - Imports
+
+import Madness
+import Prelude
+import XCTest
