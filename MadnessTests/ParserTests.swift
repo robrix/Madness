@@ -61,24 +61,6 @@ final class ParserTests: XCTestCase {
 
 	// MARK: - Nonterminals
 
-	// MARK: Alternation
-
-	let alternation = %"x" | (%"y" --> const(1))
-
-	func testAlternationParsesEitherAlternative() {
-		assertEqual(alternation("xy")?.1, "y")
-		assertEqual(alternation("yx")?.1, "x")
-	}
-
-	func testAlternationProducesTheParsedAlternative() {
-		assertEqual(alternation("xy")?.0, Either.left("x"))
-	}
-
-	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertEqual((%"x" | %"y")("xy")?.0, "x")
-	}
-
-
 	// MARK: Repetition
 
 	let zeroOrMore = (%"x")*

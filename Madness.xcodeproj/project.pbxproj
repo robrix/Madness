@@ -25,6 +25,8 @@
 		D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDA61A98D38E00054FAA /* Concatenation.swift */; };
 		D4C2EDAE1A98D52B00054FAA /* Alternation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDAD1A98D52B00054FAA /* Alternation.swift */; };
 		D4C2EDAF1A98D53400054FAA /* Alternation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDAD1A98D52B00054FAA /* Alternation.swift */; };
+		D4C2EDB11A98D5DB00054FAA /* AlternationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */; };
+		D4C2EDB21A98D5DB00054FAA /* AlternationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */; };
 		D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* BindTests.swift */; };
 		D4D955861A3B4447004725E9 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
 		D4FC47B71A37E47C00D23A6F /* Madness.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FC47B61A37E47C00D23A6F /* Madness.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -63,6 +65,7 @@
 		D4C2EDA61A98D38E00054FAA /* Concatenation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Concatenation.swift; sourceTree = "<group>"; };
 		D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcatenationTests.swift; sourceTree = "<group>"; };
 		D4C2EDAD1A98D52B00054FAA /* Alternation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alternation.swift; sourceTree = "<group>"; };
+		D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternationTests.swift; sourceTree = "<group>"; };
 		D4C8B02D1A69B1A900943303 /* BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindTests.swift; sourceTree = "<group>"; };
 		D4D955851A3B4447004725E9 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
 		D4FC47B11A37E47C00D23A6F /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				D4FC47C31A37E47C00D23A6F /* ParserTests.swift */,
+				D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */,
 				D4C8B02D1A69B1A900943303 /* BindTests.swift */,
 				D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */,
 				D4D955851A3B4447004725E9 /* Assertions.swift */,
@@ -375,6 +379,7 @@
 				D4BC5E141A98C97C008C6851 /* Assertions.swift in Sources */,
 				D4BC5E131A98C97C008C6851 /* BindTests.swift in Sources */,
 				D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */,
+				D4C2EDB21A98D5DB00054FAA /* AlternationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +402,7 @@
 				D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */,
 				D4D955861A3B4447004725E9 /* Assertions.swift in Sources */,
 				D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */,
+				D4C2EDB11A98D5DB00054FAA /* AlternationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
