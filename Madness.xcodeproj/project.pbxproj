@@ -43,9 +43,9 @@
 		D4FC47C31A37E47C00D23A6F /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		D4FC47CD1A37E48800D23A6F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		D4FC47CF1A37E51500D23A6F /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
-		D4FC47D11A37EF9800D23A6F /* Either.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Either.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Madness-girnpmefcpmxqxavocdgenpxnunw/Build/Products/Debug/Either.framework"; sourceTree = "<group>"; };
-		D4FC47D31A37EFCC00D23A6F /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Madness-girnpmefcpmxqxavocdgenpxnunw/Build/Products/Debug/Box.framework"; sourceTree = "<group>"; };
-		D4FC47D41A37EFCC00D23A6F /* Prelude.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Prelude.framework; path = "../../../../Library/Developer/Xcode/DerivedData/Madness-girnpmefcpmxqxavocdgenpxnunw/Build/Products/Debug/Prelude.framework"; sourceTree = "<group>"; };
+		D4FC47D11A37EF9800D23A6F /* Either.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Either.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FC47D31A37EFCC00D23A6F /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Box.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FC47D41A37EFCC00D23A6F /* Prelude.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Prelude.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
