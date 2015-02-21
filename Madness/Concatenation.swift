@@ -21,6 +21,18 @@ public func ++ (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser
 }
 
 
+// MARK: - Operators
+
+/// Concatenation operator.
+infix operator ++ {
+	/// Associates to the right, linked-list style.
+	associativity right
+
+	/// Higher precedence than |.
+	precedence 160
+}
+
+
 // MARK: - Private
 
 /// Defines concatenation for use in the `++` operator definitions above.

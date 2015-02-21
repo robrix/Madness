@@ -81,16 +81,6 @@ public func >>- <T, U> (parser: Parser<T>.Function, f: T -> Parser<U>.Function) 
 
 // MARK: - Operators
 
-/// Concatenation operator.
-infix operator ++ {
-	/// Associates to the right, linked-list style.
-	associativity right
-
-	/// Higher precedence than |.
-	precedence 160
-}
-
-
 /// Map operator.
 infix operator --> {
 	/// Associates to the left.
