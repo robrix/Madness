@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4BC5DF61A98C8B4008C6851"
-               BuildableName = "Madness-iOS.framework"
+               BuildableName = "Madness.framework"
                BlueprintName = "Madness-iOS"
                ReferencedContainer = "container:Madness.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4BC5DF61A98C8B4008C6851"
-            BuildableName = "Madness-iOS.framework"
+            BuildableName = "Madness.framework"
             BlueprintName = "Madness-iOS"
             ReferencedContainer = "container:Madness.xcodeproj">
          </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4BC5DF61A98C8B4008C6851"
-            BuildableName = "Madness-iOS.framework"
+            BuildableName = "Madness.framework"
             BlueprintName = "Madness-iOS"
             ReferencedContainer = "container:Madness.xcodeproj">
          </BuildableReference>
@@ -94,7 +94,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4BC5DF61A98C8B4008C6851"
-            BuildableName = "Madness-iOS.framework"
+            BuildableName = "Madness.framework"
             BlueprintName = "Madness-iOS"
             ReferencedContainer = "container:Madness.xcodeproj">
          </BuildableReference>
