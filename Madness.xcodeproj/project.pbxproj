@@ -80,7 +80,7 @@
 		D4FC47B11A37E47C00D23A6F /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47B51A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4FC47B61A37E47C00D23A6F /* Madness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Madness.h; sourceTree = "<group>"; };
-		D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MadnessTests.xctest; path = "Madness-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Madness-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47C21A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4FC47C31A37E47C00D23A6F /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		D4FC47CD1A37E48800D23A6F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				D4FC47B11A37E47C00D23A6F /* Madness.framework */,
-				D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */,
+				D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */,
 				D4BC5DF71A98C8B4008C6851 /* Madness.framework */,
 				D4BC5E011A98C8B4008C6851 /* Madness-iOSTests.xctest */,
 			);
@@ -294,7 +294,7 @@
 			);
 			name = "Madness-MacTests";
 			productName = MadnessTests;
-			productReference = D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */;
+			productReference = D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
