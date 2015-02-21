@@ -30,7 +30,8 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testLiteralParsersProduceTheirArgument() {
-		assertEqual((%"foo")("foot")?.0, "foo")
+		let parsed = (%"foo")("foot")
+		assertEqual(parsed?.0, "foo")
 	}
 
 
