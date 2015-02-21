@@ -43,34 +43,6 @@ public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) ->
 
 // MARK: - Nonterminals
 
-// MARK: Alternation
-
-/// Parses either `left` or `right`.
-public func | <T, U> (left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
-	return alternate(left, right)
-}
-
-/// Parses either `left` or `right` and coalesces their trees.
-public func | <T> (left: Parser<T>.Function, right: Parser<T>.Function) -> Parser<T>.Function {
-	return alternate(left, right) --> { $0.either(id, id) }
-}
-
-/// Parses either `left` or `right`, dropping `right`’s parse tree.
-public func | <T> (left: Parser<T>.Function, right: Parser<()>.Function) -> Parser<T?>.Function {
-	return alternate(left, right) --> { $0.either(id, const(nil)) }
-}
-
-/// Parses either `left` or `right`, dropping `left`’s parse tree.
-public func | <T> (left: Parser<()>.Function, right: Parser<T>.Function) -> Parser<T?>.Function {
-	return alternate(left, right) --> { $0.either(const(nil), id) }
-}
-
-/// Parses either `left` or `right`, dropping both parse trees.
-public func | (left: Parser<()>.Function, right: Parser<()>.Function) -> Parser<()>.Function {
-	return alternate(left, right) --> { $0.either(id, id) }
-}
-
-
 // MARK: Repetition
 
 /// Parses `parser` 0 or more times.
@@ -161,14 +133,6 @@ public func >>- <T, U> (parser: Parser<T>.Function, f: T -> Parser<U>.Function) 
 
 
 // MARK: Private
-
-/// Defines alternation for use in the `|` operator definitions above.
-private func alternate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function) -> Parser<Either<T, U>>.Function {
-	return {
-		left($0).map { (.left($0), $1) } ?? right($0).map { (.right($0), $1) }
-	}
-}
-
 
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
 private func repeat<T>(parser: Parser<T>.Function, _ interval: ClosedInterval<Int> = 0...Int.max) -> Parser<[T]>.Function {
