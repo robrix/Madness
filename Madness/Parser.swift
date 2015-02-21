@@ -39,7 +39,7 @@ public prefix func % (string: String) -> Parser<String, String>.Function {
 /// Returns a parser which parses any character in `interval`.
 public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String, String>.Function {
 	return { string in
-		first(string).map { interval.contains($0) ? ("" + [$0], string.fromOffset(1)) : nil } ?? nil
+		first(string).map { interval.contains($0) ? ("" + [$0], divide(string, 1).1) : nil } ?? nil
 	}
 }
 
