@@ -26,8 +26,8 @@ public func any(input: String) -> (String, String)? {
 }
 
 
-/// Returns a parser which parses a `literal` slice of elements from the input.
-public prefix func % <S: Sliceable where S.SubSlice == S, S.Generator.Element: Equatable> (literal: S) -> Parser<S, S>.Function {
+/// Returns a parser which parses a `literal` sequence of elements from the input.
+public prefix func % <S: Sliceable, C: CollectionType where S.SubSlice == S, C.Generator.Element == S.Generator.Element, C.Index.Distance == S.Index.Distance, C.Generator.Element: Equatable> (literal: C) -> Parser<S, C>.Function {
 	return {
 		startsWith($0, literal) ?
 			(literal, divide($0, count(literal)).1)
