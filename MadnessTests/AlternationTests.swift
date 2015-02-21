@@ -20,6 +20,7 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Imports
 
+import Assertions
 import Either
 import Madness
 import Prelude
