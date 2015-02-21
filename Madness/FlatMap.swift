@@ -3,7 +3,7 @@
 /// Returns a parser which requires `parser` to parse, passes its parsed trees to a function `f`, and then requires the result of `f` to parse.
 ///
 /// This can be used to conveniently make a parser which depends on earlier parsed input, for example to parse exactly the same number of characters, or to parse structurally significant indentation.
-public func >>- <T, U> (parser: Parser<T>.Function, f: T -> Parser<U>.Function) -> Parser<U>.Function {
+public func >>- <S: Sliceable, T, U> (parser: Parser<S, T>.Function, f: T -> Parser<S, U>.Function) -> Parser<S, U>.Function {
 	return {
 		parser($0).map { f($0)($1) } ?? nil
 	}

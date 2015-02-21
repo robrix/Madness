@@ -27,7 +27,7 @@ enum Term: Printable {
 
 let symbol = %("a"..."z")
 
-let term: Parser<Term>.Function = fix { term in
+let term: Parser<String, Term>.Function = fix { term in
 	let variable = symbol --> { Term.Variable($0) }
 	let abstraction = ignore("λ") ++ symbol ++ ignore(".") ++ term --> { Term.Abstraction($0, Box($1)) }
 	let application = ignore("(") ++ term ++ ignore(" ") ++ term ++ ignore(")") --> { Term.Application(Box($0), Box($1)) }
