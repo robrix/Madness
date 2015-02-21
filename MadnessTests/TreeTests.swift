@@ -20,6 +20,9 @@ final class TreeTests: XCTestCase {
 			let abcdef: String = at0(tree) + bcdef
 			return abcdef
 		}
+
+		let another = %"a" ++ %"b" ++ %"c" ++ %"d" --> { at0($0) + at1($0) + at2($0) + at3($0) }
+
 		XCTAssertEqual(parse(parser, "abcdef") ?? "", "abcdef")
 	}
 }
