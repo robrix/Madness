@@ -5,6 +5,9 @@
       location = "container:Documentation"
       name = "Documentation">
       <FileRef
+         location = "group:Collections.playground">
+      </FileRef>
+      <FileRef
          location = "group:Colours.playground">
       </FileRef>
       <FileRef
