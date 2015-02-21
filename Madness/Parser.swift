@@ -26,11 +26,11 @@ public func any(input: String) -> (String, String)? {
 }
 
 
-/// Returns a parser which parses `string`.
-public prefix func % (string: String) -> Parser<String, String>.Function {
+/// Returns a parser which parses a `literal` slice of elements from the input.
+public prefix func % <S: Sliceable where S.SubSlice == S, S.Generator.Element: Equatable> (literal: S) -> Parser<S, S>.Function {
 	return {
-		startsWith($0, string) ?
-			(string, $0.fromOffset(count(string)))
+		startsWith($0, literal) ?
+			(literal, divide($0, count(literal)).1)
 		:	nil
 	}
 }
