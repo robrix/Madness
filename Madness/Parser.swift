@@ -218,6 +218,7 @@ private func repeat<T>(parser: Parser<T>.Function, _ interval: ClosedInterval<In
 		} ?? (interval.start <= 0 ? ([], input) : nil)
 	}
 }
+
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
 private func repeat<T>(parser: Parser<T>.Function, _ interval: HalfOpenInterval<Int> = 0..<Int.max) -> Parser<[T]>.Function {
 	if interval.isEmpty { return { _ -> ([T], String)? in nil } }
