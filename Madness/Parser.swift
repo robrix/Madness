@@ -12,9 +12,9 @@ public struct Parser<S: Sliceable, Tree where S.SubSlice == S> {
 }
 
 
-/// Parses `string` with `parser`, returning the parse trees or `nil` if nothing could be parsed or if parsing did not consume the entire input.
-public func parse<Tree>(parser: Parser<String, Tree>.Function, string: String) -> Tree? {
-	return parser(string).map { $1 == "" ? $0 : nil } ?? nil
+/// Parses `input` with `parser`, returning the parse trees or `nil` if nothing could be parsed, or if parsing did not consume the entire input.
+public func parse<S: Sliceable, Tree>(parser: Parser<S, Tree>.Function, input: S) -> Tree? {
+	return parser(input).map { count($1) == 0 ? $0 : nil } ?? nil
 }
 
 
