@@ -5,7 +5,10 @@
       location = "container:Documentation"
       name = "Documentation">
       <FileRef
-         location = "group:Madness.playground">
+         location = "group:Colours.playground">
+      </FileRef>
+      <FileRef
+         location = "group:Lambda Calculus.playground">
       </FileRef>
       <FileRef
          location = "group:Subset of Common Markdown.playground">
