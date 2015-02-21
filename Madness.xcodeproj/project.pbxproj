@@ -146,9 +146,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D4FC47B01A37E47C00D23A6F /* Madness */ = {
+		D4FC47B01A37E47C00D23A6F /* Madness-Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D4FC47C71A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "Madness" */;
+			buildConfigurationList = D4FC47C71A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "Madness-Mac" */;
 			buildPhases = (
 				D4FC47AC1A37E47C00D23A6F /* Sources */,
 				D4FC47AD1A37E47C00D23A6F /* Frameworks */,
@@ -159,14 +159,14 @@
 			);
 			dependencies = (
 			);
-			name = Madness;
+			name = "Madness-Mac";
 			productName = Madness;
 			productReference = D4FC47B11A37E47C00D23A6F /* Madness.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		D4FC47BB1A37E47C00D23A6F /* MadnessTests */ = {
+		D4FC47BB1A37E47C00D23A6F /* Madness-MacTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D4FC47CA1A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "MadnessTests" */;
+			buildConfigurationList = D4FC47CA1A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "Madness-MacTests" */;
 			buildPhases = (
 				D4FC47B81A37E47C00D23A6F /* Sources */,
 				D4FC47B91A37E47C00D23A6F /* Frameworks */,
@@ -177,7 +177,7 @@
 			dependencies = (
 				D4FC47BF1A37E47C00D23A6F /* PBXTargetDependency */,
 			);
-			name = MadnessTests;
+			name = "Madness-MacTests";
 			productName = MadnessTests;
 			productReference = D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -211,8 +211,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D4FC47B01A37E47C00D23A6F /* Madness */,
-				D4FC47BB1A37E47C00D23A6F /* MadnessTests */,
+				D4FC47B01A37E47C00D23A6F /* Madness-Mac */,
+				D4FC47BB1A37E47C00D23A6F /* Madness-MacTests */,
 			);
 		};
 /* End PBXProject section */
@@ -259,7 +259,7 @@
 /* Begin PBXTargetDependency section */
 		D4FC47BF1A37E47C00D23A6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D4FC47B01A37E47C00D23A6F /* Madness */;
+			target = D4FC47B01A37E47C00D23A6F /* Madness-Mac */;
 			targetProxy = D4FC47BE1A37E47C00D23A6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -427,7 +427,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D4FC47C71A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "Madness" */ = {
+		D4FC47C71A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "Madness-Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4FC47C81A37E47C00D23A6F /* Debug */,
@@ -436,7 +436,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D4FC47CA1A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "MadnessTests" */ = {
+		D4FC47CA1A37E47C00D23A6F /* Build configuration list for PBXNativeTarget "Madness-MacTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D4FC47CB1A37E47C00D23A6F /* Debug */,

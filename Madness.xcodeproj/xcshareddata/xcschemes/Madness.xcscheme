@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4FC47B01A37E47C00D23A6F"
                BuildableName = "Madness.framework"
-               BlueprintName = "Madness"
+               BlueprintName = "Madness-Mac"
                ReferencedContainer = "container:Madness.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,8 +29,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4FC47BB1A37E47C00D23A6F"
-               BuildableName = "MadnessTests.xctest"
-               BlueprintName = "MadnessTests"
+               BuildableName = "Madness-MacTests.xctest"
+               BlueprintName = "Madness-MacTests"
                ReferencedContainer = "container:Madness.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,8 +47,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D4FC47BB1A37E47C00D23A6F"
-               BuildableName = "MadnessTests.xctest"
-               BlueprintName = "MadnessTests"
+               BuildableName = "Madness-MacTests.xctest"
+               BlueprintName = "Madness-MacTests"
                ReferencedContainer = "container:Madness.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -58,7 +58,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4FC47B01A37E47C00D23A6F"
             BuildableName = "Madness.framework"
-            BlueprintName = "Madness"
+            BlueprintName = "Madness-Mac"
             ReferencedContainer = "container:Madness.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -77,7 +77,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4FC47B01A37E47C00D23A6F"
             BuildableName = "Madness.framework"
-            BlueprintName = "Madness"
+            BlueprintName = "Madness-Mac"
             ReferencedContainer = "container:Madness.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -95,7 +95,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D4FC47B01A37E47C00D23A6F"
             BuildableName = "Madness.framework"
-            BlueprintName = "Madness"
+            BlueprintName = "Madness-Mac"
             ReferencedContainer = "container:Madness.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
