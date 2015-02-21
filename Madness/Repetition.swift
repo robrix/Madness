@@ -74,6 +74,15 @@ private func repeat<T>(parser: Parser<T>.Function, _ interval: HalfOpenInterval<
 }
 
 
+// MARK: - Operators
+
+/// Zero-or-more repetition operator.
+postfix operator * {}
+
+/// One-or-more repetition operator.
+postfix operator + {}
+
+
 // MARK: - Imports
 
 import Prelude
