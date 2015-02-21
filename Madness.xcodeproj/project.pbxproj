@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* BindTests.swift */; };
 		D4B693CE1A40EB5200329DCD /* Tree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693CD1A40EB5200329DCD /* Tree.swift */; };
 		D4B693D21A41033C00329DCD /* TreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B693D11A41033C00329DCD /* TreeTests.swift */; };
 		D4D955861A3B4447004725E9 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D4C8B02D1A69B1A900943303 /* BindTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BindTests.swift; sourceTree = "<group>"; };
 		D4B693CD1A40EB5200329DCD /* Tree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tree.swift; sourceTree = "<group>"; };
 		D4B693D11A41033C00329DCD /* TreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TreeTests.swift; sourceTree = "<group>"; };
 		D4D955851A3B4447004725E9 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				D4FC47C31A37E47C00D23A6F /* ParserTests.swift */,
+				D4C8B02D1A69B1A900943303 /* BindTests.swift */,
 				D4B693D11A41033C00329DCD /* TreeTests.swift */,
 				D4D955851A3B4447004725E9 /* Assertions.swift */,
 				D4FC47C11A37E47C00D23A6F /* Supporting Files */,
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C8B02E1A69B1A900943303 /* BindTests.swift in Sources */,
 				D4D955861A3B4447004725E9 /* Assertions.swift in Sources */,
 				D4B693D21A41033C00329DCD /* TreeTests.swift in Sources */,
 				D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */,
