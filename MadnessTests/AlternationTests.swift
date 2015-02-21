@@ -9,7 +9,7 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAlternationProducesTheParsedAlternative() {
-		assertEqual(alternation("xy")?.0, Either.left("x"))
+		assert(alternation("xy")?.0, ==, Either.left("x"))
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
@@ -20,6 +20,7 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Imports
 
+import Assertions
 import Either
 import Madness
 import Prelude

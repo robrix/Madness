@@ -15,6 +15,9 @@
       location = "group:Madness.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:External/Assertions/Assertions.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:External/Either/External/Box/Box.xcodeproj">
    </FileRef>
    <FileRef

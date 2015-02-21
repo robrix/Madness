@@ -194,5 +194,6 @@ final class RepetitionTests: XCTestCase {
 
 // MARK: - Imports
 
+import Assertions
 import Madness
 import XCTest

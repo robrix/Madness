@@ -1,5 +1,6 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
+import Assertions
 import Either
 import Madness
 import Prelude
@@ -78,15 +79,15 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
-		assertEqual((ignored | %"y")("y")?.0, "y")
+		assertEqual((ignored | %"y")("y")?.0 ?? "", "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
-		assertEqual((%"y" | ignored)("y")?.0, "y")
+		assertEqual((%"y" | ignored)("y")?.0 ?? "", "y")
 	}
 
 	func testIgnoringDistributesOverAlternation() {
-		assertEqual((ignored | ignored)("x")?.0, ())
+		assertNotNil((ignored | ignored)("x")?.0)
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {

@@ -12,7 +12,6 @@
 		D4BC5E111A98C978008C6851 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47CF1A37E51500D23A6F /* String.swift */; };
 		D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47C31A37E47C00D23A6F /* ParserTests.swift */; };
 		D4BC5E131A98C97C008C6851 /* FlatMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */; };
-		D4BC5E141A98C97C008C6851 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
 		D4BC5E151A98C9A6008C6851 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D31A37EFCC00D23A6F /* Box.framework */; };
 		D4BC5E161A98C9A6008C6851 /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
 		D4BC5E171A98C9A6008C6851 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
@@ -34,7 +33,8 @@
 		D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */; };
 		D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */; };
 		D4C8B02E1A69B1A900943303 /* FlatMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */; };
-		D4D955861A3B4447004725E9 /* Assertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D955851A3B4447004725E9 /* Assertions.swift */; };
+		D4D5B0ED1A98E03400BE42A2 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D5B0EC1A98E03400BE42A2 /* Assertions.framework */; };
+		D4D5B0EE1A98E2B600BE42A2 /* Assertions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D5B0EC1A98E03400BE42A2 /* Assertions.framework */; };
 		D4FC47B71A37E47C00D23A6F /* Madness.h in Headers */ = {isa = PBXBuildFile; fileRef = D4FC47B61A37E47C00D23A6F /* Madness.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D4FC47BD1A37E47C00D23A6F /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47B11A37E47C00D23A6F /* Madness.framework */; };
 		D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47C31A37E47C00D23A6F /* ParserTests.swift */; };
@@ -76,11 +76,11 @@
 		D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepetitionTests.swift; sourceTree = "<group>"; };
 		D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMap.swift; sourceTree = "<group>"; };
 		D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatMapTests.swift; sourceTree = "<group>"; };
-		D4D955851A3B4447004725E9 /* Assertions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assertions.swift; sourceTree = "<group>"; };
+		D4D5B0EC1A98E03400BE42A2 /* Assertions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Assertions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47B11A37E47C00D23A6F /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47B51A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4FC47B61A37E47C00D23A6F /* Madness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Madness.h; sourceTree = "<group>"; };
-		D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MadnessTests.xctest; path = "Madness-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Madness-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC47C21A37E47C00D23A6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4FC47C31A37E47C00D23A6F /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		D4FC47CD1A37E48800D23A6F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
@@ -105,6 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4D5B0EE1A98E2B600BE42A2 /* Assertions.framework in Frameworks */,
 				D4BC5E151A98C9A6008C6851 /* Box.framework in Frameworks */,
 				D4BC5E161A98C9A6008C6851 /* Either.framework in Frameworks */,
 				D4BC5E171A98C9A6008C6851 /* Prelude.framework in Frameworks */,
@@ -126,6 +127,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4D5B0ED1A98E03400BE42A2 /* Assertions.framework in Frameworks */,
 				D4FC47D81A37F2C400D23A6F /* Box.framework in Frameworks */,
 				D4FC47D71A37F2BF00D23A6F /* Either.framework in Frameworks */,
 				D4FC47BD1A37E47C00D23A6F /* Madness.framework in Frameworks */,
@@ -149,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				D4FC47B11A37E47C00D23A6F /* Madness.framework */,
-				D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */,
+				D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */,
 				D4BC5DF71A98C8B4008C6851 /* Madness.framework */,
 				D4BC5E011A98C8B4008C6851 /* Madness-iOSTests.xctest */,
 			);
@@ -190,7 +192,6 @@
 				D4C8B02D1A69B1A900943303 /* FlatMapTests.swift */,
 				D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */,
 				D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */,
-				D4D955851A3B4447004725E9 /* Assertions.swift */,
 				D4FC47C11A37E47C00D23A6F /* Supporting Files */,
 			);
 			path = MadnessTests;
@@ -199,6 +200,7 @@
 		D4FC47C11A37E47C00D23A6F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D4D5B0EC1A98E03400BE42A2 /* Assertions.framework */,
 				D4FC47C21A37E47C00D23A6F /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -294,7 +296,7 @@
 			);
 			name = "Madness-MacTests";
 			productName = MadnessTests;
-			productReference = D4FC47BC1A37E47C00D23A6F /* MadnessTests.xctest */;
+			productReference = D4FC47BC1A37E47C00D23A6F /* Madness-MacTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -390,7 +392,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C2EDAB1A98D4D600054FAA /* ConcatenationTests.swift in Sources */,
-				D4BC5E141A98C97C008C6851 /* Assertions.swift in Sources */,
 				D4C2EDBA1A98D82200054FAA /* RepetitionTests.swift in Sources */,
 				D4BC5E131A98C97C008C6851 /* FlatMapTests.swift in Sources */,
 				D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */,
@@ -418,7 +419,6 @@
 				D4C2EDAA1A98D4D400054FAA /* ConcatenationTests.swift in Sources */,
 				D4C8B02E1A69B1A900943303 /* FlatMapTests.swift in Sources */,
 				D4C2EDB91A98D82200054FAA /* RepetitionTests.swift in Sources */,
-				D4D955861A3B4447004725E9 /* Assertions.swift in Sources */,
 				D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */,
 				D4C2EDB11A98D5DB00054FAA /* AlternationTests.swift in Sources */,
 			);

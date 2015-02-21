@@ -1,3 +1,6 @@
 [submodule "External/Either"]
 	path = External/Either
 	url = https://github.com/robrix/Either.git
+[submodule "External/Assertions"]
+	path = External/Assertions
+	url = https://github.com/antitypical/Assertions.git
