@@ -36,7 +36,7 @@ infix operator ++ {
 // MARK: - Private
 
 /// Defines concatenation for use in the `++` operator definitions above.
-private func concatenate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function)(input: String) -> ((T, U), String)? {
+private func concatenate<T, U>(left: Parser<T>.Function, right: Parser<U>.Function)(input: String) -> Parser<(T, U)>.Result {
 	return left(input).map { x, rest in
 		right(rest).map { y, rest in
 			((x, y), rest)

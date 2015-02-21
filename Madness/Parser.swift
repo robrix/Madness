@@ -6,6 +6,8 @@
 public struct Parser<Tree> {
 	/// The type of parser combinators.
 	public typealias Function = String -> Result
+
+	/// The type produced by parser combinators.
 	public typealias Result = (Tree, String)?
 }
 
