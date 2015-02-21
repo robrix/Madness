@@ -27,6 +27,20 @@ public func any(input: String) -> (String, String)? {
 
 
 /// Returns a parser which parses a `literal` sequence of elements from the input.
+///
+/// This overload enables e.g. `%"xyz"` to produce `String -> (String, String)`.
+public prefix func % <S: Sliceable where S.SubSlice == S, S.Generator.Element: Equatable> (literal: S) -> Parser<S, S>.Function {
+	return {
+		startsWith($0, literal) ?
+			(literal, divide($0, count(literal)).1)
+		:	nil
+	}
+}
+
+
+/// Returns a parser which parses a `literal` sequence of elements from the input.
+///
+/// This overload enables e.g. `parse(%[c1, c2, c3], "123")` where `c1`, `c2`, and `c3` are each of type `Character`.
 public prefix func % <S: Sliceable, C: CollectionType where S.SubSlice == S, C.Generator.Element == S.Generator.Element, C.Index.Distance == S.Index.Distance, C.Generator.Element: Equatable> (literal: C) -> Parser<S, C>.Function {
 	return {
 		startsWith($0, literal) ?
