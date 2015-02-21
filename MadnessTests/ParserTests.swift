@@ -79,11 +79,11 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
-		assertEqual((ignored | %"y")("y")?.0, "y")
+		assertEqual((ignored | %"y")("y")?.0 ?? "", "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
-		assertEqual((%"y" | ignored)("y")?.0, "y")
+		assertEqual((%"y" | ignored)("y")?.0 ?? "", "y")
 	}
 
 	func testIgnoringDistributesOverAlternation() {
