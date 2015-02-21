@@ -36,6 +36,16 @@ public prefix func % <S: Sliceable where S.SubSlice == S, S.Generator.Element: E
 }
 
 
+/// Returns a parser which parses a `literal` element from the input.
+public prefix func % <S: Sliceable where S.SubSlice == S, S.Generator.Element: Equatable> (literal: S.Generator.Element) -> Parser<S, S.Generator.Element>.Function {
+	return {
+		(first($0) == literal) ?
+			(literal, divide($0, 1).1)
+		:	nil
+	}
+}
+
+
 /// Returns a parser which parses any character in `interval`.
 public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String, String>.Function {
 	return { string in
