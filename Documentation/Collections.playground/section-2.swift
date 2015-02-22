@@ -1,13 +1,13 @@
 let input = [1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144]
 
-typealias Fibonacci = Parser<Slice<Int>, [Int]>.Function
+typealias Fibonacci = Parser<[Int], [Int]>.Function
 
 let fibonacci: (Int, Int) -> Fibonacci = fix { fibonacci in
-	{ x, y -> Fibonacci in
-		%(x + y) >>- { xy -> Fibonacci in
+	{ (x: Int, y: Int) -> Fibonacci in
+		%(x + y) >>- { (xy: Int) -> Fibonacci in
 			fibonacci(y, xy) --> { [ xy ] + $0 }
-		} | { ([], $0) }
+		} | { ([], $1) }
 	}
 }
 
-fibonacci(0, 1)(Slice(input))
+parse(fibonacci(0, 1), input)

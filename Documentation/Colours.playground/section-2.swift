@@ -1,6 +1,9 @@
 let toComponent: String -> CGFloat = { CGFloat(strtol($0, nil, 16)) / 255 }
 
-let hex = %("0"..."9") | %("a"..."f") | %("A"..."F")
+let digit = %("0"..."9")
+let lower = %("a"..."f")
+let upper = %("A"..."F")
+let hex = digit | lower | upper
 let hex2 = (hex ++ hex --> { $0 + $1 })
 let component1: Parser<String, CGFloat>.Function = hex --> { toComponent($0 + $0) }
 let component2: Parser<String, CGFloat>.Function = hex2 --> toComponent

@@ -1,104 +1,105 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class RepetitionTests: XCTestCase {
-	let zeroOrMore = (%"x")*
+	let zeroOrMore: Parser<String, [String]>.Function = (%"x")*
 
 	func testZeroOrMoreRepetitionAcceptsTheEmptyString() {
-		assertNotNil(zeroOrMore(""))
+		assertMatched(zeroOrMore, "")
 	}
 
 	func testZeroOrMoreRepetitionAcceptsUnmatchedStrings() {
-		assertNotNil(zeroOrMore("y"))
+		assertMatched(zeroOrMore, "y")
 	}
 
 	func testZeroOrMoreRepetitionDoesNotAdvanceWithUnmatchedStrings() {
-		assertEqual(zeroOrMore("y")?.1, "y")
+		assertAdvancedBy(zeroOrMore, "y", 0)
 	}
 
 	func testZeroOrMoreRepetitionParsesUnmatchedStringsAsEmptyArrays() {
-		assertEqual(zeroOrMore("y")?.0, [])
+		assertTree(zeroOrMore, "y", ==, [])
 	}
 
 	func testZeroOrMoreRepetitionParsesAMatchedString() {
-		assertEqual(zeroOrMore("x")?.0, ["x"])
+		assertTree(zeroOrMore, "x", ==, ["x"])
 	}
 
 	func testZeroOrMoreRepetitionParsesMatchedStrings() {
-		assertEqual(zeroOrMore("xx")?.0, ["x", "x"])
+		assertTree(zeroOrMore, "xx", ==, ["x", "x"])
 	}
 
 
 	let oneOrMore = (%"x")+
 
 	func testOneOrMoreRepetitionRejectsTheEmptyString() {
-		assertNil(oneOrMore(""))
+		assertUnmatched(oneOrMore, "")
 	}
 
 	func testOneOrMoreRepetitionParsesASingleMatchedString() {
-		assertEqual(oneOrMore("x")?.0, ["x"])
+		assertTree(oneOrMore, "x", ==, ["x"])
 	}
 
 	func testOneOrMoreRepetitonParsesMultipleMatchedStrings() {
-		assertEqual(oneOrMore("xxy")?.0, ["x", "x"])
+		assertTree(oneOrMore, "xxy", ==, ["x", "x"])
 	}
 
 
 	let exactlyN = %"x" * 3
 
 	func testExactlyNRepetitionParsesNTrees() {
-		assertEqual(exactlyN("xxx")?.0, ["x", "x", "x"])
+		assertTree(exactlyN, "xxx", ==, ["x", "x", "x"])
 	}
 
 	func testExactlyNRepetitionParsesRejectsFewerMatches() {
-		assertNil(exactlyN("xx"))
+		assertUnmatched(exactlyN, "xx")
 	}
 
 	func testExactlyNRepetitionParsesStopsAtN() {
-		assertEqual(exactlyN("xxxx")?.1, "x")
+		assertAdvancedBy(exactlyN, "xxxx", 3)
 	}
 
 
 	let zeroToN = %"x" * (0..<2)
 
 	func testZeroToNRepetitionParsesZeroTrees() {
-		assertEqual(zeroToN("y")?.0, [])
+		assertTree(zeroToN, "y", ==, [])
 	}
 
 	func testZeroToNRepetitionParsesUpToButNotIncludingNTrees() {
-		assertEqual(zeroToN("xxx")?.0, ["x"])
-		assertEqual(zeroToN("xxx")?.1, "xx")
+		assertTree(zeroToN, "xxx", ==, ["x"])
+		assertAdvancedBy(zeroToN, "xxx", 1)
 	}
 
 
 	let atLeastN = %"x" * (2..<Int.max)
 
 	func testAtLeastNRepetitionRejectsZeroTrees() {
-		assertNil(atLeastN("y"))
+		assertUnmatched(atLeastN, "y")
 	}
 
 	func testAtLeastNRepetitionParsesNTrees() {
-		assertEqual(atLeastN("xx")?.0, ["x", "x"])
+		assertTree(atLeastN, "xx", ==, ["x", "x"])
 	}
 
 	func testAtLeastNRepetitionParsesMoreThanNTrees() {
-		assertEqual(atLeastN("xxxx")?.0, ["x", "x", "x", "x"])
+		assertTree(atLeastN, "xxxx", ==, ["x", "x", "x", "x"])
 	}
 
 
 	let mToN = %"x" * (2..<3)
 
 	func testMToNRepetitionRejectsLessThanM() {
-		assertNil(mToN("x"))
+		assertUnmatched(mToN, "x")
 	}
 
 	func testMToNRepetitionMatchesUpToButNotIncludingN() {
-		assertEqual(mToN("xxxx")?.1, "xx")
+		assertAdvancedBy(mToN, "xxxx", 2)
 	}
+
 
 	let nToN = %"x" * (2..<2)
 
 	func testOpenNToNRepetitionRejectsN() {
-		assertNil(nToN("xx"))
+		assertUnmatched(nToN, "xx")
 	}
 
 
@@ -106,88 +107,89 @@ final class RepetitionTests: XCTestCase {
 	let zeroToNClosed = %"x" * (0...2)
 
 	func testZeroToNClosedRepetitionParsesZeroTrees() {
-		assertEqual(zeroToNClosed("y")?.0, [])
+		assertTree(zeroToNClosed, "y", ==, [])
 	}
 
 	func testZeroToNClosedRepetitionParsesUpToNTrees() {
-		assertEqual(zeroToNClosed("xxx")?.0, ["x", "x"])
-		assertEqual(zeroToNClosed("xxx")?.1, "x")
+		assertTree(zeroToNClosed, "xxx", ==, ["x", "x"])
+		assertAdvancedBy(zeroToNClosed, "xxx", 2)
 	}
 
 
 	let atLeastNClosed = %"x" * (2...Int.max)
 
 	func testAtLeastNClosedRepetitionRejectsZeroTrees() {
-		assertNil(atLeastNClosed("y"))
+		assertUnmatched(atLeastNClosed, "y")
 	}
 
 	func testAtLeastNClosedRepetitionParsesNTrees() {
-		assertEqual(atLeastNClosed("xx")?.0, ["x", "x"])
+		assertTree(atLeastNClosed, "xx", ==, ["x", "x"])
 	}
 
 	func testAtLeastNClosedRepetitionParsesMoreThanNTrees() {
-		assertEqual(atLeastNClosed("xxxx")?.0, ["x", "x", "x", "x"])
+		assertTree(atLeastNClosed, "xxxx", ==, ["x", "x", "x", "x"])
 	}
 
 
 	let mToNClosed = %"x" * (2...3)
 
 	func testMToNClosedRepetitionRejectsLessThanM() {
-		assertNil(mToNClosed("x"))
+		assertUnmatched(mToNClosed, "x")
 	}
 
 	func testMToNClosedRepetitionMatchesUpToN() {
-		assertEqual(mToNClosed("xxxx")?.1, "x")
+		assertAdvancedBy(mToNClosed, "xxxx", 3)
 	}
 
 
 	let closedNToN = %"x" * (2...2)
 
 	func testClosedNToNRepetitionMatchesUpToN() {
-		assertEqual(closedNToN("xxx")?.1, "x")
+		assertAdvancedBy(closedNToN, "xxx", 2)
 	}
 
 
 	// MARK: Repetition shorthand
+
 	let zeroOrMoreSimple = "x"*
 
 	func testZeroOrMoreSimpleRepetitionAcceptsTheEmptyString() {
-		assertNotNil(zeroOrMoreSimple(""))
+		assertMatched(zeroOrMoreSimple, "")
 	}
 
 	func testZeroOrMoreSimpleRepetitionAcceptsUnmatchedStrings() {
-		assertNotNil(zeroOrMoreSimple("y"))
+		assertMatched(zeroOrMoreSimple, "y")
 	}
 
 	func testZeroOrMoreSimpleRepetitionDoesNotAdvanceWithUnmatchedStrings() {
-		assertEqual(zeroOrMoreSimple("y")?.1, "y")
+		assertAdvancedBy(zeroOrMoreSimple, "y", 0)
 	}
 
 	func testZeroOrMoreSimpleRepetitionParsesUnmatchedStringsAsEmptyArrays() {
-		assertEqual(zeroOrMoreSimple("y")?.0, [])
+		assertTree(zeroOrMoreSimple, "y", ==, [])
 	}
 
 	func testZeroOrMoreSimpleRepetitionParsesAMatchedString() {
-		assertEqual(zeroOrMoreSimple("x")?.0, ["x"])
+		assertTree(zeroOrMoreSimple, "x", ==, ["x"])
 	}
 
 	func testZeroOrMoreSimpleRepetitionParsesMatchedStrings() {
-		assertEqual(zeroOrMoreSimple("xx")?.0, ["x", "x"])
+		assertTree(zeroOrMoreSimple, "xx", ==, ["x", "x"])
 	}
 
 
 	let oneOrMoreSimple = "x"+
 
 	func testOneOrMoreSimpleRepetitionRejectsTheEmptyString() {
-		assertNil(oneOrMoreSimple(""))
+		assertUnmatched(oneOrMoreSimple, "")
 	}
 
 	func testOneOrMoreSimpleRepetitionParsesASingleMatchedString() {
-		assertEqual(oneOrMoreSimple("x")?.0, ["x"])
+		assertTree(oneOrMoreSimple, "x", ==, ["x"])
 	}
 
 	func testOneOrMoreSimpleRepetitonParsesMultipleMatchedStrings() {
-		assertEqual(oneOrMoreSimple("xxy")?.0, ["x", "x"])
+		assertTree(oneOrMoreSimple, "xxy", ==, ["x", "x"])
 	}
 }
 
