@@ -10,6 +10,13 @@ final class ReductionTests: XCTestCase {
 	func testRejectsInputRejectedByItsParser() {
 		assertUnmatched(reduction, "y")
 	}
+
+
+	let reductionWithIndex = %"x" --> { $2.uppercaseString + String(distance($0.startIndex, $1)) }
+
+	func testMapsParseTreesWithAFunctionWhichTakesTheSourceIndex() {
+		assertTree(reductionWithIndex, "x", ==, "X1")
+	}
 }
 
 
