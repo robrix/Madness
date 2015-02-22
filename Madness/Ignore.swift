@@ -1,7 +1,9 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// The type of trees to drop from the input.
-public typealias Ignore = ()
+public struct Ignore {
+	public init() {}
+}
 
 
 /// Ignores any parse trees produced by `parser`.
