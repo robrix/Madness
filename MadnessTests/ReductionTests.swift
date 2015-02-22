@@ -12,10 +12,10 @@ final class ReductionTests: XCTestCase {
 	}
 
 
-	let reductionWithIndex = %"x" --> { $2.uppercaseString + String(distance($0.startIndex, $1)) }
+	let reductionWithIndex = %"x" --> { "\($2.uppercaseString):\(distance($0.startIndex, $1.startIndex))..<\(distance($0.startIndex, $1.endIndex))" }
 
 	func testMapsParseTreesWithAFunctionWhichTakesTheSourceIndex() {
-		assertTree(reductionWithIndex, "x", ==, "X1")
+		assertTree(reductionWithIndex, "x", ==, "X:0..<1")
 	}
 }
 
