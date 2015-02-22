@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class AlternationTests: XCTestCase {
-	let alternation = %"x" | (%"y" --> const(1))
+	let alternation = %"x" | (%"y" --> { _, _ in 1 })
 
 	func testAlternationParsesEitherAlternative() {
 		assertAdvancedBy(alternation, "xy", 1)

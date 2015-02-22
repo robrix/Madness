@@ -69,6 +69,15 @@ public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: T ->
 	}
 }
 
+/// Returns a parser which maps parse trees into another type.
+///
+/// This overload also receives the index that parsing ended at.
+public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: (T, C.Index) -> U) -> Parser<C, U>.Function {
+	return {
+		parser($0).map { (f($0, $1), $1) }
+	}
+}
+
 
 // MARK: - Private
 
