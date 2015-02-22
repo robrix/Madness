@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D421A2A61A9A8DD4009AC3B1 /* Ignore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A51A9A8DD4009AC3B1 /* Ignore.swift */; };
+		D421A2A71A9A8DD4009AC3B1 /* Ignore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A51A9A8DD4009AC3B1 /* Ignore.swift */; };
 		D490927A1A98F11A00275C79 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49092791A98F11A00275C79 /* CollectionTests.swift */; };
 		D490927B1A98F11A00275C79 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49092791A98F11A00275C79 /* CollectionTests.swift */; };
 		D4BC5E021A98C8B4008C6851 /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BC5DF71A98C8B4008C6851 /* Madness.framework */; };
@@ -67,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D421A2A51A9A8DD4009AC3B1 /* Ignore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ignore.swift; sourceTree = "<group>"; };
 		D49092791A98F11A00275C79 /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
 		D4BC5DF71A98C8B4008C6851 /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4BC5E011A98C8B4008C6851 /* Madness-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Madness-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,6 +171,7 @@
 				D4C2EDBB1A98D8F800054FAA /* FlatMap.swift */,
 				D4C2EDA61A98D38E00054FAA /* Concatenation.swift */,
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
+				D421A2A51A9A8DD4009AC3B1 /* Ignore.swift */,
 				D4FC47B41A37E47C00D23A6F /* Supporting Files */,
 			);
 			path = Madness;
@@ -384,6 +388,7 @@
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
 				D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */,
+				D421A2A71A9A8DD4009AC3B1 /* Ignore.swift in Sources */,
 				D4C2EDB61A98D65300054FAA /* Repetition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +414,7 @@
 				D4FC47CE1A37E48800D23A6F /* Parser.swift in Sources */,
 				D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */,
+				D421A2A61A9A8DD4009AC3B1 /* Ignore.swift in Sources */,
 				D4C2EDB71A98D65400054FAA /* Repetition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
