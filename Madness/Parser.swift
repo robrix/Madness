@@ -93,6 +93,18 @@ public func ignore(string: String) -> Parser<String, ()>.Function {
 }
 
 
+// MARK: - Private
+
+/// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
+func containsAt<C1: CollectionType, C2: CollectionType where C1.Generator.Element == C2.Generator.Element, C1.Generator.Element: Equatable>(collection: C1, index: C1.Index, needle: C2) -> Bool {
+	let needleCount = count(needle).toIntMax()
+	let range = index..<advance(index, C1.Index.Distance(needleCount), collection.endIndex)
+	if count(range).toIntMax() < needleCount { return false }
+
+	return reduce(lazy(zip(range, needle)).map { collection[$0] == $1 }, true) { $0 && $1 }
+}
+
+
 // MARK: - Operators
 
 /// Map operator.
