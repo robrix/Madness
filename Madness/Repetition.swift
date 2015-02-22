@@ -12,7 +12,7 @@ public postfix func * (string: String) -> Parser<String, [String]>.Function {
 
 /// Parses `parser` 0 or more times and drops its parse trees.
 public postfix func * <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return repeat(parser, 0..<Int.max) --> const(Ignore())
+	return ignore(repeat(parser, 0..<Int.max))
 }
 
 /// Parses `parser` 1 or more times.
@@ -27,7 +27,7 @@ public postfix func + (string: String) -> Parser<String, [String]>.Function {
 
 /// Parses `parser` 0 or more times and drops its parse trees.
 public postfix func + <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return repeat(parser, 1..<Int.max) --> const(Ignore())
+	return ignore(repeat(parser, 1..<Int.max))
 }
 
 /// Parses `parser` exactly `n` times.

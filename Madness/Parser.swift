@@ -58,18 +58,6 @@ public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) ->
 }
 
 
-// MARK: - Nonterminals
-
-// MARK: Mapping
-
-/// Returns a parser which maps parse trees into another type.
-public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: T -> U) -> Parser<C, U>.Function {
-	return {
-		parser($0).map { (f($0), $1) }
-	}
-}
-
-
 // MARK: - Private
 
 /// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
