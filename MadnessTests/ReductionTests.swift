@@ -6,6 +6,10 @@ final class ReductionTests: XCTestCase {
 	func testMapsParseTreesWithAFunction() {
 		assertTree(reduction, "x", ==, "X")
 	}
+
+	func testRejectsInputRejectedByItsParser() {
+		assertUnmatched(reduction, "y")
+	}
 }
 
 
