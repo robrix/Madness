@@ -6,17 +6,17 @@ public func ++ <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Pa
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
-public func ++ <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, ()>.Function) -> Parser<C, T>.Function {
+public func ++ <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T>.Function {
 	return concatenate(left, right) --> { x, _ in x }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `left`’s parse tree.
-public func ++ <C: CollectionType, T> (left: Parser<C, ()>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
+public func ++ <C: CollectionType, T> (left: Parser<C, Ignore>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return concatenate(left, right) --> { $1 }
 }
 
 /// Parses the concatenation of `left` and `right, dropping both parse trees.
-public func ++ <C: CollectionType> (left: Parser<C, ()>.Function, right: Parser<C, ()>.Function) -> Parser<C, ()>.Function {
+public func ++ <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
 	return ignore(concatenate(left, right))
 }
 

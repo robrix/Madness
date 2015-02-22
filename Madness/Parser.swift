@@ -70,19 +70,6 @@ public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: T ->
 }
 
 
-// MARK: Ignoring input
-
-/// Ignores any parse trees produced by `parser`.
-public func ignore<C: CollectionType, T>(parser: Parser<C, T>.Function) -> Parser<C, ()>.Function {
-	return parser --> const(())
-}
-
-/// Ignores any parse trees produced by a parser which parses `string`.
-public func ignore(string: String) -> Parser<String, ()>.Function {
-	return ignore(%string)
-}
-
-
 // MARK: - Private
 
 /// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
