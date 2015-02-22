@@ -5,12 +5,12 @@ public typealias Ignore = ()
 
 
 /// Ignores any parse trees produced by `parser`.
-public func ignore<C: CollectionType, T>(parser: Parser<C, T>.Function) -> Parser<C, ()>.Function {
-	return parser --> const(())
+public func ignore<C: CollectionType, T>(parser: Parser<C, T>.Function) -> Parser<C, Ignore>.Function {
+	return parser --> const(Ignore())
 }
 
 /// Ignores any parse trees produced by a parser which parses `string`.
-public func ignore(string: String) -> Parser<String, ()>.Function {
+public func ignore(string: String) -> Parser<String, Ignore>.Function {
 	return ignore(%string)
 }
 
