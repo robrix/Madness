@@ -2,8 +2,11 @@
 
 let newline = ignore("\n")
 let ws = %" " | %"\t"
-let text = %("a"..."z") | %("A"..."Z") | %("0"..."9") | ws
-let restOfLine = (text+ --> { "".join($0) }) ++ newline
+let lower = %("a"..."z")
+let upper = %("A"..."Z")
+let digit = %("0"..."9")
+let text = lower | upper | digit | ws
+let restOfLine: Parser<String, String>.Function = (text+ --> { "".join($0) }) ++ newline
 
 
 // MARK: - AST
@@ -48,16 +51,17 @@ let element: NodeParser = fix { element in
 			return (each)+ --> { Node.Blockquote(join([], $0)) }
 		}
 
-		let header = prefix ++ ((%"#" * (1..<7)) --> { $0.count }) ++ ignore(" ") ++ restOfLine --> { Node.Header($0, $1) }
-		let paragraph = (prefix ++ restOfLine)+ --> { Node.Paragraph("\n".join($0)) }
-		let blockquote = prefix ++ { prefixedElements(ignore("> "))($0) }
+		let octothorpes: Parser<String, Int>.Function = (%"#" * (1..<7)) --> { $0.count }
+		let header: Parser<String, Node>.Function = prefix ++ octothorpes ++ ignore(" ") ++ restOfLine --> { (level: Int, title: String) in Node.Header(level, title) }
+		let paragraph: Parser<String, Node>.Function = (prefix ++ restOfLine)+ --> { Node.Paragraph("\n".join($0)) }
+		let blockquote: Parser<String, Node>.Function = prefix ++ { prefixedElements(ignore("> "))($0, $1) }
 
 		return header | paragraph | blockquote
 	}
 }
 
-let ok: Parser<String, ()>.Function = { ((), $0) }
+let ok: Parser<String, ()>.Function = { ((), $1) }
 let parsed = parse(element(ok), "> # hello\n> \n> hello\n> there\n> \n> \n")
-if let translated = parsed?.0 {
+if let translated = parsed.0 {
 	translated.description
 }

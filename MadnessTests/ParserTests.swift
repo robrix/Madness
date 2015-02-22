@@ -24,14 +24,12 @@ final class ParserTests: XCTestCase {
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		let parser = %"foo"
-		assertEqual(parser("foot")?.1, "t")
-		assertNil(parser("fo"))
-		assertNil(parser("fo"))
+		assertAdvancedBy(parser, "foot", 3)
+		assertUnmatched(parser, "fo")
 	}
 
 	func testLiteralParsersProduceTheirArgument() {
-		let parsed = (%"foo")("foot")
-		assertEqual(parsed?.0, "foo")
+		assertTree(%"foo", "foot", ==, "foo")
 	}
 
 
@@ -40,24 +38,24 @@ final class ParserTests: XCTestCase {
 	let digits = %("0"..."9")
 
 	func testRangeParsersParseAnyCharacterInTheirRange() {
-		assertEqual(digits("0")?.0, "0")
-		assertEqual(digits("5")?.0, "5")
-		assertEqual(digits("9")?.0, "9")
+		assertTree(digits, "0", ==, "0")
+		assertTree(digits, "5", ==, "5")
+		assertTree(digits, "9", ==, "9")
 	}
 
 	func testRangeParsersRejectCharactersOutsideTheRange() {
-		assertNil(digits("a"))
+		assertUnmatched(digits, "a")
 	}
 
 
 	// MARK: Any
 
 	func testAnyRejectsTheEmptyString() {
-		assertNil(any(""))
+		assertUnmatched(any, "")
 	}
 
 	func testAnyParsesAnySingleCharacter() {
-		assertEqual(any("🔥")?.0, "🔥")
+		assertTree(any, "🔥", ==, "🔥")
 	}
 
 
@@ -68,36 +66,34 @@ final class ParserTests: XCTestCase {
 	let ignored = ignore("x")
 
 	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
-		assertEqual((ignored ++ %"y")("xy")?.0, "y")
+		assertTree(ignored ++ %"y", "xy", ==, "y")
 	}
 
 	func testIgnoredInputDoesNotGetConcatenatedAtRight() {
-		assertEqual((%"y" ++ ignored)("yx")?.0, "y")
+		assertTree(%"y" ++ ignored, "yx", ==, "y")
 	}
 
 	func testIgnoringDistributesOverConcatenation() {
-		let parser = (ignored ++ ignored)("xx")
-		assertEqual(parser?.1, "")
+		assertAdvancedBy(ignored ++ ignored, "xx", 2)
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
-		assertEqual((ignored | %"y")("y")?.0 ?? "", "y")
+		assertTree(ignored | %"y", "y", ==, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
-		assertEqual((%"y" | ignored)("y")?.0 ?? "", "y")
+		assertTree(%"y" | ignored, "y", ==, "y")
 	}
 
 	func testIgnoringDistributesOverAlternation() {
-		let parser = (ignored | ignored)
-		assertNotNil(parser("x")?.0)
+		assertMatched(ignored | ignored, "x")
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
-		assertEqual((ignored* ++ %"y")("y")?.0, "y")
+		assertTree(ignored* ++ %"y", "y", ==, "y")
 	}
 
 	func testRepeatedIgnoredParsesAreDropped() {
-		assertEqual((ignored* ++ %"y")("xxy")?.0, "y")
+		assertTree(ignored* ++ %"y", "xxy", ==, "y")
 	}
 }

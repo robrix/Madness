@@ -4,17 +4,16 @@ final class AlternationTests: XCTestCase {
 	let alternation = %"x" | (%"y" --> const(1))
 
 	func testAlternationParsesEitherAlternative() {
-		assertEqual(alternation("xy")?.1, "y")
-		assertEqual(alternation("yx")?.1, "x")
+		assertAdvancedBy(alternation, "xy", 1)
+		assertAdvancedBy(alternation, "yx", 1)
 	}
 
 	func testAlternationProducesTheParsedAlternative() {
-		assert(alternation("xy")?.0, ==, Either.left("x"))
+		assertTree(alternation, "xy", ==, Either.left("x"))
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		let parsed = (%"x" | %"y")("xy")
-		assertEqual(parsed?.0, "x")
+		assertTree(%"x" | %"y", "xy", ==, "x")
 	}
 }
 
