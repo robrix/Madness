@@ -1,6 +1,6 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-struct Tree<T: Equatable>: Equatable, Printable {
+private struct Tree<T: Equatable>: Equatable, Printable {
 	init(_ value: T, _ children: [Tree] = []) {
 		self.values = [ value ]
 		self.children = children
@@ -21,7 +21,7 @@ struct Tree<T: Equatable>: Equatable, Printable {
 	}
 }
 
-func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
+private func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 	return left.values == right.values && left.children == right.children
 }
 
