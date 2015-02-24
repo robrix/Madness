@@ -58,6 +58,24 @@ public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) ->
 }
 
 
+// MARK: - Nonterminals
+
+private func memoize<T>(f: () -> T) -> () -> T {
+	var memoized: T!
+	return {
+		if memoized == nil {
+			memoized = f()
+		}
+		return memoized
+	}
+}
+
+public func delay<C: CollectionType, T>(parser: () -> Parser<C, T>.Function) -> Parser<C, T>.Function {
+	let memoized = memoize(parser)
+	return { memoized()($0, $1) }
+}
+
+
 // MARK: - Private
 
 /// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
