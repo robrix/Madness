@@ -55,7 +55,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: H
 // MARK: - Private
 
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
-private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, _ interval: ClosedInterval<Int> = 0...Int.max) -> Parser<C, [T]>.Function {
+private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.end <= 0 { return { ([], $1) } }
 	
 	return { input, index in
@@ -68,7 +68,7 @@ private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, _ inter
 }
 
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
-private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, _ interval: HalfOpenInterval<Int> = 0..<Int.max) -> Parser<C, [T]>.Function {
+private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.isEmpty { return { _ -> ([T], C.Index)? in nil } }
 	return repeat(parser, ClosedInterval(interval.start, interval.end.predecessor()))
 }
