@@ -34,6 +34,12 @@ private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, rig
 }
 
 
+// MARK: - Operators
+
+/// Optional alternation operator.
+postfix operator |? {}
+
+
 // MARK: - Imports
 
 import Either
