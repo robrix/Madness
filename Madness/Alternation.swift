@@ -35,7 +35,7 @@ public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Pars
 // MARK: - Private
 
 /// Defines alternation for use in the `|` operator definitions above.
-private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result? {
+private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
 	return left(input, index).map { (.left($0), $1) } ?? right(input, index).map { (.right($0), $1) }
 }
 
