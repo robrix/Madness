@@ -24,6 +24,15 @@ public enum Error<I: ForwardIndexType>: Printable {
 	}
 
 
+	// MARK: Printable
+
+	public var description: String {
+		return analysis(
+			ifLeaf: { "\($1): \($0)" },
+			ifBranch: { "\n".join(lazy($0).map(toString)) })
+	}
+
+
 	// MARK: Cases
 
 	case Leaf(String, Box<I>)
