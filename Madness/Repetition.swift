@@ -46,7 +46,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 
 /// Parses `parser` the number of times specified in `interval`.
 ///
-/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means at least `m` and fewer than `n` repetitions.
+/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
 	return repeat(parser, interval)
 }
