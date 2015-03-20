@@ -69,7 +69,7 @@ private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, interva
 
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
 private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
-	if interval.isEmpty { return { _ -> ([T], C.Index)? in nil } }
+	if interval.isEmpty { return { .left(.leaf("cannot parse an empty interval of repetitions", $1)) } }
 	return repeat(parser, ClosedInterval(interval.start, interval.end.predecessor()))
 }
 
