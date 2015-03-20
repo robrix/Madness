@@ -14,11 +14,6 @@ final class ErrorTests: XCTestCase {
 		assert(parser(input, input.startIndex).right, ==, nil)
 		assert(parser(input, input.startIndex).left, !=, nil)
 	}
-
-	func testError() {
-		["xy": "expected rest of sequence, or term"]
-		parse(term, "x")
-	}
 }
 
 
@@ -28,18 +23,6 @@ private func lift<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function) -> 
 			??	Either.left(Error.leaf("expected to parse with \(parser)", index))
 	}
 }
-
-
-// MARK: - Fixtures
-
-private enum Tree {
-	case Leaf
-	case Branch([Tree])
-}
-
-private let group: Parser<String, Tree>.Function = ignore("(") ++ sequence ++ ignore(")")
-private let sequence: Parser<String, Tree>.Function = (term ++ (ignore(",") ++ term)+) --> { Tree.Branch([$0] + $1) }
-private let term: Parser<String, Tree>.Function = delay { (%"x" --> { _, _, _ in Tree.Leaf }) | group }
 
 
 // MARK: - Imports
