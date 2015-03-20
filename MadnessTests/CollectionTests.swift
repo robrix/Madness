@@ -10,11 +10,11 @@ final class CollectionTests: XCTestCase {
 			{ (x: Int, y: Int) -> Fibonacci in
 				%(x + y) >>- { (xy: Int) -> Fibonacci in
 					fibonacci(y, xy) --> { [ xy ] + $0 }
-				} | { ([], $1) }
+				} | { .right([], $1) }
 			}
 		}
 
-		assert(parse(fibonacci(0, 1), input), ==, input)
+		assert(parse(fibonacci(0, 1), input).right, ==, input)
 	}
 }
 

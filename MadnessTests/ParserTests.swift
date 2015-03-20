@@ -14,7 +14,7 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testParseProducesParseTreesForFullParses() {
-		assertEqual(parse(%"x", "x"), "x")
+		assertEqual(parse(%"x", "x").right, "x")
 	}
 
 

@@ -2,31 +2,17 @@
 
 final class ErrorTests: XCTestCase {
 	func testLiftedParsersDoNotReportErrorsWhenTheyMatch() {
-		let parser = lift(%"x")
+		let parser = %"x"
 		let input = "x"
 		assert(parser(input, input.startIndex).right, !=, nil)
 		assert(parser(input, input.startIndex).left, ==, nil)
 	}
 
 	func testLiftedParsersReportErrorsWhenTheyDoNotMatch() {
-		let parser = lift(%"x")
+		let parser = %"x"
 		let input = "y"
 		assert(parser(input, input.startIndex).right, ==, nil)
 		assert(parser(input, input.startIndex).left, !=, nil) // 0: expected to parse with (Function)
-	}
-}
-
-
-private func lift<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function) -> (C, C.Index) -> Either<Error<C.Index>, (Tree, C.Index)> {
-	return lift(parser) {
-		.leaf("expected to parse with \($0)", $2)
-	}
-}
-
-private func lift<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, because: (Parser<C, Tree>.Function, C, C.Index) -> Error<C.Index>) -> (C, C.Index) -> Either<Error<C.Index>, (Tree, C.Index)> {
-	return { input, index in
-		parser(input, index).map { tree, rest in Either.right(tree, rest) }
-			??	Either.left(because(parser, input, index))
 	}
 }
 

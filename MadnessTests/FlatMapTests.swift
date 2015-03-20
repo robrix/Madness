@@ -45,7 +45,7 @@ final class FlatMapTests: XCTestCase {
 		]
 
 		for (input, actual) in fixtures {
-			if let parsed = parse(tree(0), input) {
+			if let parsed = parse(tree(0), input).right {
 				XCTAssertEqual(parsed, actual)
 			} else {
 				XCTFail("expected to parse \(input) as \(actual) but failed to parse")
@@ -59,7 +59,7 @@ final class FlatMapTests: XCTestCase {
 		]
 
 		for input in failures {
-			XCTAssert(parse(tree(0), input) == nil)
+			XCTAssert(parse(tree(0), input).right == nil)
 		}
 	}
 }
