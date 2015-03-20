@@ -49,7 +49,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 /// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.isEmpty { return { .left(.leaf("cannot parse an empty interval of repetitions", $1)) } }
-	return parser * (interval.start...interval.end.predecessor())
+	return parser * (interval.start...(interval.end == Int.max ? Int.max : interval.end - 1))
 }
 
 
