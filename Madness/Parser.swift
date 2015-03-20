@@ -13,8 +13,8 @@ public enum Parser<C: CollectionType, Tree> {
 
 
 /// Parses `input` with `parser`, returning the parse trees or `nil` if nothing could be parsed, or if parsing did not consume the entire input.
-public func parse<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, input: C) -> Tree? {
-	return parser(input, input.startIndex).map { $1 == input.endIndex ? $0 : nil } ?? nil
+public func parse<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, input: C) -> Either<Error<C.Index>, Tree> {
+	return parser(input, input.startIndex).flatMap { $1 == input.endIndex ? .right($0) : .left(.leaf("finished parsing before end of input", $1)) }
 }
 
 
