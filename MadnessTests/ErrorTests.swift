@@ -1,8 +1,11 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class ErrorTests: XCTestCase {
-	func testLiteralErrorReporting() {
+	func testLiftedParsersDoNotReportErrorsWhenTheyMatch() {
 		let parser = lift(%"x")
+		let input = "x"
+		assert(parser(input, input.startIndex).right, !=, nil)
+		assert(parser(input, input.startIndex).left, ==, nil)
 	}
 
 	func testError() {
@@ -34,6 +37,7 @@ private let term: Parser<String, Tree>.Function = delay { (%"x" --> { _, _, _ in
 
 // MARK: - Imports
 
+import Assertions
 import Either
 import Madness
 import Prelude
