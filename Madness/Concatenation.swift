@@ -33,16 +33,6 @@ infix operator ++ {
 }
 
 
-// MARK: - Private
-
-/// Defines concatenation for use in the `++` operator definitions above.
-private func concatenate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, (T, U)>.Function {
-	return left >>- { x in
-		right --> { y in (x, y) }
-	}
-}
-
-
 // MARK: - Imports
 
 import Prelude
