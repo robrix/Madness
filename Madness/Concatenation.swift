@@ -7,7 +7,7 @@ public func ++ <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Pa
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
 public func ++ <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T>.Function {
-	return concatenate(left, right) --> { x, _ in x }
+	return left >>- { x in right --> { _, _, _ in x } }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `left`’s parse tree.
