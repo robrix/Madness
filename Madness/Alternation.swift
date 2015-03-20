@@ -7,22 +7,22 @@ public func | <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Par
 
 /// Parses either `left` or `right` and coalesces their trees.
 public func | <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return alternate(left, right) --> { $0.either(id, id) }
+	return alternate(left, right) --> { $0.either(ifLeft: id, ifRight: id) }
 }
 
 /// Parses either `left` or `right`, dropping `right`’s parse tree.
 public func | <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) --> { $0.either(unit, const(nil)) }
+	return alternate(left, right) --> { $0.either(ifLeft: unit, ifRight: const(nil)) }
 }
 
 /// Parses either `left` or `right`, dropping `left`’s parse tree.
 public func | <C: CollectionType, T> (left: Parser<C, Ignore>.Function, right: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) --> { $0.either(const(nil), unit) }
+	return alternate(left, right) --> { $0.either(ifLeft: const(nil), ifRight: unit) }
 }
 
 /// Parses either `left` or `right`, dropping both parse trees.
 public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return alternate(left, right) --> { $0.either(id, id) }
+	return alternate(left, right) --> { $0.either(ifLeft: id, ifRight: id) }
 }
 
 
