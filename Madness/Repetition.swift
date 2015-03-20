@@ -25,7 +25,7 @@ public postfix func + (string: String) -> Parser<String, [String]>.Function {
 	return %(string) * (1..<Int.max)
 }
 
-/// Parses `parser` 0 or more times and drops its parse trees.
+/// Parses `parser` 1 or more times and drops its parse trees.
 public postfix func + <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
 	return ignore(repeat(parser, 1..<Int.max))
 }
