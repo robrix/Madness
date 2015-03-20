@@ -56,8 +56,8 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: H
 
 /// Defines repetition for use in the postfix `*` and `+` operator definitions above.
 private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
-	if interval.end <= 0 { return { ([], $1) } }
-	
+	if interval.end <= 0 { return { .right([], $1) } }
+
 	return { input, index in
 		parser(input, index).map { first, rest in
 			repeat(parser, (interval.start - 1)...(interval.end - (interval.end == Int.max ? 0 : 1)))(input, rest).map {
