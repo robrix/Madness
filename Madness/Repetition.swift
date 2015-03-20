@@ -2,7 +2,7 @@
 
 /// Parses `parser` 0 or more times.
 public postfix func * <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
-	return repeat(parser, 0..<Int.max)
+	return parser * (0..<Int.max)
 }
 
 /// Creates a parser from `string`, and parses it 0 or more times.
