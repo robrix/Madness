@@ -2,7 +2,7 @@
 
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
 public func ++ <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, (T, U)>.Function {
-	return concatenate(left, right)
+	return left >>- { x in right --> { y in (x, y) } }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
