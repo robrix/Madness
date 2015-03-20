@@ -65,6 +65,10 @@ private func decrement(x: Int) -> Int {
 	return (x == Int.max ? Int.max : x - 1)
 }
 
+private func decrement(x: ClosedInterval<Int>) -> ClosedInterval<Int> {
+	return decrement(x.start)...decrement(x.end)
+}
+
 
 // MARK: - Operators
 
