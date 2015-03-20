@@ -50,10 +50,10 @@ public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (l
 
 /// Returns a parser which parses any character in `interval`.
 public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String, String>.Function {
-	return { (input: String, index: String.Index) -> Parser<String, String>.Result? in
+	return { (input: String, index: String.Index) -> Parser<String, String>.Result in
 		(index < input.endIndex && interval.contains(input[index])) ?
-			(String(input[index]), index.successor())
-		:	nil
+			.right(String(input[index]), index.successor())
+		:	.left(.leaf("expected an element in interval \(interval)", index))
 	}
 }
 
