@@ -58,6 +58,14 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: H
 }
 
 
+// MARK: - Private
+
+/// Decrements `x` iff it is not equal to `Int.max`.
+private func decrement(x: Int) -> Int {
+	return (x == Int.max ? Int.max : x - 1)
+}
+
+
 // MARK: - Operators
 
 /// Zero-or-more repetition operator.
