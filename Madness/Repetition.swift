@@ -43,10 +43,8 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.end <= 0 { return { .right([], $1) } }
 
-	return { input, index in
-		((input, index) |> parser >>- { x in (parser * ((interval.start - 1)...decrement(interval.end))) --> { [x] + $0 } })
-			??	(interval.start <= 0 ? .right([], index) : .left(.leaf("expected at least \(interval.start) matches", index)))
-	}
+	return parser >>- { x in parser * decrement(interval) --> { [x] + $0 } }
+		|	{ interval.start <= 0 ? .right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
 /// Parses `parser` the number of times specified in `interval`.
