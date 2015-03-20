@@ -32,8 +32,8 @@ public func any(input: String, index: String.Index) -> Parser<String, String>.Re
 public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (literal: C) -> Parser<C, C>.Function {
 	return { input, index in
 		containsAt(input, index, literal) ?
-			(literal, advance(index, count(literal)))
-		:	nil
+			.right(literal, advance(index, count(literal)))
+		:	.left(.leaf("expected \(literal)", index))
 	}
 }
 
