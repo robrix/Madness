@@ -15,7 +15,7 @@ final class ErrorTests: XCTestCase {
 private func lift<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function) -> (C, C.Index) -> Either<Error<C.Index>, (Tree, C.Index)> {
 	return { input, index in
 		parser(input, index).map { tree, rest in Either.right(tree, rest) }
-			??	Either.left(Error.leaf("", index))
+			??	Either.left(Error.leaf("expected to parse with \(parser)", index))
 	}
 }
 
