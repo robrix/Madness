@@ -44,7 +44,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 	if interval.end <= 0 { return { .right([], $1) } }
 
 	return { input, index in
-		((input, index) |> parser >>- { x in (parser * ((interval.start - 1)...(interval.end == Int.max ? Int.max : interval.end - 1))) --> { [x] + $0 } })
+		((input, index) |> parser >>- { x in (parser * ((interval.start - 1)...decrement(interval.end))) --> { [x] + $0 } })
 			??	(interval.start <= 0 ? .right([], index) : .left(.leaf("expected at least \(interval.start) matches", index)))
 	}
 }
@@ -54,7 +54,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 /// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.isEmpty { return { .left(.leaf("cannot parse an empty interval of repetitions", $1)) } }
-	return parser * (interval.start...(interval.end == Int.max ? Int.max : interval.end - 1))
+	return parser * (interval.start...decrement(interval.end))
 }
 
 
