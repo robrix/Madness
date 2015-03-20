@@ -1,6 +1,10 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class ErrorTests: XCTestCase {
+	func testLiteralErrorReporting() {
+		let parser = lift(%"x")
+	}
+
 	func testError() {
 		["xy": "expected rest of sequence, or term"]
 		parse(term, "x")
