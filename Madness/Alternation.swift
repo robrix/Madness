@@ -2,7 +2,7 @@
 
 /// Parses `parser` 0 or one time.
 public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-	return parser | { _ in nil }
+	return (parser --> unit) | { .right(nil, $1) }
 }
 
 
