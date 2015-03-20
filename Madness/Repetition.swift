@@ -59,11 +59,8 @@ private func repeat<C: CollectionType, T>(parser: Parser<C, T>.Function, interva
 	if interval.end <= 0 { return { .right([], $1) } }
 
 	return { input, index in
-		parser(input, index).map { first, rest in
-			repeat(parser, (interval.start - 1)...(interval.end - (interval.end == Int.max ? 0 : 1)))(input, rest).map {
-				([first] + $0, $1)
-			}
-		} ?? (interval.start <= 0 ? ([], index) : nil)
+		((input, index) |> parser >>- { x in repeat(parser, (interval.start - 1)...(interval.end == Int.max ? Int.max : interval.end - 1)) --> { [x] + $0 } })
+		??	(interval.start <= 0 ? .right([], index) : .left(.leaf("expected at least \(interval.start) matches", index)))
 	}
 }
 
