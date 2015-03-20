@@ -1,5 +1,11 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
+/// Parses `parser` 0 or one time.
+public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
+	return parser | { _ in nil }
+}
+
+
 /// Parses either `left` or `right`.
 public func | <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
 	return alternate(left, right)
@@ -32,6 +38,12 @@ public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Pars
 private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
 	return left(input, index).map { (.left($0), $1) } ?? right(input, index).map { (.right($0), $1) }
 }
+
+
+// MARK: - Operators
+
+/// Optional alternation operator.
+postfix operator |? {}
 
 
 // MARK: - Imports
