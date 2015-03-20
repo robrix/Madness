@@ -8,6 +8,13 @@ final class ErrorTests: XCTestCase {
 		assert(parser(input, input.startIndex).left, ==, nil)
 	}
 
+	func testLiftedParsersReportErrorsWhenTheyDoNotMatch() {
+		let parser = lift(%"x")
+		let input = "y"
+		assert(parser(input, input.startIndex).right, ==, nil)
+		assert(parser(input, input.startIndex).left, !=, nil)
+	}
+
 	func testError() {
 		["xy": "expected rest of sequence, or term"]
 		parse(term, "x")
