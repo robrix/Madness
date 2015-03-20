@@ -19,7 +19,7 @@ final class ErrorTests: XCTestCase {
 
 private func lift<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function) -> (C, C.Index) -> Either<Error<C.Index>, (Tree, C.Index)> {
 	return lift(parser) {
-		.leaf("expected to parse with \($0) at \($2)", $2)
+		.leaf("expected to parse with \($0)", $2)
 	}
 }
 
