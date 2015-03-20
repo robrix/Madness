@@ -41,7 +41,12 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n+1` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
-	return repeat(parser, interval)
+	if interval.end <= 0 { return { .right([], $1) } }
+
+	return { input, index in
+		((input, index) |> parser >>- { x in repeat(parser, (interval.start - 1)...(interval.end == Int.max ? Int.max : interval.end - 1)) --> { [x] + $0 } })
+			??	(interval.start <= 0 ? .right([], index) : .left(.leaf("expected at least \(interval.start) matches", index)))
+	}
 }
 
 /// Parses `parser` the number of times specified in `interval`.
