@@ -17,7 +17,7 @@ public func ++ <C: CollectionType, T> (left: Parser<C, Ignore>.Function, right: 
 
 /// Parses the concatenation of `left` and `right, dropping both parse trees.
 public func ++ <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return ignore(concatenate(left, right))
+	return ignore(left >>- const(right))
 }
 
 
