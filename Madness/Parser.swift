@@ -42,8 +42,8 @@ public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (l
 public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (literal: C.Generator.Element) -> Parser<C, C.Generator.Element>.Function {
 	return { input, index in
 		index != input.endIndex && input[index] == literal ?
-			(literal, index.successor())
-		:	nil
+			.right(literal, index.successor())
+		:	.left(.leaf("expected \(literal)", index))
 	}
 }
 
