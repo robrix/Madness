@@ -12,7 +12,7 @@ final class ErrorTests: XCTestCase {
 		let parser = lift(%"x")
 		let input = "y"
 		assert(parser(input, input.startIndex).right, ==, nil)
-		assert(parser(input, input.startIndex).left, !=, nil)
+		assert(parser(input, input.startIndex).left, !=, nil) // 0: expected to parse with (Function)
 	}
 }
 
