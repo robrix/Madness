@@ -34,7 +34,7 @@ public postfix func + <C: CollectionType> (parser: Parser<C, Ignore>.Function) -
 ///
 /// `n` must be > 0 to make any sense.
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> Parser<C, [T]>.Function {
-	return repeat(parser, n...n)
+	return parser * (n...n)
 }
 
 /// Parses `parser` the number of times specified in `interval`.
