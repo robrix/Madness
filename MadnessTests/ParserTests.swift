@@ -10,7 +10,7 @@ final class ParserTests: XCTestCase {
 	// MARK: - Operations
 
 	func testParseRejectsPartialParses() {
-		assertNil(parse(%"x", "xy"))
+		assertNil(parse(%"x", "xy").right)
 	}
 
 	func testParseProducesParseTreesForFullParses() {
