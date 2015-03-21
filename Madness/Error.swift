@@ -24,6 +24,14 @@ public enum Error<I: ForwardIndexType>: Printable {
 	}
 
 
+	// Destruction as an array of errors.
+	public var errors: [Error] {
+		return analysis(
+			ifLeaf: const([self]),
+			ifBranch: id)
+	}
+
+
 	// MARK: Printable
 
 	public var description: String {
@@ -43,3 +51,4 @@ public enum Error<I: ForwardIndexType>: Printable {
 // MARK: - Imports
 
 import Box
+import Prelude
