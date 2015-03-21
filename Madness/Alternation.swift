@@ -39,6 +39,11 @@ private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, rig
 	return left(input, index).map { (.left($0), $1) } ?? right(input, index).map { (.right($0), $1) }
 }
 
+/// Disjunction of two `Either`s.
+private func ||| <A, B> (a: Either<A, B>, b: Either<A, B>) -> Either<(A, A), B> {
+	return (a.right ?? b.right).map(Either<(A, A), B>.right) ?? (a.left &&& b.left).map(Either<(A, A), B>.left)!
+}
+
 
 // MARK: - Operators
 
