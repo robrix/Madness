@@ -48,6 +48,11 @@ public enum Error<I: ForwardIndexType>: Printable {
 }
 
 
+public func + <I> (left: Error<I>, right: Error<I>) -> Error<I> {
+	return .branch(left.errors + right.errors)
+}
+
+
 // MARK: - Imports
 
 import Box
