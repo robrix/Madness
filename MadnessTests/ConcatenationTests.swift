@@ -30,11 +30,11 @@ func doesNotMatch<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C)
 }
 
 func assertUnmatched<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> Bool {
-	return assertNil(parser(input, input.startIndex), "should not have matched \(input). " + message, file: file, line: line)
+	return assertNil(parser(input, input.startIndex).right, "should not have matched \(input). " + message, file: file, line: line)
 }
 
 func assertMatched<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> Bool {
-	return assertNotNil(parser(input, input.startIndex), "should have matched \(input). " + message, file: file, line: line) != nil
+	return assertNotNil(parser(input, input.startIndex).right, "should have matched \(input). " + message, file: file, line: line) != nil
 }
 
 func assertTree<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, match: (T, T) -> Bool, tree: T, message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> T? {
