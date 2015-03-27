@@ -14,6 +14,10 @@ final class ErrorTests: XCTestCase {
 		assert(parser(input, input.startIndex).right, ==, nil)
 		assert(parser(input, input.startIndex).left, !=, nil) // 0: expected to parse with (Function)
 	}
+
+	func testParseError() {
+		assert(parse(lambda, "λx.").left?.depth, ==, 5)
+	}
 }
 
 
