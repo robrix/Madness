@@ -15,3 +15,14 @@ public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: (C, 
 		parser(input, index).map { (f(input, index..<$1, $0), $1) }
 	}
 }
+
+
+/// Returns a parser which maps parse results.
+///
+/// This enables e.g. adding identifiers for error handling.
+public func --> <C: CollectionType, T, U> (parser: Parser<C, T>.Function, transform: Parser<C, T>.Result -> Parser<C, U>.Result) -> Parser<C, U>.Function {
+	return parser >>> transform
+}
+
+
+import Prelude
