@@ -22,6 +22,10 @@ public struct Error<I: ForwardIndexType>: Printable {
 	public let children: [Error]
 
 
+	public var depth: Int {
+		return 1 + ((sorted(children) { $0.depth < $1.depth }).last?.depth ?? 0)
+	}
+
 
 	// MARK: Printable
 
