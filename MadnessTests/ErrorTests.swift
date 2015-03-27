@@ -20,7 +20,5 @@ final class ErrorTests: XCTestCase {
 // MARK: - Imports
 
 import Assertions
-import Either
 import Madness
-import Prelude
 import XCTest
