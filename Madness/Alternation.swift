@@ -38,7 +38,7 @@ public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Pars
 private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
 	let a = left(input, index).map { (Either<T, U>.left($0), $1) }
 	let b = right(input, index).map { (Either<T, U>.right($0), $1) }
-	return (a ||| b).either(ifLeft: (+) >>> Either.left, ifRight: Either.right)
+	return (a ||| b).either(ifLeft: Error.withReason("no alternative matched:", index) >>> Either.left, ifRight: Either.right)
 }
 
 /// Disjunction of two `Either`s.

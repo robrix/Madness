@@ -1,55 +1,41 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// A composite error.
-public enum Error<I: ForwardIndexType>: Printable {
+public struct Error<I: ForwardIndexType>: Printable {
 	/// Constructs a leaf error, e.g. for terminal parsers.
 	public static func leaf(reason: String, _ index: I) -> Error {
-		return Leaf(reason, Box(index))
+		return Error(reason: reason, _index: Box(index), children: [])
 	}
 
-	/// Constructs a branch error, e.g. for nonterminal parsers.
-	public static func branch(errors: [Error]) -> Error {
-		return Branch(errors)
-	}
-
-
-	/// Case analysis.
-	public func analysis<Result>(@noescape #ifLeaf: (String, I) -> Result, @noescape ifBranch: [Error] -> Result) -> Result {
-		switch self {
-		case let Leaf(reason, index):
-			return ifLeaf(reason, index.value)
-		case let Branch(errors):
-			return ifBranch(errors)
-		}
+	public static func withReason(reason: String, _ index: I) -> (Error, Error) -> Error {
+		return { Error(reason: reason, _index: Box(index), children: [$0, $1]) }
 	}
 
 
-	// Destruction as an array of errors.
-	public var errors: [Error] {
-		return analysis(
-			ifLeaf: const([self]),
-			ifBranch: id)
+	public let reason: String
+
+	public var index: I {
+		return _index.value
 	}
+	private let _index: Box<I>
+
+	public let children: [Error]
+
 
 
 	// MARK: Printable
 
 	public var description: String {
-		return analysis(
-			ifLeaf: { "\($1): \($0)" },
-			ifBranch: { "\n".join(lazy($0).map(toString)) })
+		return describe(0)
 	}
 
-
-	// MARK: Cases
-
-	case Leaf(String, Box<I>)
-	case Branch([Error])
-}
-
-
-public func + <I> (left: Error<I>, right: Error<I>) -> Error<I> {
-	return .branch(left.errors + right.errors)
+	private func describe(n: Int) -> String {
+		let description = String(count: n, repeatedValue: "\t" as Character) + "\(index): \(reason)"
+		if children.count > 0 {
+			return description + "\n" + "\n".join(lazy(children).map { $0.describe(n + 1) })
+		}
+		return description
+	}
 }
 
 
