@@ -1,8 +1,6 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class AlternationTests: XCTestCase {
-	let alternation = %"x" | (%"y" --> { _, _, _ in 1 })
-
 	func testAlternationParsesEitherAlternative() {
 		assertAdvancedBy(alternation, "xy", 1)
 		assertAdvancedBy(alternation, "yx", 1)
@@ -15,7 +13,30 @@ final class AlternationTests: XCTestCase {
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
 		assertTree(%"x" | %"y", "xy", ==, "x")
 	}
+
+    func testOptionalProducesWhenPresent() {
+        assertTree(optional, "y", ==, "y")
+        assertTree(prefixed, "xy", ==, "xy")
+        assertTree(suffixed, "yz", ==, "yz")
+        assertTree(sandwiched, "xyz", ==, "xyz")
+    }
+
+    func testOptionalProducesWhenAbsent() {
+        assertTree(optional, "", ==, "")
+        assertTree(prefixed, "x", ==, "x")
+        assertTree(suffixed, "z", ==, "z")
+        assertTree(sandwiched, "xz", ==, "xz")
+    }
 }
+
+// MARK: - Fixtures
+
+let alternation = %"x" | (%"y" --> { _, _, _ in 1 })
+
+let optional = (%"y")|? --> { $0 ?? "" }
+let prefixed = %"x" ++ optional --> { $0 + $1 }
+let suffixed = optional ++ %"z" --> { $0 + $1 }
+let sandwiched = prefixed ++ %"z" --> { $0 + $1 }
 
 
 // MARK: - Imports

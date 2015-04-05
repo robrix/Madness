@@ -2,7 +2,12 @@
 
 /// Parses `parser` 0 or one time.
 public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-	return parser | { _ in nil }
+    return parser * (0...1) --> first
+}
+
+/// Parses `parser` 0 or one time dropping the parse tree.
+public postfix func |? <C: CollectionType, T> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
+    return ignore(parser * (0...1))
 }
 
 
