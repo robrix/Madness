@@ -81,12 +81,12 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Fixtures
 
-let alternation = %"x" | (%"y" --> { _, _, _ in 1 })
+private let alternation = %"x" | (%"y" --> { _, _, _ in 1 })
 
-let optional = (%"y")|? --> { $0 ?? "" }
-let prefixed = %"x" ++ optional --> { $0 + $1 }
-let suffixed = optional ++ %"z" --> { $0 + $1 }
-let sandwiched = prefixed ++ %"z" --> { $0 + $1 }
+private let optional = (%"y")|? --> { $0 ?? "" }
+private let prefixed = %"x" ++ optional --> { $0 + $1 }
+private let suffixed = optional ++ %"z" --> { $0 + $1 }
+private let sandwiched = prefixed ++ %"z" --> { $0 + $1 }
 
 private let one = oneOf(["x", "y", "z"])
 private let any = anyOf(["x", "y", "z"])
