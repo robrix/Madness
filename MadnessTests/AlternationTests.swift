@@ -14,19 +14,19 @@ final class AlternationTests: XCTestCase {
 		assertTree(%"x" | %"y", "xy", ==, "x")
 	}
 
-    func testOptionalProducesWhenPresent() {
-        assertTree(optional, "y", ==, "y")
-        assertTree(prefixed, "xy", ==, "xy")
-        assertTree(suffixed, "yz", ==, "yz")
-        assertTree(sandwiched, "xyz", ==, "xyz")
-    }
+	func testOptionalProducesWhenPresent() {
+		assertTree(optional, "y", ==, "y")
+		assertTree(prefixed, "xy", ==, "xy")
+		assertTree(suffixed, "yz", ==, "yz")
+		assertTree(sandwiched, "xyz", ==, "xyz")
+	}
 
-    func testOptionalProducesWhenAbsent() {
-        assertTree(optional, "", ==, "")
-        assertTree(prefixed, "x", ==, "x")
-        assertTree(suffixed, "z", ==, "z")
-        assertTree(sandwiched, "xz", ==, "xz")
-    }
+	func testOptionalProducesWhenAbsent() {
+		assertTree(optional, "", ==, "")
+		assertTree(prefixed, "x", ==, "x")
+		assertTree(suffixed, "z", ==, "z")
+		assertTree(sandwiched, "xz", ==, "xz")
+	}
 }
 
 // MARK: - Fixtures
