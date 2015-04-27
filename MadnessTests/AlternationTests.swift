@@ -44,6 +44,25 @@ final class AlternationTests: XCTestCase {
 		assertTree(xyz, "zxy", ==, "z")
 	}
 
+
+	// MARK: Any-of
+
+	func testAnyOfParsesAnArrayOfMatchesPreservingOrder() {
+		let xyz = anyOf(["x", "y", "z"])
+		assertTree(xyz, "xy", ==, ["x", "y"])
+		assertTree(xyz, "yx", ==, ["y", "x"])
+		assertTree(xyz, "zxy", ==, ["z", "x", "y"])
+	}
+
+	func testAnyOfRejectsWhenNoneMatch() {
+		assertUnmatched(anyOf(["x"]), "y")
+	}
+
+	func testAnyOfOnlyParsesFirstMatch() {
+		let xyz = anyOf(["x", "y", "z"])
+		assertTree(xyz, "xyy", ==, ["x", "y"])
+	}
+
 }
 
 // MARK: - Fixtures

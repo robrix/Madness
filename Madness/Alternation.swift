@@ -44,6 +44,17 @@ public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: 
 	return reduce(input, none()) { $0 | %$1 }
 }
 
+/// Given a set of literals, parses an array of any matches in the order they were found.
+///
+/// Each literal will only match the first time.
+public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: Set<C>) -> Parser<C, [C]>.Function {
+	return oneOf(set) >>- { match in
+		var rest = set
+		rest.remove(match)
+		return anyOf(rest) >>- { inject([match] + $0) } | inject([match])
+	}
+}
+
 
 // MARK: - Private
 
