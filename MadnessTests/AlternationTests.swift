@@ -63,6 +63,25 @@ final class AlternationTests: XCTestCase {
 		assertTree(xyz, "xyy", ==, ["x", "y"])
 	}
 
+
+	// MARK: All-of
+
+	func testAllOfParsesAnArrayOfMatchesPreservingOrder() {
+		let xyz = allOf(["x", "y", "z"])
+		assertTree(xyz, "xy", ==, ["x", "y"])
+		assertTree(xyz, "yx", ==, ["y", "x"])
+		assertTree(xyz, "zxy", ==, ["z", "x", "y"])
+	}
+
+	func testAllOfRejectsWhenNoneMatch() {
+		assertUnmatched(allOf(["x"]), "y")
+	}
+
+	func testAllOfParsesAllMatches() {
+		let xyz = allOf(["x", "y", "z"])
+		assertTree(xyz, "xyyxz", ==, ["x", "y", "y", "x", "z"])
+	}
+
 }
 
 // MARK: - Fixtures

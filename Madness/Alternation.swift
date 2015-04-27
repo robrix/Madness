@@ -55,6 +55,15 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 	}
 }
 
+/// Given a set of literals, parses an array of all matches in the order they were found.
+///
+/// Each literal will be matched as many times as it is found.
+public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
+	return oneOf(input) >>- { match in
+		allOf(input) >>- { inject([match] + $0) } | inject([match])
+	}
+}
+
 
 // MARK: - Private
 
