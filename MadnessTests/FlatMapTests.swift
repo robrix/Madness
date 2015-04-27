@@ -63,8 +63,8 @@ final class FlatMapTests: XCTestCase {
 		}
 	}
 
-	func testInjectIgnoresItsInput() {
-		assertTree(inject("a"), "b", ==, "a")
+	func testPureIgnoresItsInput() {
+		assertTree(pure("a"), "b", ==, "a")
 	}
 }
 

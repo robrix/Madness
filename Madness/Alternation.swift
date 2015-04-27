@@ -51,7 +51,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
-		return anyOf(rest) >>- { inject([match] + $0) } | inject([match])
+		return anyOf(rest) >>- { pure([match] + $0) } | pure([match])
 	}
 }
 
@@ -60,7 +60,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 /// Each literal will be matched as many times as it is found.
 public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
 	return oneOf(input) >>- { match in
-		allOf(input) >>- { inject([match] + $0) } | inject([match])
+		allOf(input) >>- { pure([match] + $0) } | pure([match])
 	}
 }
 
