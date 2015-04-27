@@ -38,20 +38,18 @@ final class AlternationTests: XCTestCase {
 	// MARK: One-of
 
 	func testOneOfParsesFirstMatch() {
-		let xyz = oneOf(["x", "y", "z"])
-		assertTree(xyz, "xyz", ==, "x")
-		assertTree(xyz, "yzx", ==, "y")
-		assertTree(xyz, "zxy", ==, "z")
+		assertTree(one, "xyz", ==, "x")
+		assertTree(one, "yzx", ==, "y")
+		assertTree(one, "zxy", ==, "z")
 	}
 
 
 	// MARK: Any-of
 
 	func testAnyOfParsesAnArrayOfMatchesPreservingOrder() {
-		let xyz = anyOf(["x", "y", "z"])
-		assertTree(xyz, "xy", ==, ["x", "y"])
-		assertTree(xyz, "yx", ==, ["y", "x"])
-		assertTree(xyz, "zxy", ==, ["z", "x", "y"])
+		assertTree(any, "xy", ==, ["x", "y"])
+		assertTree(any, "yx", ==, ["y", "x"])
+		assertTree(any, "zxy", ==, ["z", "x", "y"])
 	}
 
 	func testAnyOfRejectsWhenNoneMatch() {
@@ -59,18 +57,16 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAnyOfOnlyParsesFirstMatch() {
-		let xyz = anyOf(["x", "y", "z"])
-		assertTree(xyz, "xyy", ==, ["x", "y"])
+		assertTree(any, "xyy", ==, ["x", "y"])
 	}
 
 
 	// MARK: All-of
 
 	func testAllOfParsesAnArrayOfMatchesPreservingOrder() {
-		let xyz = allOf(["x", "y", "z"])
-		assertTree(xyz, "xy", ==, ["x", "y"])
-		assertTree(xyz, "yx", ==, ["y", "x"])
-		assertTree(xyz, "zxy", ==, ["z", "x", "y"])
+		assertTree(all, "xy", ==, ["x", "y"])
+		assertTree(all, "yx", ==, ["y", "x"])
+		assertTree(all, "zxy", ==, ["z", "x", "y"])
 	}
 
 	func testAllOfRejectsWhenNoneMatch() {
@@ -78,8 +74,7 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAllOfParsesAllMatches() {
-		let xyz = allOf(["x", "y", "z"])
-		assertTree(xyz, "xyyxz", ==, ["x", "y", "y", "x", "z"])
+		assertTree(all, "xyyxz", ==, ["x", "y", "y", "x", "z"])
 	}
 
 }
@@ -92,6 +87,10 @@ let optional = (%"y")|? --> { $0 ?? "" }
 let prefixed = %"x" ++ optional --> { $0 + $1 }
 let suffixed = optional ++ %"z" --> { $0 + $1 }
 let sandwiched = prefixed ++ %"z" --> { $0 + $1 }
+
+private let one = oneOf(["x", "y", "z"])
+private let any = anyOf(["x", "y", "z"])
+private let all = allOf(["x", "y", "z"])
 
 
 // MARK: - Imports
