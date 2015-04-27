@@ -1,6 +1,9 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class AlternationTests: XCTestCase {
+
+	// MARK: Alternation
+
 	func testAlternationParsesEitherAlternative() {
 		assertAdvancedBy(alternation, "xy", 1)
 		assertAdvancedBy(alternation, "yx", 1)
@@ -13,6 +16,9 @@ final class AlternationTests: XCTestCase {
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
 		assertTree(%"x" | %"y", "xy", ==, "x")
 	}
+
+
+	// MARK: Optional
 
 	func testOptionalProducesWhenPresent() {
 		assertTree(optional, "y", ==, "y")
@@ -27,6 +33,17 @@ final class AlternationTests: XCTestCase {
 		assertTree(suffixed, "z", ==, "z")
 		assertTree(sandwiched, "xz", ==, "xz")
 	}
+
+
+	// MARK: One-of
+
+	func testOneOfParsesFirstMatch() {
+		let xyz = oneOf(["x", "y", "z"])
+		assertTree(xyz, "xyz", ==, "x")
+		assertTree(xyz, "yzx", ==, "y")
+		assertTree(xyz, "zxy", ==, "z")
+	}
+
 }
 
 // MARK: - Fixtures

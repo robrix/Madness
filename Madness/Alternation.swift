@@ -37,6 +37,14 @@ public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Pars
 }
 
 
+// MARK: - n-ary alternation
+
+/// Alternates over a sequence of literals, coalescing their parse trees.
+public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C>(input: S) -> Parser<C, C>.Function {
+	return reduce(input, none()) { $0 | %$1 }
+}
+
+
 // MARK: - Private
 
 /// Defines alternation for use in the `|` operator definitions above.
