@@ -9,6 +9,13 @@ public func >>- <C: CollectionType, T, U> (parser: Parser<C, T>.Function, f: T -
 	}
 }
 
+/// Returns a parser which always ignores its input and produces a constant value.
+///
+/// When combining parsers with `>>-`, allows constant values to be injected into the parser chain.
+public func inject<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
+	return { _, index in (value, index) }
+}
+
 
 // MARK: - Operators
 

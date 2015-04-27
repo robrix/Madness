@@ -62,6 +62,10 @@ final class FlatMapTests: XCTestCase {
 			XCTAssert(parse(tree(0), input) == nil)
 		}
 	}
+
+	func testInjectIgnoresItsInput() {
+		assertTree(inject("a"), "b", ==, "a")
+	}
 }
 
 
