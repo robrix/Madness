@@ -68,6 +68,22 @@ final class MapTests: XCTestCase {
 	}
 
 
+	// MARK: map
+
+	func testMapTransformsParserOutput() {
+		assertTree(toString <^> %123, [123], ==, "123")
+	}
+
+	func testMapHasHigherPrecedenceThanFlatMap() {
+		let addTwo = { $0 + 2 }
+		let triple = { $0 * 3 }
+
+		let parser: Parser<[Int], Int>.Function = addTwo <^> %2 >>- { i in triple <^> pure(i) }
+
+		assertTree(parser, [2], ==, 12)
+	}
+
+
 	// MARK: pure
 
 	func testPureIgnoresItsInput() {

@@ -12,6 +12,14 @@ public func >>- <C: CollectionType, T, U> (parser: Parser<C, T>.Function, f: T -
 }
 
 
+// MARK: - map
+
+/// Returns a parser which applies `f` to transform the output of `parser`.
+public func <^> <C: CollectionType, T, U> (f: T -> U, parser: Parser<C, T>.Function) -> Parser<C, U>.Function {
+	return parser >>- { pure(f($0)) }
+}
+
+
 // MARK: - pure
 
 /// Returns a parser which always ignores its input and produces a constant value.
@@ -28,4 +36,12 @@ public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
 infix operator >>- {
 	associativity left
 	precedence 150
+}
+
+/// Map operator.
+infix operator <^> {
+	associativity left
+
+	// Higher precedence than `>>-`.
+	precedence 155
 }
