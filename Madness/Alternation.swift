@@ -51,7 +51,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
-		return anyOf(rest) >>- { pure([match] + $0) } | pure([match])
+		return prepend(match) <^> anyOf(rest) | pure([match])
 	}
 }
 
@@ -60,7 +60,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 /// Each literal will be matched as many times as it is found.
 public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
 	return oneOf(input) >>- { match in
-		allOf(input) >>- { pure([match] + $0) } | pure([match])
+		prepend(match) <^> allOf(input) | pure([match])
 	}
 }
 
@@ -70,6 +70,11 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 /// Defines alternation for use in the `|` operator definitions above.
 private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
 	return left(input, index).map { (.left($0), $1) } ?? right(input, index).map { (.right($0), $1) }
+}
+
+/// Curried function that prepends a value to an array.
+private func prepend<T>(value: T) -> [T] -> [T] {
+	return { [value] + $0 }
 }
 
 
