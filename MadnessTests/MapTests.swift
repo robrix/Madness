@@ -83,6 +83,10 @@ final class MapTests: XCTestCase {
 		assertTree(parser, [2], ==, 12)
 	}
 
+	func testCurriedMap() {
+		assertTree(%123 |> map(toString), [123], ==, "123")
+	}
+
 
 	// MARK: pure
 
