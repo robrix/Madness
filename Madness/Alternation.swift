@@ -37,6 +37,34 @@ public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Pars
 }
 
 
+// MARK: - n-ary alternation
+
+/// Alternates over a sequence of literals, coalescing their parse trees.
+public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C>(input: S) -> Parser<C, C>.Function {
+	return reduce(input, none()) { $0 | %$1 }
+}
+
+/// Given a set of literals, parses an array of any matches in the order they were found.
+///
+/// Each literal will only match the first time.
+public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: Set<C>) -> Parser<C, [C]>.Function {
+	return oneOf(set) >>- { match in
+		var rest = set
+		rest.remove(match)
+		return anyOf(rest) >>- { pure([match] + $0) } | pure([match])
+	}
+}
+
+/// Given a set of literals, parses an array of all matches in the order they were found.
+///
+/// Each literal will be matched as many times as it is found.
+public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
+	return oneOf(input) >>- { match in
+		allOf(input) >>- { pure([match] + $0) } | pure([match])
+	}
+}
+
+
 // MARK: - Private
 
 /// Defines alternation for use in the `|` operator definitions above.
