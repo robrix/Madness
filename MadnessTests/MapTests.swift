@@ -25,7 +25,10 @@ private func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 	return left.values == right.values && left.children == right.children
 }
 
-final class FlatMapTests: XCTestCase {
+final class MapTests: XCTestCase {
+
+	// MARK: flatMap
+
 	func testFlatMap() {
 		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
 		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
@@ -61,7 +64,11 @@ final class FlatMapTests: XCTestCase {
 		for input in failures {
 			XCTAssert(parse(tree(0), input) == nil)
 		}
+
 	}
+
+
+	// MARK: pure
 
 	func testPureIgnoresItsInput() {
 		assertTree(pure("a"), "b", ==, "a")
