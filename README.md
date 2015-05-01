@@ -57,6 +57,24 @@ See `Madness.playground` for some examples of parsing with Madness.
 
 	parses `x`, and if it fails, `y`, and produces parses as `Either<X, Y>`. If `x` and `y` are of the same type, then it produces parses as `X`.
 
+	```swift
+	oneOf([x1, x2, x3])
+	```
+
+	tries a sequence of parsers until the first success, producing parses as `X`
+
+	```swift
+	anyOf(["x", "y", "z"])
+	```
+
+	tries to parse any of a set of literals in sequence, collecting each unique successful parse into an array until none match
+
+	```swift
+	allOf(["x", "y", "z"])
+	```
+
+	greedier than `anyOf`, parses every match from a set of literals in sequence, including duplicates
+
 - **Repetition**
 
 	```swift
