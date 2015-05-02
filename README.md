@@ -67,13 +67,13 @@ See `Madness.playground` for some examples of parsing with Madness.
 	anyOf(["x", "y", "z"])
 	```
 
-	tries to parse any of a set of literals in sequence, collecting each unique successful parse into an array until none match
+	tries to parse one each of a set of literals in sequence, collecting each successful parse into an array until none match
 
 	```swift
 	allOf(["x", "y", "z"])
 	```
 
-	greedier than `anyOf`, parses every match from a set of literals in sequence, including duplicates
+	greedier than `anyOf`, parsing every match from a set of literals in sequence, including duplicates
 
 - **Repetition**
 
