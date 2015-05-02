@@ -7,12 +7,12 @@ public func ++ <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Pa
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
 public func ++ <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T>.Function {
-	return concatenate(left, right) --> { x, _ in x }
+	return concatenate(left, right) |> map { x, _ in x }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `left`’s parse tree.
 public func ++ <C: CollectionType, T> (left: Parser<C, Ignore>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return concatenate(left, right) --> { $1 }
+	return concatenate(left, right) |> map { _, y in y }
 }
 
 /// Parses the concatenation of `left` and `right, dropping both parse trees.
@@ -43,3 +43,8 @@ private func concatenate<C: CollectionType, T, U>(left: Parser<C, T>.Function, r
 		}
 	} ?? nil
 }
+
+
+// MARK: Imports
+
+import Prelude

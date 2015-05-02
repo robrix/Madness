@@ -35,7 +35,7 @@ final class MapTests: XCTestCase {
 			{ n in
 				let line: Parser<String, String>.Function = ignore(%"\t" * n) ++ item
 				return line >>- { itemContent in
-					(tree(n + 1)* --> { children in Tree(itemContent, children) })
+					(tree(n + 1)* |> map { children in Tree(itemContent, children) })
 				}
 			}
 		}
