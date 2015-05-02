@@ -61,19 +61,19 @@ See `Madness.playground` for some examples of parsing with Madness.
 	oneOf([x1, x2, x3])
 	```
 
-	tries a sequence of parsers until the first success, producing parses as `X`
+	tries a sequence of parsers until the first success, producing parses as `X`.
 
 	```swift
 	anyOf(["x", "y", "z"])
 	```
 
-	tries to parse one each of a set of literals in sequence, collecting each successful parse into an array until none match
+	tries to parse one each of a set of literals in sequence, collecting each successful parse into an array until none match.
 
 	```swift
 	allOf(["x", "y", "z"])
 	```
 
-	greedier than `anyOf`, parsing every match from a set of literals in sequence, including duplicates
+	greedier than `anyOf`, parsing every match from a set of literals in sequence, including duplicates.
 
 - **Repetition**
 
