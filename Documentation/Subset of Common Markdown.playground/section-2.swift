@@ -42,7 +42,7 @@ enum Node: Printable {
 
 // MARK: - Parsing rules
 
-typealias NodeParser = Parser<String, ()>.Function -> Parser<String, Node>.Function
+typealias NodeParser = Parser<String, Ignore>.Function -> Parser<String, Node>.Function
 
 let element: NodeParser = fix { element in
 	{ prefix in
@@ -60,7 +60,7 @@ let element: NodeParser = fix { element in
 	}
 }
 
-let ok: Parser<String, ()>.Function = { ((), $1) }
+let ok: Parser<String, Ignore>.Function = { (Ignore(), $1) }
 let parsed = parse(element(ok), "> # hello\n> \n> hello\n> there\n> \n> \n")
 if let translated = parsed.0 {
 	translated.description
