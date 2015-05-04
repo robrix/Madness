@@ -19,10 +19,10 @@ enum Term: Printable {
 let symbol = %("a"..."z")
 
 let term: Parser<String, Term>.Function = fix { (term: Parser<String, Term>.Function) -> Parser<String, Term>.Function in
-	let variable: Parser<String, Term>.Function = symbol --> { Term.Variable($0) }
-	let abstraction: Parser<String, Term>.Function = ignore("λ") ++ symbol ++ ignore(".") ++ term --> { Term.Abstraction($0, Box($1)) }
+	let variable: Parser<String, Term>.Function = symbol |> map { Term.Variable($0) }
+	let abstraction: Parser<String, Term>.Function = ignore("λ") ++ symbol ++ ignore(".") ++ term |> map { Term.Abstraction($0, Box($1)) }
 	let parenthesized: Parser<String, (Term, Term)>.Function = ignore("(") ++ term ++ ignore(" ") ++ term ++ ignore(")")
-	let application: Parser<String, Term>.Function = parenthesized --> { (function: Term, argument: Term) -> Term in
+	let application: Parser<String, Term>.Function = parenthesized |> map { (function: Term, argument: Term) -> Term in
 		Term.Application(Box(function), Box(argument))
 	}
 	return variable | abstraction | application
