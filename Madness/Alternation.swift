@@ -2,7 +2,7 @@
 
 /// Parses `parser` 0 or one time.
 public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-    return first <^> (parser * (0...1))
+    return first <^> parser * (0...1)
 }
 
 /// Parses `parser` 0 or one time dropping the parse tree.
@@ -51,7 +51,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
-		return prepend(match) <^> anyOf(rest) | pure([match])
+		return (prepend(match) <^> anyOf(rest)) | pure([match])
 	}
 }
 
@@ -60,7 +60,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 /// Each literal will be matched as many times as it is found.
 public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
 	return oneOf(input) >>- { match in
-		prepend(match) <^> allOf(input) | pure([match])
+		(prepend(match) <^> allOf(input)) | pure([match])
 	}
 }
 

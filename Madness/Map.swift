@@ -40,13 +40,11 @@ public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
 /// Flat map operator.
 infix operator >>- {
 	associativity left
-	precedence 150
+	precedence 100
 }
 
 /// Map operator.
 infix operator <^> {
 	associativity left
-
-	// Higher precedence than `>>-`.
-	precedence 155
+	precedence 130
 }

@@ -8,9 +8,9 @@ final class CollectionTests: XCTestCase {
 
 		let fibonacci: (Int, Int) -> Fibonacci = fix { fibonacci in
 			{ (x: Int, y: Int) -> Fibonacci in
-				%(x + y) >>- { (xy: Int) -> Fibonacci in
+				(%(x + y) >>- { (xy: Int) -> Fibonacci in
 					fibonacci(y, xy) |> map { [ xy ] + $0 }
-				} | { ([], $1) }
+				}) | { ([], $1) }
 			}
 		}
 
