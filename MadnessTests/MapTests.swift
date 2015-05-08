@@ -25,14 +25,17 @@ private func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 	return left.values == right.values && left.children == right.children
 }
 
-final class FlatMapTests: XCTestCase {
+final class MapTests: XCTestCase {
+
+	// MARK: flatMap
+
 	func testFlatMap() {
 		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
 		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
 			{ n in
 				let line: Parser<String, String>.Function = ignore(%"\t" * n) ++ item
 				return line >>- { itemContent in
-					(tree(n + 1)* --> { children in Tree(itemContent, children) })
+					(tree(n + 1)* |> map { children in Tree(itemContent, children) })
 				}
 			}
 		}
@@ -61,7 +64,31 @@ final class FlatMapTests: XCTestCase {
 		for input in failures {
 			XCTAssert(parse(tree(0), input) == nil)
 		}
+
 	}
+
+
+	// MARK: map
+
+	func testMapTransformsParserOutput() {
+		assertTree(toString <^> %123, [123], ==, "123")
+	}
+
+	func testMapHasHigherPrecedenceThanFlatMap() {
+		let addTwo = { $0 + 2 }
+		let triple = { $0 * 3 }
+
+		let parser: Parser<[Int], Int>.Function = addTwo <^> %2 >>- { i in triple <^> pure(i) }
+
+		assertTree(parser, [2], ==, 12)
+	}
+
+	func testCurriedMap() {
+		assertTree(%123 |> map(toString), [123], ==, "123")
+	}
+
+
+	// MARK: pure
 
 	func testPureIgnoresItsInput() {
 		assertTree(pure("a"), "b", ==, "a")
