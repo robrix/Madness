@@ -43,7 +43,16 @@ public struct Error<I: ForwardIndexType>: Printable {
 }
 
 
-// MARK: - Imports
+/// Adds a name to parse errors.
+public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T>.Function) -> Parser<C, T>.Function {
+	return { input, index in
+		parser(input, index).either(
+			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", _index: $0._index, children: $0.children)) },
+			ifRight: Either.right)
+	}
+}
+
 
 import Box
+import Either
 import Prelude
