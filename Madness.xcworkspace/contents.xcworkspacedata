@@ -30,6 +30,12 @@
       location = "group:Carthage/Checkouts/Either/Either.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/Memo/Memo.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Carthage/Checkouts/Prelude/Prelude.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Carthage/Checkouts/Stream/Stream.xcodeproj">
    </FileRef>
 </Workspace>
