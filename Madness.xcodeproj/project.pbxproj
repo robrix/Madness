@@ -15,6 +15,8 @@
 		D421A2AD1A9A9540009AC3B1 /* ReductionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */; };
 		D47B10761A9A9A1C006701A8 /* Reduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B10751A9A9A1C006701A8 /* Reduction.swift */; };
 		D47B10771A9A9A1C006701A8 /* Reduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B10751A9A9A1C006701A8 /* Reduction.swift */; };
+		D4809FD31AFD50970084B8FE /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD21AFD50970084B8FE /* Prism.swift */; };
+		D4809FD41AFD51640084B8FE /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD21AFD50970084B8FE /* Prism.swift */; };
 		D490927A1A98F11A00275C79 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49092791A98F11A00275C79 /* CollectionTests.swift */; };
 		D490927B1A98F11A00275C79 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49092791A98F11A00275C79 /* CollectionTests.swift */; };
 		D4BC5E021A98C8B4008C6851 /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BC5DF71A98C8B4008C6851 /* Madness.framework */; };
@@ -79,6 +81,7 @@
 		D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreTests.swift; sourceTree = "<group>"; };
 		D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReductionTests.swift; path = MadnessTests/ReductionTests.swift; sourceTree = SOURCE_ROOT; };
 		D47B10751A9A9A1C006701A8 /* Reduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reduction.swift; sourceTree = "<group>"; };
+		D4809FD21AFD50970084B8FE /* Prism.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prism.swift; sourceTree = "<group>"; };
 		D49092791A98F11A00275C79 /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
 		D4BC5DF71A98C8B4008C6851 /* Madness.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Madness.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4BC5E011A98C8B4008C6851 /* Madness-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Madness-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +186,7 @@
 				D421A2A51A9A8DD4009AC3B1 /* Ignore.swift */,
 				D47B10751A9A9A1C006701A8 /* Reduction.swift */,
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
+				D4809FD21AFD50970084B8FE /* Prism.swift */,
 				D4FC47B41A37E47C00D23A6F /* Supporting Files */,
 			);
 			path = Madness;
@@ -398,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C2EDAF1A98D53400054FAA /* Alternation.swift in Sources */,
+				D4809FD41AFD51640084B8FE /* Prism.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
 				D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */,
@@ -427,6 +432,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C2EDAE1A98D52B00054FAA /* Alternation.swift in Sources */,
+				D4809FD31AFD50970084B8FE /* Prism.swift in Sources */,
 				D4FC47CE1A37E48800D23A6F /* Parser.swift in Sources */,
 				D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */,
