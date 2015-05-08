@@ -18,6 +18,10 @@ final class ErrorTests: XCTestCase {
 	func testParseError() {
 		assert(parse(lambda, "λx.").left?.depth, ==, 5)
 	}
+
+	func testParseNaming() {
+		assert(parse(lambda |> describeAs("lambda"), "λx.").left, !=, nil)
+	}
 }
 
 
@@ -25,4 +29,5 @@ final class ErrorTests: XCTestCase {
 
 import Assertions
 import Madness
+import Prelude
 import XCTest
