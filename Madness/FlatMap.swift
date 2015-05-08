@@ -7,6 +7,13 @@ public func >>- <C: CollectionType, T, U> (parser: Parser<C, T>.Function, f: T -
 	return { input, index in parser(input, index).flatMap { f($0)(input, $1) } }
 }
 
+/// Returns a parser which always ignores its input and produces a constant value.
+///
+/// When combining parsers with `>>-`, allows constant values to be injected into the parser chain.
+public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
+	return { _, index in Either.right(value, index) }
+}
+
 
 // MARK: - Operators
 
@@ -15,3 +22,6 @@ infix operator >>- {
 	associativity left
 	precedence 150
 }
+
+
+import Either

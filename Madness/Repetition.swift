@@ -39,7 +39,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 
 /// Parses `parser` the number of times specified in `interval`.
 ///
-/// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n+1` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
+/// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.end <= 0 { return { .right([], $1) } }
 
@@ -49,7 +49,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 
 /// Parses `parser` the number of times specified in `interval`.
 ///
-/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n` repetitions; `m..<Int.max` means at least `m` repetitions; `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
+/// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n-1` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.isEmpty { return { .left(.leaf("cannot parse an empty interval of repetitions", $1)) } }
 	return parser * (interval.start...decrement(interval.end))

@@ -20,6 +20,11 @@ public func parse<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, inp
 
 // MARK: - Terminals
 
+/// Returns a parser which never parses its input.
+public func none<C: CollectionType, Tree>(string: String = "no way forward") -> Parser<C, Tree>.Function {
+	return { _, index in Either.left(Error.leaf(string, index)) }
+}
+
 /// Returns a parser which parses any single character.
 public func any(input: String, index: String.Index) -> Parser<String, String>.Result {
 	return index < input.endIndex ? .right(input[index..<advance(index, 1)], index.successor()) : .left(.leaf("", index))

@@ -168,6 +168,7 @@
 				D4FC47B21A37E47C00D23A6F /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		D4FC47B21A37E47C00D23A6F /* Products */ = {
 			isa = PBXGroup;
