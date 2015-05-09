@@ -7,4 +7,12 @@ func literal<T: Equatable>(element: T) -> Prism<Stream<T>, T> {
 }
 
 
+func concatenate<T, U, V>(left: Prism<Stream<T>, U>, right: Prism<Stream<T>, V>) -> Prism<Stream<T>, (U, V)> {
+	return Prism(
+		forward: { (left.forward($0) &&& right.forward($0.rest)) },
+		backward: { left.backward($0.0) ++ right.backward($0.1) })
+}
+
+
+import Prelude
 import Stream
