@@ -11,14 +11,6 @@ final class IgnoreTests: XCTestCase {
 		assertTree(%"y" <* ignored, "yx", ==, "y")
 	}
 
-	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
-		assertTree(ignored ||> %"y", "y", ==, "y")
-	}
-
-	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
-		assertTree(%"y" <|| ignored, "y", ==, "y")
-	}
-
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
 		assertTree(ignored* *> %"y", "y", ==, "y")
 	}
