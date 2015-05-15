@@ -3,9 +3,9 @@
 Madness is a Swift µframework for parsing strings in simple context-free grammars. Combine parsers from simple Swift expressions and parse away:
 
 ```swift
-let digit = %("0"..."9") | %("a"..."f") | %("A"..."F")
-let hex = digit+ --> { strtol(join("", $0), nil, 16) }
-parse(ignore("0x") ++ hex, "0xdeadbeef") // => 3,735,928,559
+let digit = %("0"..."9") <|> %("a"..."f") <|> %("A"..."F")
+let hex = digit+ |> map { strtol(join("", $0), nil, 16) }
+parse(%"0x" *> hex, "0xdeadbeef") // => 3,735,928,559
 ```
 
 Your parsers can produce your own model objects directly, making Madness ideal for experimenting with grammars, for example in a playground.
@@ -44,7 +44,7 @@ See `Madness.playground` for some examples of parsing with Madness.
 - **Concatenation**
 
 	```swift
-	x ++ y ++ z
+	x <*> y <*> z
 	```
 
 	parses `x` followed by `y` and produces parses as `(X, Y)`.
@@ -52,7 +52,7 @@ See `Madness.playground` for some examples of parsing with Madness.
 - **Alternation**
 
 	```swift
-	x | y
+	x <|> y
 	```
 
 	parses `x`, and if it fails, `y`, and produces parses as `Either<X, Y>`. If `x` and `y` are of the same type, then it produces parses as `X`.
@@ -104,16 +104,16 @@ See `Madness.playground` for some examples of parsing with Madness.
 - **Mapping**
 
 	```swift
-	x --> { $0 }
+	x |> map { $0 }
+	{ $0 } <^> x
+	x --> { _, _, y in y }
 	```
 
-	parses `x` and maps its parse trees using the passed function. Use mapping to build your model objects.
+	parses `x` and maps its parse trees using the passed function. Use mapping to build your model objects. `-->` passes the input and parsed range as well as the parsed data for e.g. error reporting or AST construction.
 
 - **Ignoring**
 
-	Some text is just decoration. `ignore` takes a string and returns a parser which will match that string but not produce it in parses. Another form takes an arbitrary parser and drops its parses.
-
-	(Technically it produces `()` instead, but concatenation, alternation, and repetition of `()` will omit it.)
+	Some text is just decoration. `x *> y` parses `x` and then `y` just like `<*>`, but drops the result of `x`. `x <* y` does the same, but drops the result of `y`.
 
 API documentation is in the source.
 
@@ -126,8 +126,8 @@ Madness employs simple—naïve, even—recursive descent parsing. Among other t
 
 ```swift
 let number = %("0"..."9")
-let addition = expression ++ %"+" ++ expression
-let expression = addition | number
+let addition = expression <*> %"+" <*> expression
+let expression = addition <|> number
 ```
 
 `expression` is left-recursive: its first term is `addition`, whose first term is `expression`. This will cause infinite loops every time `expression` is invoked; try to avoid it.
@@ -138,7 +138,7 @@ let expression = addition | number
 Alternations try their left operand before their operand, and are short-circuiting. This means that they disambiguate (arbitrarily) to the left, which can be handy; but this can have unintended consequences. For example, this parser:
 
 ```swift
-%"x" | %"xx"
+%"x" <|> %"xx"
 ```
 
 will not parse “xx” completely.
