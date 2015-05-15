@@ -30,10 +30,10 @@ final class MapTests: XCTestCase {
 	// MARK: flatMap
 
 	func testFlatMap() {
-		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
+		let item = %"-" *> %("a"..."z") <* %"\n"
 		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
 			{ n in
-				let line: Parser<String, String>.Function = ignore(%"\t" * n) ++ item
+				let line: Parser<String, String>.Function = (%"\t" * n) *> item
 				return line >>- { itemContent in
 					(tree(n + 1)* |> map { children in Tree(itemContent, children) })
 				}

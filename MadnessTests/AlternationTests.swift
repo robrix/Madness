@@ -84,9 +84,9 @@ final class AlternationTests: XCTestCase {
 private let alternation = %"x" | (%"y" --> { _, _, _ in 1 })
 
 private let optional = (%"y")|? |> map { $0 ?? "" }
-private let prefixed = %"x" ++ optional |> map { $0 + $1 }
-private let suffixed = optional ++ %"z" |> map { $0 + $1 }
-private let sandwiched = prefixed ++ %"z" |> map { $0 + $1 }
+private let prefixed = %"x" <*> optional |> map { $0 + $1 }
+private let suffixed = optional <*> %"z" |> map { $0 + $1 }
+private let sandwiched = prefixed <*> %"z" |> map { $0 + $1 }
 
 private let one = oneOf(["x", "y", "z"])
 private let any = anyOf(["x", "y", "z"])

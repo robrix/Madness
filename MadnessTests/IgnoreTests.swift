@@ -1,18 +1,14 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class IgnoreTests: XCTestCase {
-	let ignored = ignore("x")
+	let ignored = %"x"
 
 	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
-		assertTree(ignored ++ %"y", "xy", ==, "y")
+		assertTree(ignored *> %"y", "xy", ==, "y")
 	}
 
 	func testIgnoredInputDoesNotGetConcatenatedAtRight() {
-		assertTree(%"y" ++ ignored, "yx", ==, "y")
-	}
-
-	func testIgnoringDistributesOverConcatenation() {
-		assertAdvancedBy(ignored ++ ignored, "xx", 2)
+		assertTree(%"y" <* ignored, "yx", ==, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
@@ -28,11 +24,11 @@ final class IgnoreTests: XCTestCase {
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
-		assertTree(ignored* ++ %"y", "y", ==, "y")
+		assertTree(ignored* *> %"y", "y", ==, "y")
 	}
 
 	func testRepeatedIgnoredParsesAreDropped() {
-		assertTree(ignored* ++ %"y", "xxy", ==, "y")
+		assertTree(ignored* *> %"y", "xxy", ==, "y")
 	}
 }
 
