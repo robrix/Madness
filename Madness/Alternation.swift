@@ -2,7 +2,7 @@
 
 /// Parses `parser` 0 or one time.
 public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-    return parser * (0...1) --> first
+    return first <^> parser * (0...1)
 }
 
 /// Parses `parser` 0 or one time dropping the parse tree.
@@ -18,22 +18,22 @@ public func | <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Par
 
 /// Parses either `left` or `right` and coalesces their trees.
 public func | <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return alternate(left, right) --> { $0.either(ifLeft: id, ifRight: id) }
+	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
 }
 
 /// Parses either `left` or `right`, dropping `right`’s parse tree.
 public func | <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) --> { $0.either(ifLeft: unit, ifRight: const(nil)) }
+	return alternate(left, right) |> map { $0.either(ifLeft: unit, ifRight: const(nil)) }
 }
 
 /// Parses either `left` or `right`, dropping `left`’s parse tree.
 public func | <C: CollectionType, T> (left: Parser<C, Ignore>.Function, right: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) --> { $0.either(ifLeft: const(nil), ifRight: unit) }
+	return alternate(left, right) |> map { $0.either(ifLeft: const(nil), ifRight: unit) }
 }
 
 /// Parses either `left` or `right`, dropping both parse trees.
 public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return alternate(left, right) --> { $0.either(ifLeft: id, ifRight: id) }
+	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
 }
 
 
@@ -51,7 +51,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
-		return anyOf(rest) >>- { pure([match] + $0) } | pure([match])
+		return (prepend(match) <^> anyOf(rest)) | pure([match])
 	}
 }
 
@@ -60,7 +60,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 /// Each literal will be matched as many times as it is found.
 public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
 	return oneOf(input) >>- { match in
-		allOf(input) >>- { pure([match] + $0) } | pure([match])
+		(prepend(match) <^> allOf(input)) | pure([match])
 	}
 }
 
@@ -77,6 +77,11 @@ private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, rig
 /// Disjunction of two `Either`s.
 private func ||| <A, B> (a: Either<A, B>, b: Either<A, B>) -> Either<(A, A), B> {
 	return (a.right ?? b.right).map(Either<(A, A), B>.right) ?? (a.left &&& b.left).map(Either<(A, A), B>.left)!
+}
+
+/// Curried function that prepends a value to an array.
+private func prepend<T>(value: T) -> [T] -> [T] {
+	return { [value] + $0 }
 }
 
 

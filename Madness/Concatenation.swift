@@ -2,12 +2,12 @@
 
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
 public func ++ <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, (T, U)>.Function {
-	return left >>- { x in right --> { y in (x, y) } }
+	return left >>- { x in { y in (x, y) } <^> right }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.
 public func ++ <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T>.Function {
-	return left >>- { x in right --> { _, _, _ in x } }
+	return left >>- { x in  const(x) <^> right }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `left`’s parse tree.
@@ -32,7 +32,5 @@ infix operator ++ {
 	precedence 160
 }
 
-
-// MARK: - Imports
 
 import Prelude

@@ -3,12 +3,12 @@
 let lambda: Parser<String, Lambda>.Function = fix { term in
 	let symbol: Parser<String, String>.Function = %("a"..."z")
 
-	let variable: Parser<String, Lambda>.Function = symbol --> { Lambda.Variable($0) }
-	let abstraction: Parser<String, Lambda>.Function = ignore("λ") ++ symbol ++ ignore(".") ++ term --> { Lambda.Abstraction($0, Box($1)) }
+	let variable: Parser<String, Lambda>.Function = { Lambda.Variable($0) } <^> symbol
+	let abstraction: Parser<String, Lambda>.Function = { Lambda.Abstraction($0, Box($1)) } <^> ignore("λ") ++ symbol ++ ignore(".") ++ term
 	let parenthesized: Parser<String, (Lambda, Lambda)>.Function = ignore("(") ++ term ++ ignore(" ") ++ term ++ ignore(")")
-	let application: Parser<String, Lambda>.Function = parenthesized --> { (function: Lambda, argument: Lambda) -> Lambda in
+	let application: Parser<String, Lambda>.Function = { (function: Lambda, argument: Lambda) -> Lambda in
 		Lambda.Application(Box(function), Box(argument))
-	}
+	} <^> parenthesized
 	return variable | abstraction | application
 }
 

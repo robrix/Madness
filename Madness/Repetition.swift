@@ -43,7 +43,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
 	if interval.end <= 0 { return { .right([], $1) } }
 
-	return parser >>- { x in parser * decrement(interval) --> { [x] + $0 } }
+	return (parser >>- { x in { [x] + $0 } <^> (parser * decrement(interval)) })
 		|	{ interval.start <= 0 ? .right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
@@ -79,4 +79,5 @@ postfix operator + {}
 
 // MARK: - Imports
 
+import Either
 import Prelude
