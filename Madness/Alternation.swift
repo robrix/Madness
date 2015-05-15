@@ -73,7 +73,7 @@ postfix operator |? {}
 
 infix operator <|> {
 	associativity left
-	precedence 95
+	precedence 120
 }
 
 
