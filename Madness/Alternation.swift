@@ -16,16 +16,6 @@ public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Pars
 	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
 }
 
-/// Parses either `left` or `right`, dropping `right`’s parse tree.
-public func <|| <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: unit, ifRight: const(nil)) }
-}
-
-/// Parses either `left` or `right`, dropping `left`’s parse tree.
-public func ||> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, U?>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: const(nil), ifRight: unit) }
-}
-
 
 // MARK: - n-ary alternation
 
