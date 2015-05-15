@@ -8,7 +8,7 @@ let lambda: Parser<String, Lambda>.Function = fix { term in
 	let application: Parser<String, Lambda>.Function = %"(" *> term <*> (%" " *> term) <* %")" |> map { (function: Lambda, argument: Lambda) -> Lambda in
 		Lambda.Application(Box(function), Box(argument))
 	}
-	return variable | abstraction | application
+	return variable <||> abstraction <||> application
 }
 
 enum Lambda: Printable {

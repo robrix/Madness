@@ -12,15 +12,11 @@ final class IgnoreTests: XCTestCase {
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
-		assertTree(ignored | %"y", "y", ==, "y")
+		assertTree(ignored ||> %"y", "y", ==, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
-		assertTree(%"y" | ignored, "y", ==, "y")
-	}
-
-	func testIgnoringDistributesOverAlternation() {
-		assertMatched(ignored | ignored, "x")
+		assertTree(%"y" <|| ignored, "y", ==, "y")
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
