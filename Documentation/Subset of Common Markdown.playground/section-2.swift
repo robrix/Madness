@@ -1,12 +1,12 @@
 // MARK: - Lexing rules
 
-let newline = ignore("\n")
-let ws = %" " | %"\t"
+let newline = %"\n"
+let ws = %" " <|> %"\t"
 let lower = %("a"..."z")
 let upper = %("A"..."Z")
 let digit = %("0"..."9")
-let text = lower | upper | digit | ws
-let restOfLine: Parser<String, String>.Function = (text+ |> map { "".join($0) }) ++ newline
+let text = lower <|> upper <|> digit <|> ws
+let restOfLine: Parser<String, String>.Function = (text+ |> map { "".join($0) }) <* newline
 
 
 // MARK: - AST
@@ -42,26 +42,26 @@ enum Node: Printable {
 
 // MARK: - Parsing rules
 
-typealias NodeParser = Parser<String, Ignore>.Function -> Parser<String, Node>.Function
+typealias NodeParser = Parser<String, ()>.Function -> Parser<String, Node>.Function
 
 let element: NodeParser = fix { element in
 	{ prefix in
 		let prefixedElements: NodeParser = {
-			let each = (element(prefix ++ $0) | (prefix ++ $0 ++ newline)) |> map { $0.map { [ $0 ] } ?? [] }
-      return (each)+ |> map { Node.Blockquote(join([], $0)) }
+			let each = (element(prefix *> $0) <|> (prefix *> $0 <*> newline)) |> map { $0.map { [ $0 ] } ?? [] }
+			return each+ |> map { Node.Blockquote(join([], $0)) }
 		}
 
 		let octothorpes: Parser<String, Int>.Function = (%"#" * (1..<7)) |> map { $0.count }
-		let header: Parser<String, Node>.Function = prefix ++ octothorpes ++ ignore(" ") ++ restOfLine |> map { (level: Int, title: String) in Node.Header(level, title) }
-		let paragraph: Parser<String, Node>.Function = (prefix ++ restOfLine)+ |> map { Node.Paragraph("\n".join($0)) }
-		let blockquote: Parser<String, Node>.Function = prefix ++ { prefixedElements(ignore("> "))($0, $1) }
+		let header: Parser<String, Node>.Function = prefix *> octothorpes <*> (%" " *> restOfLine) |> map { (level: Int, title: String) in Node.Header(level, title) }
+		let paragraph: Parser<String, Node>.Function = (prefix *> restOfLine)+ |> map { Node.Paragraph("\n".join($0)) }
+		let blockquote: Parser<String, Node>.Function = prefix *> { prefixedElements(%"> ")($0, $1) }
 
-		return header | paragraph | blockquote
+		return header <|> paragraph <|> blockquote
 	}
 }
 
-let ok: Parser<String, Ignore>.Function = { (Ignore(), $1) }
+let ok: Parser<String, ()>.Function = { .right((), $1) }
 let parsed = parse(element(ok), "> # hello\n> \n> hello\n> there\n> \n> \n")
-if let translated = parsed.0 {
+if let translated = parsed.0.right {
 	translated.description
 }
