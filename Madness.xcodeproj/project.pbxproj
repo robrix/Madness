@@ -17,8 +17,8 @@
 		D47B10771A9A9A1C006701A8 /* Reduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B10751A9A9A1C006701A8 /* Reduction.swift */; };
 		D4809FD31AFD50970084B8FE /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD21AFD50970084B8FE /* Prism.swift */; };
 		D4809FD41AFD51640084B8FE /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD21AFD50970084B8FE /* Prism.swift */; };
-		D4809FD61AFD55DE0084B8FE /* Literals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD51AFD55DE0084B8FE /* Literals.swift */; };
-		D4809FD71AFD55DE0084B8FE /* Literals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD51AFD55DE0084B8FE /* Literals.swift */; };
+		D4809FD61AFD55DE0084B8FE /* Terminals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD51AFD55DE0084B8FE /* Terminals.swift */; };
+		D4809FD71AFD55DE0084B8FE /* Terminals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD51AFD55DE0084B8FE /* Terminals.swift */; };
 		D490927A1A98F11A00275C79 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49092791A98F11A00275C79 /* CollectionTests.swift */; };
 		D490927B1A98F11A00275C79 /* CollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D49092791A98F11A00275C79 /* CollectionTests.swift */; };
 		D49E34E01AFD7483006C0AB6 /* Memo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E34DE1AFD7483006C0AB6 /* Memo.framework */; };
@@ -92,7 +92,7 @@
 		D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReductionTests.swift; path = MadnessTests/ReductionTests.swift; sourceTree = SOURCE_ROOT; };
 		D47B10751A9A9A1C006701A8 /* Reduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reduction.swift; sourceTree = "<group>"; };
 		D4809FD21AFD50970084B8FE /* Prism.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prism.swift; sourceTree = "<group>"; };
-		D4809FD51AFD55DE0084B8FE /* Literals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Literals.swift; sourceTree = "<group>"; };
+		D4809FD51AFD55DE0084B8FE /* Terminals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terminals.swift; sourceTree = "<group>"; };
 		D49092791A98F11A00275C79 /* CollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTests.swift; sourceTree = "<group>"; };
 		D49E34DE1AFD7483006C0AB6 /* Memo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Memo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D49E34DF1AFD7483006C0AB6 /* Stream.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Stream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,7 +208,7 @@
 				D47B10751A9A9A1C006701A8 /* Reduction.swift */,
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
 				D4809FD21AFD50970084B8FE /* Prism.swift */,
-				D4809FD51AFD55DE0084B8FE /* Literals.swift */,
+				D4809FD51AFD55DE0084B8FE /* Terminals.swift */,
 				D4FC47B41A37E47C00D23A6F /* Supporting Files */,
 			);
 			path = Madness;
@@ -428,7 +428,7 @@
 				D4C2EDAF1A98D53400054FAA /* Alternation.swift in Sources */,
 				D4809FD41AFD51640084B8FE /* Prism.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
-				D4809FD71AFD55DE0084B8FE /* Literals.swift in Sources */,
+				D4809FD71AFD55DE0084B8FE /* Terminals.swift in Sources */,
 				D4C2EDBD1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */,
 				D47B10771A9A9A1C006701A8 /* Reduction.swift in Sources */,
@@ -459,7 +459,7 @@
 				D4C2EDAE1A98D52B00054FAA /* Alternation.swift in Sources */,
 				D4809FD31AFD50970084B8FE /* Prism.swift in Sources */,
 				D4FC47CE1A37E48800D23A6F /* Parser.swift in Sources */,
-				D4809FD61AFD55DE0084B8FE /* Literals.swift in Sources */,
+				D4809FD61AFD55DE0084B8FE /* Terminals.swift in Sources */,
 				D4C2EDBC1A98D8F800054FAA /* FlatMap.swift in Sources */,
 				D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */,
 				D47B10761A9A9A1C006701A8 /* Reduction.swift in Sources */,
