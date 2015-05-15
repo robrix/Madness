@@ -13,6 +13,8 @@
 		D421A2AA1A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */; };
 		D421A2AC1A9A9540009AC3B1 /* ReductionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */; };
 		D421A2AD1A9A9540009AC3B1 /* ReductionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */; };
+		D46C90221B067D9900975BFD /* Nonterminals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46C90211B067D9900975BFD /* Nonterminals.swift */; };
+		D46C90231B067D9900975BFD /* Nonterminals.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46C90211B067D9900975BFD /* Nonterminals.swift */; };
 		D47B10761A9A9A1C006701A8 /* Reduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B10751A9A9A1C006701A8 /* Reduction.swift */; };
 		D47B10771A9A9A1C006701A8 /* Reduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B10751A9A9A1C006701A8 /* Reduction.swift */; };
 		D4809FD31AFD50970084B8FE /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4809FD21AFD50970084B8FE /* Prism.swift */; };
@@ -90,6 +92,7 @@
 		D421A2A51A9A8DD4009AC3B1 /* Ignore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ignore.swift; sourceTree = "<group>"; };
 		D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreTests.swift; sourceTree = "<group>"; };
 		D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReductionTests.swift; path = MadnessTests/ReductionTests.swift; sourceTree = SOURCE_ROOT; };
+		D46C90211B067D9900975BFD /* Nonterminals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nonterminals.swift; sourceTree = "<group>"; };
 		D47B10751A9A9A1C006701A8 /* Reduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reduction.swift; sourceTree = "<group>"; };
 		D4809FD21AFD50970084B8FE /* Prism.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prism.swift; sourceTree = "<group>"; };
 		D4809FD51AFD55DE0084B8FE /* Terminals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Terminals.swift; sourceTree = "<group>"; };
@@ -209,6 +212,7 @@
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
 				D4809FD21AFD50970084B8FE /* Prism.swift */,
 				D4809FD51AFD55DE0084B8FE /* Terminals.swift */,
+				D46C90211B067D9900975BFD /* Nonterminals.swift */,
 				D4FC47B41A37E47C00D23A6F /* Supporting Files */,
 			);
 			path = Madness;
@@ -426,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C2EDAF1A98D53400054FAA /* Alternation.swift in Sources */,
+				D46C90231B067D9900975BFD /* Nonterminals.swift in Sources */,
 				D4809FD41AFD51640084B8FE /* Prism.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
 				D4809FD71AFD55DE0084B8FE /* Terminals.swift in Sources */,
@@ -457,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C2EDAE1A98D52B00054FAA /* Alternation.swift in Sources */,
+				D46C90221B067D9900975BFD /* Nonterminals.swift in Sources */,
 				D4809FD31AFD50970084B8FE /* Prism.swift in Sources */,
 				D4FC47CE1A37E48800D23A6F /* Parser.swift in Sources */,
 				D4809FD61AFD55DE0084B8FE /* Terminals.swift in Sources */,
