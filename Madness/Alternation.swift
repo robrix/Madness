@@ -7,12 +7,12 @@ public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) ->
 
 
 /// Parses either `left` or `right`.
-public func <||> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
+public func <|> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
 	return alternate(left, right)
 }
 
 /// Parses either `left` or `right` and coalesces their trees.
-public func <||> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
+public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
 }
 
@@ -31,7 +31,7 @@ public func ||> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: P
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
 public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C>(input: S) -> Parser<C, C>.Function {
-	return reduce(input, none()) { $0 <||> %$1 }
+	return reduce(input, none()) { $0 <|> %$1 }
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.
@@ -41,7 +41,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
-		return prepend(match) <^> anyOf(rest) <||> pure([match])
+		return prepend(match) <^> anyOf(rest) <|> pure([match])
 	}
 }
 
@@ -50,7 +50,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 /// Each literal will be matched as many times as it is found.
 public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
 	return oneOf(input) >>- { match in
-		prepend(match) <^> allOf(input) <||> pure([match])
+		prepend(match) <^> allOf(input) <|> pure([match])
 	}
 }
 
@@ -81,7 +81,7 @@ private func prepend<T>(value: T) -> [T] -> [T] {
 postfix operator |? {}
 
 
-infix operator <||> {
+infix operator <|> {
 	associativity left
 	precedence 95
 }

@@ -36,7 +36,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 	if interval.end <= 0 { return { .right([], $1) } }
 
 	return (parser >>- { x in { [x] + $0 } <^> (parser * decrement(interval)) })
-		<||> { interval.start <= 0 ? .right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
+		<|> { interval.start <= 0 ? .right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
 /// Parses `parser` the number of times specified in `interval`.

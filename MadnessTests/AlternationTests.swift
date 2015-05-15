@@ -14,7 +14,7 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertTree(%"x" <||> %"y", "xy", ==, "x")
+		assertTree(%"x" <|> %"y", "xy", ==, "x")
 	}
 
 
@@ -81,7 +81,7 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Fixtures
 
-private let alternation = %"x" <||> (%"y" --> { _, _, _ in 1 })
+private let alternation = %"x" <|> (%"y" --> { _, _, _ in 1 })
 
 private let optional = (%"y")|? |> map { $0 ?? "" }
 private let prefixed = %"x" <*> optional |> map { $0 + $1 }
