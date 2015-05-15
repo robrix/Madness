@@ -6,9 +6,7 @@
 ///
 /// This can be used to conveniently make a parser which depends on earlier parsed input, for example to parse exactly the same number of characters, or to parse structurally significant indentation.
 public func >>- <C: CollectionType, T, U> (parser: Parser<C, T>.Function, f: T -> Parser<C, U>.Function) -> Parser<C, U>.Function {
-	return { input, index in
-		parser(input, index).map { f($0)(input, $1) } ?? nil
-	}
+	return { input, index in parser(input, index).flatMap { f($0)(input, $1) } }
 }
 
 
@@ -31,7 +29,7 @@ public func map<C: CollectionType, T, U>(f: T -> U)(_ parser: Parser<C, T>.Funct
 ///
 /// When combining parsers with `>>-`, allows constant values to be injected into the parser chain.
 public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
-	return { _, index in (value, index) }
+	return { _, index in Either.right(value, index) }
 }
 
 
@@ -48,3 +46,6 @@ infix operator <^> {
 	associativity left
 	precedence 130
 }
+
+
+import Either

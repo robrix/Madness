@@ -69,7 +69,14 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 
 /// Defines alternation for use in the `|` operator definitions above.
 private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
-	return left(input, index).map { (.left($0), $1) } ?? right(input, index).map { (.right($0), $1) }
+	let a = left(input, index).map { (Either<T, U>.left($0), $1) }
+	let b = right(input, index).map { (Either<T, U>.right($0), $1) }
+	return (a ||| b).either(ifLeft: Error.withReason("no alternative matched:", index) >>> Either.left, ifRight: Either.right)
+}
+
+/// Disjunction of two `Either`s.
+private func ||| <A, B> (a: Either<A, B>, b: Either<A, B>) -> Either<(A, A), B> {
+	return (a.right ?? b.right).map(Either<(A, A), B>.right) ?? (a.left &&& b.left).map(Either<(A, A), B>.left)!
 }
 
 /// Curried function that prepends a value to an array.
