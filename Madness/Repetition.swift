@@ -10,10 +10,6 @@ public postfix func * (string: String) -> Parser<String, [String]>.Function {
 	return %(string) * (0..<Int.max)
 }
 
-/// Parses `parser` 0 or more times and drops its parse trees.
-public postfix func * <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return ignore(parser * (0..<Int.max))
-}
 
 /// Parses `parser` 1 or more times.
 public postfix func + <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
