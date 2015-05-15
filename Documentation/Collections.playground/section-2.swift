@@ -10,4 +10,5 @@ let fibonacci: (Int, Int) -> Fibonacci = fix { fibonacci in
 	}
 }
 
-parse(fibonacci(0, 1), input)
+parse(fibonacci(0, 1), input).right
+
