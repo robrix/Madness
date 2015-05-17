@@ -17,6 +17,11 @@ public func <^> <C: CollectionType, T, U> (f: T -> U, parser: Parser<C, T>.Funct
 	return parser >>- { pure(f($0)) }
 }
 
+/// Returns a parser which first parses `right`, replacing successful parses with `left`.
+public func <^ <C: CollectionType, T, U> (left: T, right: Parser<C, U>.Function) -> Parser<C, T>.Function {
+	return const(left) <^> right
+}
+
 /// Curried `<^>`. Returns a parser which applies `f` to transform the output of `parser`.
 public func map<C: CollectionType, T, U>(f: T -> U)(_ parser: Parser<C, T>.Function) -> Parser<C, U>.Function {
 	return f <^> parser
@@ -47,5 +52,12 @@ infix operator <^> {
 	precedence 130
 }
 
+/// Replace operator.
+infix operator <^ {
+	associativity left
+	precedence 130
+}
+
 
 import Either
+import Prelude
