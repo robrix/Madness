@@ -25,6 +25,10 @@ private func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
 	return left.values == right.values && left.children == right.children
 }
 
+private func == <T: Equatable, U: Equatable> (l: (T, U), r: (T, U)) -> Bool {
+	return l.0 == r.0 && l.1 == r.1
+}
+
 final class MapTests: XCTestCase {
 
 	// MARK: flatMap
@@ -81,6 +85,10 @@ final class MapTests: XCTestCase {
 		let parser: Parser<[Int], Int>.Function = addTwo <^> %2 >>- { i in triple <^> pure(i) }
 
 		assertTree(parser, [2], ==, 12)
+	}
+
+	func testReplaceConsumesItsInput() {
+		assertTree(("abc" <^ %123) ++ %0, [123, 0], ==, ("abc", 0))
 	}
 
 	func testCurriedMap() {
