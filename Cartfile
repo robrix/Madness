@@ -1,1 +1,1 @@
-github "robrix/Either" "b31d1ee"
+github "robrix/Either" ~> 1.2.2
