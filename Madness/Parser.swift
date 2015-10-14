@@ -17,7 +17,6 @@ public func parse<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, inp
 	return parser(input, input.startIndex).flatMap { $1 == input.endIndex ? .right($0) : .left(.leaf("finished parsing before end of input", $1)) }
 }
 
-
 // MARK: - Terminals
 
 /// Returns a parser which never parses its input.
@@ -26,8 +25,16 @@ public func none<C: CollectionType, Tree>(string: String = "no way forward") -> 
 }
 
 /// Returns a parser which parses any single character.
-public func any(input: String, index: String.Index) -> Parser<String, String>.Result {
-	return index < input.endIndex ? .right(input[index..<advance(index, 1)], index.successor()) : .left(.leaf("", index))
+public func any(input: String, index: String.CharacterView.Index) -> Parser<String.CharacterView, String>.Result {
+
+	if index < input.endIndex {
+		let parsed = String(input.characters[index..<index.advancedBy(1)])
+		let next = index.successor()
+		
+		return .Right((parsed, next))
+	} else {
+		return .Left(Error.leaf("", index))
+	}
 }
 
 
@@ -36,29 +43,32 @@ public func any(input: String, index: String.Index) -> Parser<String, String>.Re
 /// This overload enables e.g. `%"xyz"` to produce `String -> (String, String)`.
 public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (literal: C) -> Parser<C, C>.Function {
 	return { input, index in
-		containsAt(input, index, literal) ?
-			.right(literal, advance(index, count(literal)))
-		:	.left(.leaf("expected \(literal)", index))
+		containsAt(input, index: index, needle: literal) ?
+			.Right(literal, index.advancedBy(literal.count))
+		:	.Left(.leaf("expected \(literal)", index))
 	}
 }
 
+public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Function {
+	return String.init <^> %literal.characters
+}
 
 /// Returns a parser which parses a `literal` element from the input.
 public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (literal: C.Generator.Element) -> Parser<C, C.Generator.Element>.Function {
 	return { input, index in
 		index != input.endIndex && input[index] == literal ?
-			.right(literal, index.successor())
-		:	.left(.leaf("expected \(literal)", index))
+			.Right(literal, index.successor())
+		:	.Left(.leaf("expected \(literal)", index))
 	}
 }
 
 
 /// Returns a parser which parses any character in `interval`.
-public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String, String>.Function {
-	return { (input: String, index: String.Index) -> Parser<String, String>.Result in
+public prefix func %<I: IntervalType where I.Bound == Character>(interval: I) -> Parser<String.CharacterView, String>.Function {
+	return { (input: String.CharacterView, index: String.Index) -> Parser<String.CharacterView, String>.Result in
 		(index < input.endIndex && interval.contains(input[index])) ?
-			.right(String(input[index]), index.successor())
-		:	.left(.leaf("expected an element in interval \(interval)", index))
+			.Right(String(input[index]), index.successor())
+		:	.Left(.leaf("expected an element in interval \(interval)", index))
 	}
 }
 
@@ -85,11 +95,11 @@ public func delay<C: CollectionType, T>(parser: () -> Parser<C, T>.Function) -> 
 
 /// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
 func containsAt<C1: CollectionType, C2: CollectionType where C1.Generator.Element == C2.Generator.Element, C1.Generator.Element: Equatable>(collection: C1, index: C1.Index, needle: C2) -> Bool {
-	let needleCount = count(needle).toIntMax()
-	let range = index..<advance(index, C1.Index.Distance(needleCount), collection.endIndex)
-	if count(range).toIntMax() < needleCount { return false }
+	let needleCount = needle.count.toIntMax()
+	let range = index..<index.advancedBy(C1.Index.Distance(needleCount), limit: collection.endIndex)
+	if range.count.toIntMax() < needleCount { return false }
 
-	return reduce(lazy(zip(range, needle)).map { collection[$0] == $1 }, true) { $0 && $1 }
+	return zip(range, needle).lazy.map { collection[$0] == $1 }.reduce(true) { $0 && $1 }
 }
 
 

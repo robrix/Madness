@@ -34,7 +34,7 @@ public func map<C: CollectionType, T, U>(f: T -> U)(_ parser: Parser<C, T>.Funct
 ///
 /// When combining parsers with `>>-`, allows constant values to be injected into the parser chain.
 public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
-	return { _, index in Either.right(value, index) }
+	return { _, index in .Right(value, index) }
 }
 
 
