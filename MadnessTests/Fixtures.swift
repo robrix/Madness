@@ -1,5 +1,13 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
+// Extend String to be a CollectionType of CharacterView
+extension String : CollectionType {
+	// Swift crashes if we don't override count
+	public var count: String.Index.Distance {
+		return characters.count
+	}
+}
+
 let lambda: Parser<String.CharacterView, Lambda>.Function = fix { term in
 	let symbol: Parser<String.CharacterView, String>.Function = %("a"..."z")
 
