@@ -37,9 +37,11 @@ final class AlternationTests: XCTestCase {
 	// MARK: One-of
 
 	func testOneOfParsesFirstMatch() {
-		assertTree(one, Set(["xyz"]), ==, Set(["x"]))
-		assertTree(one, Set(["yzx"]), ==, Set(["y"]))
-		assertTree(one, Set(["zxy"]), ==, Set(["z"]))
+		let string = "xyz"
+		let eqs: (String, String) -> Bool = (==)
+		assertTree(one, string, eqs, "x")
+		assertTree(one, "yzx", ==, "y")
+		assertTree(one, "zxy", ==, "z")
 	}
 
 
@@ -76,7 +78,6 @@ final class AlternationTests: XCTestCase {
 	func testAllOfParsesAllMatches() {
 		assertTree(all, Set(["xyyxz"]), ==, [Set(["x", "y", "y", "x", "z"])])
 	}
-
 }
 
 // MARK: - Fixtures
@@ -88,9 +89,9 @@ private let prefixed = %"x" ++ optional |> map { $0 + $1 }
 private let suffixed = optional ++ %"z" |> map { $0 + $1 }
 private let sandwiched = prefixed ++ %"z" |> map { $0 + $1 }
 
-private let one = oneOf([Set(["x", "y", "z"])])
-private let any = anyOf([Set(["x", "y", "z"])])
-private let all = allOf([Set(["x", "y", "z"])])
+private let one = oneOf(["x", "y", "z"])
+private let any = anyOf(["x", "y", "z"])
+private let all = allOf(["x", "y", "z"])
 
 
 // MARK: - Imports

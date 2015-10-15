@@ -11,6 +11,14 @@ public enum Parser<C: CollectionType, Tree> {
 	public typealias Result = Either<Error<C.Index>, (Tree, C.Index)>
 }
 
+// Extend String to be a CollectionType of CharacterView
+extension String : CollectionType {
+	// Swift crashes if we don't override count
+	public var count: String.Index.Distance {
+		return characters.count
+	}
+}
+
 
 /// Parses `input` with `parser`, returning the parse trees or `nil` if nothing could be parsed, or if parsing did not consume the entire input.
 public func parse<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, input: C) -> Either<Error<C.Index>, Tree> {
