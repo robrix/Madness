@@ -88,7 +88,7 @@ final class MapTests: XCTestCase {
 	}
 
 	func testReplaceConsumesItsInput() {
-		assertTree(("abc" <^ %123) <*> %0, [123, 0], ==, ("abc", 0))
+		assertTree(lift(pair) <*> ("abc" <^ %123) <*> %0, [123, 0], ==, ("abc", 0))
 	}
 
 	func testCurriedMap() {

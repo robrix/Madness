@@ -1,8 +1,8 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// Parses the concatenation of `left` and `right`, pairing their parse trees.
-public func <*> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, (T, U)>.Function {
-	return left >>- { x in { y in (x, y) } <^> right }
+public func <*> <C: CollectionType, T, U> (left: Parser<C, T -> U>.Function, right: Parser<C, T>.Function) -> Parser<C, U>.Function {
+	return left >>- { $0 <^> right }
 }
 
 /// Parses the concatenation of `left` and `right`, dropping `right`’s parse tree.

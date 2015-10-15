@@ -19,11 +19,9 @@ typealias LambdaParser = Parser<String, Lambda>.Function
 let lambda: LambdaParser = fix { term in
 	let symbol: Parser<String, String>.Function = String.lift(%("a"..."z"))
 
-	let variable: Parser<String, Lambda>.Function = symbol |> map { Lambda.Variable($0) }
-	let abstraction: Parser<String, Lambda>.Function = %"λ" *> symbol <*> (%"." *> term) |> map { Lambda.Abstraction($0, $1) }
-	let application: Parser<String, Lambda>.Function = %"(" *> term <*> (%" " *> term) <* %")" |> map { (function: Lambda, argument: Lambda) -> Lambda in
-		Lambda.Application(function, argument)
-	}
+	let variable: LambdaParser = Lambda.Variable <^> symbol
+	let abstraction: LambdaParser = curry(Lambda.Abstraction) <^> (%"λ" *> symbol) <*> (%"." *> term)
+	let application: LambdaParser = curry(Lambda.Application) <^> (%"(" *> term) <*> (%" " *> term) <* %")"
 	return variable <|> abstraction <|> application
 }
 
