@@ -14,7 +14,9 @@ extension String : CollectionType {
 	}
 }
 
-let lambda: Parser<String, Lambda>.Function = fix { term in
+typealias LambdaParser = Parser<String, Lambda>.Function
+
+let lambda: LambdaParser = fix { term in
 	let symbol: Parser<String, String>.Function = String.lift(%("a"..."z"))
 
 	let variable: Parser<String, Lambda>.Function = symbol |> map { Lambda.Variable($0) }
