@@ -37,9 +37,7 @@ final class AlternationTests: XCTestCase {
 	// MARK: One-of
 
 	func testOneOfParsesFirstMatch() {
-		let string = "xyz"
-		let eqs: (String, String) -> Bool = (==)
-		assertTree(one, string, eqs, "x")
+		assertTree(one, "xyz", ==, "x")
 		assertTree(one, "yzx", ==, "y")
 		assertTree(one, "zxy", ==, "z")
 	}
@@ -48,9 +46,9 @@ final class AlternationTests: XCTestCase {
 	// MARK: Any-of
 
 	func testAnyOfParsesAnArrayOfMatchesPreservingOrder() {
-		assertTree(any, Set(["xy"]), ==, [Set(["x", "y"])])
-		assertTree(any, Set(["yx"]), ==, [Set(["y", "x"])])
-		assertTree(any, Set(["zxy"]), ==, [Set(["z", "x", "y"])])
+		assertTree(any, "xy", ==, ["x", "y"])
+		assertTree(any, "yx", ==, ["y", "x"])
+		assertTree(any, "zxy", ==, ["z", "x", "y"])
 	}
 
 	func testAnyOfRejectsWhenNoneMatch() {
@@ -59,16 +57,16 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAnyOfOnlyParsesFirstMatch() {
-		assertTree(any, Set(["xyy"]), ==, [Set(["x", "y"])])
+		assertTree(any, "xyy", ==, ["x", "y"])
 	}
 
 
 	// MARK: All-of
 
 	func testAllOfParsesAnArrayOfMatchesPreservingOrder() {
-		assertTree(all, Set(["xy"]), ==, [Set(["x", "y"])])
-		assertTree(all, Set(["yx"]), ==, [Set(["y", "x"])])
-		assertTree(all, Set(["zxy"]), ==, [Set(["z", "x", "y"])])
+		assertTree(all, "xy", ==, ["x", "y"])
+		assertTree(all, "yx", ==, ["y", "x"])
+		assertTree(all, "zxy", ==, ["z", "x", "y"])
 	}
 
 	func testAllOfRejectsWhenNoneMatch() {
@@ -76,7 +74,7 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAllOfParsesAllMatches() {
-		assertTree(all, Set(["xyyxz"]), ==, [Set(["x", "y", "y", "x", "z"])])
+		assertTree(all, "xyyxz", ==, ["x", "y", "y", "x", "z"])
 	}
 }
 
