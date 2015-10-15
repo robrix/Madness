@@ -75,7 +75,7 @@ final class MapTests: XCTestCase {
 	// MARK: map
 
 	func testMapTransformsParserOutput() {
-		assertTree({ String($0) } <^> %123, [123], ==, "123")
+		assertTree(String.init <^> %123, [123], ==, "123")
 	}
 
 	func testMapHasHigherPrecedenceThanFlatMap() {
