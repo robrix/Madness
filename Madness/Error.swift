@@ -1,25 +1,43 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// A composite error.
-public struct Error<I: ForwardIndexType>: CustomStringConvertible {
+public enum Error<I: ForwardIndexType>: CustomStringConvertible {
+	indirect case Branch(String, I, [Error])
+
 	/// Constructs a leaf error, e.g. for terminal parsers.
 	public static func leaf(reason: String, _ index: I) -> Error {
-		return Error(reason: reason, _index: Box(index), children: [])
+		return .Branch(reason, index, [])
 	}
 
 	public static func withReason(reason: String, _ index: I) -> (Error, Error) -> Error {
-		return { Error(reason: reason, _index: Box(index), children: [$0, $1]) }
+		return { Error(reason: reason, index: index, children: [$0, $1]) }
+	}
+
+	public init(reason: String, index: I, children: [Error]) {
+		self = .Branch(reason, index, children)
 	}
 
 
-	public let reason: String
+	public var reason: String {
+		switch self {
+		case let .Branch(s, _, _):
+			return s
+		}
+	}
 
 	public var index: I {
-		return _index.value
+		switch self {
+		case let .Branch(_, i, _):
+			return i
+		}
 	}
-	private let _index: Box<I>
 
-	public let children: [Error]
+	public var children: [Error] {
+		switch self {
+		case let .Branch(_, _, c):
+			return c
+		}
+	}
 
 
 	public var depth: Int {
@@ -47,12 +65,11 @@ public struct Error<I: ForwardIndexType>: CustomStringConvertible {
 public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, index in
 		parser(input, index).either(
-			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", _index: $0._index, children: $0.children)) },
+			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", index: $0.index, children: $0.children)) },
 			ifRight: Either.right)
 	}
 }
 
 
-import Box
 import Either
 import Prelude
