@@ -1,6 +1,6 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-private struct Tree<T: Equatable>: Equatable, Printable {
+private struct Tree<T: Equatable>: Equatable, CustomStringConvertible {
 	init(_ value: T, _ children: [Tree] = []) {
 		self.values = [ value ]
 		self.children = children
@@ -14,9 +14,9 @@ private struct Tree<T: Equatable>: Equatable, Printable {
 
 	var description: String {
 		let space = " "
-		let valueString = space.join(map(values, toString))
+		let valueString = values.map({ String($0) }).joinWithSeparator(space)
 		return children.count > 0 ?
-			"(\(valueString) \(space.join(map(children, toString))))"
+			"(\(valueString) \(children.map({ String($0) }).joinWithSeparator(space)))"
 		:	"(\(valueString))"
 	}
 }
@@ -35,9 +35,9 @@ final class MapTests: XCTestCase {
 
 	func testFlatMap() {
 		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
-		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
+		let tree: Int -> Parser<String.CharacterView, Tree<String>>.Function = fix { tree in
 			{ n in
-				let line: Parser<String, String>.Function = ignore(%"\t" * n) ++ item
+				let line: Parser<String.CharacterView, String>.Function = ignore(%"\t" * n) ++ item
 				return line >>- { itemContent in
 					(tree(n + 1)* |> map { children in Tree(itemContent, children) })
 				}
@@ -52,7 +52,7 @@ final class MapTests: XCTestCase {
 		]
 
 		for (input, actual) in fixtures {
-			if let parsed = parse(tree(0), input).right {
+			if let parsed = parse(tree(0), input: input).right {
 				XCTAssertEqual(parsed, actual)
 			} else {
 				XCTFail("expected to parse \(input) as \(actual) but failed to parse")
@@ -66,7 +66,7 @@ final class MapTests: XCTestCase {
 		]
 
 		for input in failures {
-			XCTAssert(parse(tree(0), input).right == nil)
+			XCTAssert(parse(tree(0), input: input).right == nil)
 		}
 
 	}
@@ -75,7 +75,7 @@ final class MapTests: XCTestCase {
 	// MARK: map
 
 	func testMapTransformsParserOutput() {
-		assertTree(toString <^> %123, [123], ==, "123")
+		assertTree({ String($0) } <^> %123, [123], ==, "123")
 	}
 
 	func testMapHasHigherPrecedenceThanFlatMap() {
@@ -92,14 +92,14 @@ final class MapTests: XCTestCase {
 	}
 
 	func testCurriedMap() {
-		assertTree(%123 |> map(toString), [123], ==, "123")
+		assertTree(%123 |> map({ String($0) }), [123], ==, "123")
 	}
 
 
 	// MARK: pure
 
 	func testPureIgnoresItsInput() {
-		assertTree(pure("a"), "b", ==, "a")
+		assertTree(pure("a"), "b".characters, ==, "a")
 	}
 }
 

@@ -4,35 +4,35 @@ final class IgnoreTests: XCTestCase {
 	let ignored = ignore("x")
 
 	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
-		assertTree(ignored ++ %"y", "xy", ==, "y")
+		assertTree(ignored ++ %"y", "xy".characters, ==, "y")
 	}
 
 	func testIgnoredInputDoesNotGetConcatenatedAtRight() {
-		assertTree(%"y" ++ ignored, "yx", ==, "y")
+		assertTree(%"y" ++ ignored, "yx".characters, ==, "y")
 	}
 
 	func testIgnoringDistributesOverConcatenation() {
-		assertAdvancedBy(ignored ++ ignored, "xx", 2)
+		assertAdvancedBy(ignored ++ ignored, input: "xx".characters, offset: 2)
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtLeft() {
-		assertTree(ignored | %"y", "y", ==, "y")
+		assertTree(ignored | %"y", "y".characters, ==, "y")
 	}
 
 	func testIgnoredInputIsDroppedFromAlternationsAtRight() {
-		assertTree(%"y" | ignored, "y", ==, "y")
+		assertTree(%"y" | ignored, "y".characters, ==, "y")
 	}
 
 	func testIgnoringDistributesOverAlternation() {
-		assertMatched(ignored | ignored, "x")
+		assertMatched(ignored | ignored, input: "x".characters)
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
-		assertTree(ignored* ++ %"y", "y", ==, "y")
+		assertTree(ignored* ++ %"y", "y".characters, ==, "y")
 	}
 
 	func testRepeatedIgnoredParsesAreDropped() {
-		assertTree(ignored* ++ %"y", "xxy", ==, "y")
+		assertTree(ignored* ++ %"y", "xxy".characters, ==, "y")
 	}
 }
 

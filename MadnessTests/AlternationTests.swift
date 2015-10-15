@@ -5,76 +5,76 @@ final class AlternationTests: XCTestCase {
 	// MARK: Alternation
 
 	func testAlternationParsesEitherAlternative() {
-		assertAdvancedBy(alternation, "xy", 1)
-		assertAdvancedBy(alternation, "yx", 1)
+		assertAdvancedBy(alternation, input: "xy".characters, offset: 1)
+		assertAdvancedBy(alternation, input: "yx".characters, offset: 1)
 	}
 
 	func testAlternationProducesTheParsedAlternative() {
-		assertTree(alternation, "xy", ==, Either.left("x"))
+		assertTree(alternation, "xy".characters, ==, Either.left("x"))
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertTree(%"x" | %"y", "xy", ==, "x")
+		assertTree(%"x" | %"y", "xy".characters, ==, "x")
 	}
 
 
 	// MARK: Optional
 
 	func testOptionalProducesWhenPresent() {
-		assertTree(optional, "y", ==, "y")
-		assertTree(prefixed, "xy", ==, "xy")
-		assertTree(suffixed, "yz", ==, "yz")
-		assertTree(sandwiched, "xyz", ==, "xyz")
+		assertTree(optional, "y".characters, ==, "y")
+		assertTree(prefixed, "xy".characters, ==, "xy")
+		assertTree(suffixed, "yzsandwiched".characters, ==, "yz")
 	}
 
 	func testOptionalProducesWhenAbsent() {
-		assertTree(optional, "", ==, "")
-		assertTree(prefixed, "x", ==, "x")
-		assertTree(suffixed, "z", ==, "z")
-		assertTree(sandwiched, "xz", ==, "xz")
+		assertTree(optional, "".characters, ==, "")
+		assertTree(prefixed, "x".characters, ==, "x")
+		assertTree(suffixed, "z".characters, ==, "z")
+		assertTree(sandwiched, "xz".characters, ==, "xz")
 	}
 
 
 	// MARK: One-of
 
 	func testOneOfParsesFirstMatch() {
-		assertTree(one, "xyz", ==, "x")
-		assertTree(one, "yzx", ==, "y")
-		assertTree(one, "zxy", ==, "z")
+		assertTree(one, Set(["xyz"]), ==, Set(["x"]))
+		assertTree(one, Set(["yzx"]), ==, Set(["y"]))
+		assertTree(one, Set(["zxy"]), ==, Set(["z"]))
 	}
 
 
 	// MARK: Any-of
 
 	func testAnyOfParsesAnArrayOfMatchesPreservingOrder() {
-		assertTree(any, "xy", ==, ["x", "y"])
-		assertTree(any, "yx", ==, ["y", "x"])
-		assertTree(any, "zxy", ==, ["z", "x", "y"])
+		assertTree(any, Set(["xy"]), ==, [Set(["x", "y"])])
+		assertTree(any, Set(["yx"]), ==, [Set(["y", "x"])])
+		assertTree(any, Set(["zxy"]), ==, [Set(["z", "x", "y"])])
 	}
 
 	func testAnyOfRejectsWhenNoneMatch() {
-		assertUnmatched(anyOf(["x"]), "y")
+		
+		assertUnmatched(anyOf([Set("x".characters)]), Set("y".characters))
 	}
 
 	func testAnyOfOnlyParsesFirstMatch() {
-		assertTree(any, "xyy", ==, ["x", "y"])
+		assertTree(any, Set(["xyy"]), ==, [Set(["x", "y"])])
 	}
 
 
 	// MARK: All-of
 
 	func testAllOfParsesAnArrayOfMatchesPreservingOrder() {
-		assertTree(all, "xy", ==, ["x", "y"])
-		assertTree(all, "yx", ==, ["y", "x"])
-		assertTree(all, "zxy", ==, ["z", "x", "y"])
+		assertTree(all, Set(["xy"]), ==, [Set(["x", "y"])])
+		assertTree(all, Set(["yx"]), ==, [Set(["y", "x"])])
+		assertTree(all, Set(["zxy"]), ==, [Set(["z", "x", "y"])])
 	}
 
 	func testAllOfRejectsWhenNoneMatch() {
-		assertUnmatched(allOf(["x"]), "y")
+		assertUnmatched(allOf([Set(["x"])]), Set(["y"]))
 	}
 
 	func testAllOfParsesAllMatches() {
-		assertTree(all, "xyyxz", ==, ["x", "y", "y", "x", "z"])
+		assertTree(all, Set(["xyyxz"]), ==, [Set(["x", "y", "y", "x", "z"])])
 	}
 
 }
@@ -88,9 +88,9 @@ private let prefixed = %"x" ++ optional |> map { $0 + $1 }
 private let suffixed = optional ++ %"z" |> map { $0 + $1 }
 private let sandwiched = prefixed ++ %"z" |> map { $0 + $1 }
 
-private let one = oneOf(["x", "y", "z"])
-private let any = anyOf(["x", "y", "z"])
-private let all = allOf(["x", "y", "z"])
+private let one = oneOf([Set(["x", "y", "z"])])
+private let any = anyOf([Set(["x", "y", "z"])])
+private let all = allOf([Set(["x", "y", "z"])])
 
 
 // MARK: - Imports

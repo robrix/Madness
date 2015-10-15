@@ -17,6 +17,10 @@ public func parse<C: CollectionType, Tree>(parser: Parser<C, Tree>.Function, inp
 	return parser(input, input.startIndex).flatMap { $1 == input.endIndex ? .right($0) : .left(.leaf("finished parsing before end of input", $1)) }
 }
 
+public func parse<Tree>(parser: Parser<String.CharacterView, Tree>.Function, input: String) -> Either<Error<String.Index>, Tree> {
+	return parser(input.characters, input.startIndex).flatMap { $1 == input.endIndex ? .right($0) : .left(.leaf("finished parsing before end of input", $1)) }
+}
+
 // MARK: - Terminals
 
 /// Returns a parser which never parses its input.
@@ -25,10 +29,10 @@ public func none<C: CollectionType, Tree>(string: String = "no way forward") -> 
 }
 
 /// Returns a parser which parses any single character.
-public func any(input: String, index: String.CharacterView.Index) -> Parser<String.CharacterView, String>.Result {
+public func any<C: CollectionType>(input: C, index: C.Index) -> Parser<C, C.Generator.Element>.Result {
 
-	if index < input.endIndex {
-		let parsed = String(input.characters[index..<index.advancedBy(1)])
+	if input.count > 0 {
+		let parsed = input[index]
 		let next = index.successor()
 		
 		return .Right((parsed, next))

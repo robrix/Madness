@@ -1,18 +1,18 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-let lambda: Parser<String, Lambda>.Function = fix { term in
-	let symbol: Parser<String, String>.Function = %("a"..."z")
+let lambda: Parser<String.CharacterView, Lambda>.Function = fix { term in
+	let symbol: Parser<String.CharacterView, String>.Function = %("a"..."z")
 
-	let variable: Parser<String, Lambda>.Function = { Lambda.Variable($0) } <^> symbol
-	let abstraction: Parser<String, Lambda>.Function = { Lambda.Abstraction($0, Box($1)) } <^> ignore("λ") ++ symbol ++ ignore(".") ++ term
-	let parenthesized: Parser<String, (Lambda, Lambda)>.Function = ignore("(") ++ term ++ ignore(" ") ++ term ++ ignore(")")
-	let application: Parser<String, Lambda>.Function = { (function: Lambda, argument: Lambda) -> Lambda in
+	let variable: Parser<String.CharacterView, Lambda>.Function = { Lambda.Variable($0) } <^> symbol
+	let abstraction: Parser<String.CharacterView, Lambda>.Function = { Lambda.Abstraction($0, Box($1)) } <^> ignore("λ") ++ symbol ++ ignore(".") ++ term
+	let parenthesized: Parser<String.CharacterView, (Lambda, Lambda)>.Function = ignore("(") ++ term ++ ignore(" ") ++ term ++ ignore(")")
+	let application: Parser<String.CharacterView, Lambda>.Function = { (function: Lambda, argument: Lambda) -> Lambda in
 		Lambda.Application(Box(function), Box(argument))
 	} <^> parenthesized
 	return variable | abstraction | application
 }
 
-enum Lambda: Printable {
+enum Lambda: CustomStringConvertible {
 	case Variable(String)
 	case Abstraction(String, Box<Lambda>)
 	case Application(Box<Lambda>, Box<Lambda>)
