@@ -49,6 +49,13 @@ public func lift<C: CollectionType, T, U, V, W>(f: (T, U, V) -> W) -> Parser<C, 
 }
 
 
+// MARK: - pair
+
+public func pair<A, B>(a: A, b: B) -> (A, B) {
+	return (a, b)
+}
+
+
 // MARK: - Operators
 
 /// Flat map operator.
