@@ -3,7 +3,7 @@
 final class ErrorTests: XCTestCase {
 	func testLiftedParsersDoNotReportErrorsWhenTheyMatch() {
 		let parser = %"x"
-		let input = "x"
+		let input = "x".characters
 		assert(parser(input, input.startIndex).right, !=, nil)
 		assert(parser(input, input.startIndex).left, ==, nil)
 	}
@@ -11,16 +11,16 @@ final class ErrorTests: XCTestCase {
 	func testLiftedParsersReportErrorsWhenTheyDoNotMatch() {
 		let parser = %"x"
 		let input = "y"
-		assert(parser(input, input.startIndex).right, ==, nil)
-		assert(parser(input, input.startIndex).left, !=, nil)
+		assert(parser(input.characters, input.startIndex).right, ==, nil)
+		assert(parser(input.characters, input.startIndex).left, !=, nil)
 	}
 
 	func testParseError() {
-		assert(parse(lambda, "λx.").left?.depth, ==, 5)
+		assert(parse(lambda, input: "λx.").left?.depth, ==, 5)
 	}
 
 	func testParseNaming() {
-		assert(parse(lambda |> describeAs("lambda"), "λx.").left, !=, nil)
+		assert(parse(lambda |> describeAs("lambda"), input: "λx.").left, !=, nil)
 	}
 }
 

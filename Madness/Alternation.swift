@@ -2,9 +2,8 @@
 
 /// Parses `parser` 0 or one time.
 public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-    return first <^> parser * (0...1)
+    return { $0.first } <^> parser * (0...1)
 }
-
 
 /// Parses either `left` or `right`.
 public func <|> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
@@ -21,7 +20,7 @@ public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Pars
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
 public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C>(input: S) -> Parser<C, C>.Function {
-	return reduce(input, none()) { $0 <|> %$1 }
+	return input.reduce(none()) { $0 <|> %$1 }
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.
@@ -48,7 +47,7 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 // MARK: - Private
 
 /// Defines alternation for use in the `|` operator definitions above.
-private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
+private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
 	let a = left(input, index).map { (Either<T, U>.left($0), $1) }
 	let b = right(input, index).map { (Either<T, U>.right($0), $1) }
 	return (a ||| b).either(ifLeft: Error.withReason("no alternative matched:", index) >>> Either.left, ifRight: Either.right)

@@ -4,19 +4,19 @@ final class IgnoreTests: XCTestCase {
 	let ignored = %"x"
 
 	func testIgnoredInputDoesNotGetConcatenatedAtLeft() {
-		assertTree(ignored *> %"y", "xy", ==, "y")
+		assertTree(ignored *> %"y", "xy".characters, ==, "y")
 	}
 
 	func testIgnoredInputDoesNotGetConcatenatedAtRight() {
-		assertTree(%"y" <* ignored, "yx", ==, "y")
+		assertTree(%"y" <* ignored, "yx".characters, ==, "y")
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
-		assertTree(ignored* *> %"y", "y", ==, "y")
+		assertTree(ignored* *> %"y", "y".characters, ==, "y")
 	}
 
 	func testRepeatedIgnoredParsesAreDropped() {
-		assertTree(ignored* *> %"y", "xxy", ==, "y")
+		assertTree(ignored* *> %"y", "xxy".characters, ==, "y")
 	}
 }
 
