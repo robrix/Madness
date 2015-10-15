@@ -6,8 +6,8 @@ public postfix func * <C: CollectionType, T> (parser: Parser<C, T>.Function) -> 
 }
 
 /// Creates a parser from `string`, and parses it 0 or more times.
-public postfix func * (string: String) -> Parser<String, [String]>.Function {
-	return %(string) * (0..<Int.max)
+public postfix func * (string: String) -> Parser<String.CharacterView, [String]>.Function {
+	return { $0.map { String($0) } } <^> %(string.characters) * (0..<Int.max)
 }
 
 /// Parses `parser` 0 or more times and drops its parse trees.
@@ -21,8 +21,8 @@ public postfix func + <C: CollectionType, T> (parser: Parser<C, T>.Function) -> 
 }
 
 /// Creates a parser from `string`, and parses it 1 or more times.
-public postfix func + (string: String) -> Parser<String, [String]>.Function {
-	return %(string) * (1..<Int.max)
+public postfix func + (string: String) -> Parser<String.CharacterView, [String]>.Function {
+	return { $0.map { String($0) } } <^> %(string.characters) * (1..<Int.max)
 }
 
 /// Parses `parser` 1 or more times and drops its parse trees.
@@ -41,10 +41,10 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
-	if interval.end <= 0 { return { .right([], $1) } }
+	if interval.end <= 0 { return { .Right([], $1) } }
 
 	return (parser >>- { x in { [x] + $0 } <^> (parser * decrement(interval)) })
-		|	{ interval.start <= 0 ? .right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
+		|	{ interval.start <= 0 ? .Right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
 /// Parses `parser` the number of times specified in `interval`.

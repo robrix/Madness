@@ -5,33 +5,32 @@ final class AlternationTests: XCTestCase {
 	// MARK: Alternation
 
 	func testAlternationParsesEitherAlternative() {
-		assertAdvancedBy(alternation, "xy", 1)
-		assertAdvancedBy(alternation, "yx", 1)
+		assertAdvancedBy(alternation, input: "xy".characters, offset: 1)
+		assertAdvancedBy(alternation, input: "yx".characters, offset: 1)
 	}
 
 	func testAlternationProducesTheParsedAlternative() {
-		assertTree(alternation, "xy", ==, Either.left("x"))
+		assertTree(alternation, "xy".characters, ==, Either.left("x"))
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertTree(%"x" | %"y", "xy", ==, "x")
+		assertTree(%"x" | %"y", "xy".characters, ==, "x")
 	}
 
 
 	// MARK: Optional
 
 	func testOptionalProducesWhenPresent() {
-		assertTree(optional, "y", ==, "y")
-		assertTree(prefixed, "xy", ==, "xy")
-		assertTree(suffixed, "yz", ==, "yz")
-		assertTree(sandwiched, "xyz", ==, "xyz")
+		assertTree(optional, "y".characters, ==, "y")
+		assertTree(prefixed, "xy".characters, ==, "xy")
+		assertTree(suffixed, "yzsandwiched".characters, ==, "yz")
 	}
 
 	func testOptionalProducesWhenAbsent() {
-		assertTree(optional, "", ==, "")
-		assertTree(prefixed, "x", ==, "x")
-		assertTree(suffixed, "z", ==, "z")
-		assertTree(sandwiched, "xz", ==, "xz")
+		assertTree(optional, "".characters, ==, "")
+		assertTree(prefixed, "x".characters, ==, "x")
+		assertTree(suffixed, "z".characters, ==, "z")
+		assertTree(sandwiched, "xz".characters, ==, "xz")
 	}
 
 
@@ -53,7 +52,8 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAnyOfRejectsWhenNoneMatch() {
-		assertUnmatched(anyOf(["x"]), "y")
+		
+		assertUnmatched(anyOf([Set("x".characters)]), Set("y".characters))
 	}
 
 	func testAnyOfOnlyParsesFirstMatch() {
@@ -70,13 +70,12 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAllOfRejectsWhenNoneMatch() {
-		assertUnmatched(allOf(["x"]), "y")
+		assertUnmatched(allOf([Set(["x"])]), Set(["y"]))
 	}
 
 	func testAllOfParsesAllMatches() {
 		assertTree(all, "xyyxz", ==, ["x", "y", "y", "x", "z"])
 	}
-
 }
 
 // MARK: - Fixtures

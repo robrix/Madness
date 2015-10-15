@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// A composite error.
-public struct Error<I: ForwardIndexType>: Printable {
+public struct Error<I: ForwardIndexType>: CustomStringConvertible {
 	/// Constructs a leaf error, e.g. for terminal parsers.
 	public static func leaf(reason: String, _ index: I) -> Error {
 		return Error(reason: reason, _index: Box(index), children: [])
@@ -23,12 +23,12 @@ public struct Error<I: ForwardIndexType>: Printable {
 
 
 	public var depth: Int {
-		return 1 + ((sorted(children) { $0.depth < $1.depth }).last?.depth ?? 0)
+		return 1 + ((children.sort { $0.depth < $1.depth }).last?.depth ?? 0)
 	}
 
 
 	// MARK: Printable
-
+	
 	public var description: String {
 		return describe(0)
 	}
@@ -36,7 +36,7 @@ public struct Error<I: ForwardIndexType>: Printable {
 	private func describe(n: Int) -> String {
 		let description = String(count: n, repeatedValue: "\t" as Character) + "\(index): \(reason)"
 		if children.count > 0 {
-			return description + "\n" + "\n".join(lazy(children).map { $0.describe(n + 1) })
+			return description + "\n" + children.lazy.map { $0.describe(n + 1) }.joinWithSeparator("\n")
 		}
 		return description
 	}

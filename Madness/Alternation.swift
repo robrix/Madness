@@ -2,38 +2,38 @@
 
 /// Parses `parser` 0 or one time.
 public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-    return first <^> parser * (0...1)
+    return { $0.first } <^> parser * (0...1)
 }
 
 /// Parses `parser` 0 or one time dropping the parse tree.
-public postfix func |? <C: CollectionType, T> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
+public postfix func |? <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
     return ignore(parser * (0...1))
 }
 
 
 /// Parses either `left` or `right`.
 public func | <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
-	return alternate(left, right)
+	return alternate(left, right: right)
 }
 
 /// Parses either `left` or `right` and coalesces their trees.
 public func | <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
+	return alternate(left, right: right) |> map { $0.either(ifLeft: id, ifRight: id) }
 }
 
 /// Parses either `left` or `right`, dropping `right`’s parse tree.
 public func | <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: unit, ifRight: const(nil)) }
+	return alternate(left, right: right) |> map { $0.either(ifLeft: unit, ifRight: const(nil)) }
 }
 
 /// Parses either `left` or `right`, dropping `left`’s parse tree.
 public func | <C: CollectionType, T> (left: Parser<C, Ignore>.Function, right: Parser<C, T>.Function) -> Parser<C, T?>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: const(nil), ifRight: unit) }
+	return alternate(left, right: right) |> map { $0.either(ifLeft: const(nil), ifRight: unit) }
 }
 
 /// Parses either `left` or `right`, dropping both parse trees.
 public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
+	return alternate(left, right: right) |> map { $0.either(ifLeft: id, ifRight: id) }
 }
 
 
@@ -41,7 +41,7 @@ public func | <C: CollectionType> (left: Parser<C, Ignore>.Function, right: Pars
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
 public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C>(input: S) -> Parser<C, C>.Function {
-	return reduce(input, none()) { $0 | %$1 }
+	return input.reduce(none()) { $0 | %$1 }
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.

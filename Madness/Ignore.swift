@@ -12,8 +12,8 @@ public func ignore<C: CollectionType, T>(parser: Parser<C, T>.Function) -> Parse
 }
 
 /// Ignores any parse trees produced by a parser which parses `string`.
-public func ignore(string: String) -> Parser<String, Ignore>.Function {
-	return ignore(%string)
+public func ignore(string: String) -> Parser<String.CharacterView, Ignore>.Function {
+	return ignore(%string.characters)
 }
 
 
