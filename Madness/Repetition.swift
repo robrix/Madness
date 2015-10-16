@@ -10,10 +10,6 @@ public postfix func * (string: String) -> Parser<String.CharacterView, [String]>
 	return { $0.map { String($0) } } <^> %(string.characters) * (0..<Int.max)
 }
 
-/// Parses `parser` 0 or more times and drops its parse trees.
-public postfix func * <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return ignore(parser * (0..<Int.max))
-}
 
 /// Parses `parser` 1 or more times.
 public postfix func + <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
@@ -25,10 +21,6 @@ public postfix func + (string: String) -> Parser<String.CharacterView, [String]>
 	return { $0.map { String($0) } } <^> %(string.characters) * (1..<Int.max)
 }
 
-/// Parses `parser` 1 or more times and drops its parse trees.
-public postfix func + <C: CollectionType> (parser: Parser<C, Ignore>.Function) -> Parser<C, Ignore>.Function {
-	return ignore(parser * (1..<Int.max))
-}
 
 /// Parses `parser` exactly `n` times.
 ///
@@ -44,7 +36,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 	if interval.end <= 0 { return { .Right([], $1) } }
 
 	return (parser >>- { x in { [x] + $0 } <^> (parser * decrement(interval)) })
-		|	{ interval.start <= 0 ? .Right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
+		<|> { interval.start <= 0 ? .Right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
 /// Parses `parser` the number of times specified in `interval`.

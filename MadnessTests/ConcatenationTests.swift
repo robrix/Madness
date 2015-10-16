@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class ConcatenationTests: XCTestCase {
-	let concatenation = %"x" ++ %"y"
+	let concatenation = lift(pair) <*> %"x" <*> %"y"
 
 	func testConcatenationRejectsPartialParses() {
 		assertUnmatched(concatenation, "x".characters)

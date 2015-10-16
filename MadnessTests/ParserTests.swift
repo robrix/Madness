@@ -51,16 +51,16 @@ final class ParserTests: XCTestCase {
 	// MARK: None
 
 	func testNoneDoesNotConsumeItsInput() {
-		assertTree(none() | %"a", "a".characters, ==, "a")
+		assertTree(none() <|> %"a", "a", ==, "a")
 	}
 
 	func testNoneIsIdentityForAlternation() {
-		typealias Parser = Madness.Parser<String.CharacterView, String>.Function
-		let alternate: (Parser, Parser) -> Parser = { $0 | $1 }
+		typealias Parser = Madness.Parser<String, String>.Function
+		let alternate: (Parser, Parser) -> Parser = { $0 <|> $1 }
 		let parser = [%"a", %"b", %"c"].reduce(none(), combine: alternate)
-		assertTree(parser, "a".characters, ==, "a")
-		assertTree(parser, "b".characters, ==, "b")
-		assertTree(parser, "c".characters, ==, "c")
+		assertTree(parser, "a", ==, "a")
+		assertTree(parser, "b", ==, "b")
+		assertTree(parser, "c", ==, "c")
 	}
 
 

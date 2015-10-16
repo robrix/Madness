@@ -14,7 +14,8 @@ final class AlternationTests: XCTestCase {
 	}
 
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertTree(%"x" | %"y", "xy".characters, ==, "x")
+		assertTree(%"x" <|> %"y", "xy", ==, "x")
+
 	}
 
 
@@ -80,12 +81,12 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Fixtures
 
-private let alternation = %"x" | (%"y" --> { _, _, _ in 1 })
+private let alternation = %"x" <|> (%"y" --> { _, _, _ in 1 })
 
 private let optional = (%"y")|? |> map { $0 ?? "" }
-private let prefixed = %"x" ++ optional |> map { $0 + $1 }
-private let suffixed = optional ++ %"z" |> map { $0 + $1 }
-private let sandwiched = prefixed ++ %"z" |> map { $0 + $1 }
+private let prefixed = curry { $0 + $1 } <^> %"x" <*> optional
+private let suffixed = curry { $0 + $1 } <^> optional <*> %"z"
+private let sandwiched = curry { $0 + $1 } <^> prefixed <*> %"z"
 
 private let one = oneOf(["x", "y", "z"])
 private let any = anyOf(["x", "y", "z"])

@@ -38,6 +38,24 @@ public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
 }
 
 
+// MARK: - lift
+
+public func lift<C: CollectionType, T, U, V>(f: (T, U) -> V) -> Parser<C, T -> U -> V>.Function {
+	return pure(curry(f))
+}
+
+public func lift<C: CollectionType, T, U, V, W>(f: (T, U, V) -> W) -> Parser<C, T -> U -> V -> W>.Function {
+	return pure(curry(f))
+}
+
+
+// MARK: - pair
+
+public func pair<A, B>(a: A, b: B) -> (A, B) {
+	return (a, b)
+}
+
+
 // MARK: - Operators
 
 /// Flat map operator.

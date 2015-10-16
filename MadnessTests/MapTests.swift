@@ -34,10 +34,10 @@ final class MapTests: XCTestCase {
 	// MARK: flatMap
 
 	func testFlatMap() {
-		let item = ignore("-") ++ %("a"..."z") ++ ignore("\n")
-		let tree: Int -> Parser<String.CharacterView, Tree<String>>.Function = fix { tree in
+		let item: Parser<String, String>.Function = %"-" *> String.lift(%("a"..."z")) <* %"\n"
+		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
 			{ n in
-				let line: Parser<String.CharacterView, String>.Function = ignore(%"\t" * n) ++ item
+				let line: Parser<String, String>.Function = (%"\t" * n) *> item
 				return line >>- { itemContent in
 					(tree(n + 1)* |> map { children in Tree(itemContent, children) })
 				}
@@ -75,7 +75,7 @@ final class MapTests: XCTestCase {
 	// MARK: map
 
 	func testMapTransformsParserOutput() {
-		assertTree({ String($0) } <^> %123, [123], ==, "123")
+		assertTree(String.init <^> %123, [123], ==, "123")
 	}
 
 	func testMapHasHigherPrecedenceThanFlatMap() {
@@ -88,7 +88,7 @@ final class MapTests: XCTestCase {
 	}
 
 	func testReplaceConsumesItsInput() {
-		assertTree(("abc" <^ %123) ++ %0, [123, 0], ==, ("abc", 0))
+		assertTree(lift(pair) <*> ("abc" <^ %123) <*> %0, [123, 0], ==, ("abc", 0))
 	}
 
 	func testCurriedMap() {

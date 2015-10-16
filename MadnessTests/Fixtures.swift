@@ -6,18 +6,23 @@ extension String : CollectionType {
 	public var count: String.Index.Distance {
 		return characters.count
 	}
+
+	public static func lift<A>(parser: Parser<String.CharacterView, A>.Function) -> Parser<String, A>.Function {
+		return {
+			parser($0.characters, $1)
+		}
+	}
 }
 
-let lambda: Parser<String.CharacterView, Lambda>.Function = fix { term in
-	let symbol: Parser<String.CharacterView, String>.Function = %("a"..."z")
+typealias LambdaParser = Parser<String, Lambda>.Function
 
-	let variable: Parser<String.CharacterView, Lambda>.Function = { Lambda.Variable($0) } <^> symbol
-	let abstraction: Parser<String.CharacterView, Lambda>.Function = { Lambda.Abstraction($0, $1) } <^> ignore("λ") ++ symbol ++ ignore(".") ++ term
-	let parenthesized: Parser<String.CharacterView, (Lambda, Lambda)>.Function = ignore("(") ++ term ++ ignore(" ") ++ term ++ ignore(")")
-	let application: Parser<String.CharacterView, Lambda>.Function = { (function: Lambda, argument: Lambda) -> Lambda in
-		Lambda.Application(function, argument)
-	} <^> parenthesized
-	return variable | abstraction | application
+let lambda: LambdaParser = fix { term in
+	let symbol: Parser<String, String>.Function = String.lift(%("a"..."z"))
+
+	let variable: LambdaParser = Lambda.Variable <^> symbol
+	let abstraction: LambdaParser = curry(Lambda.Abstraction) <^> (%"λ" *> symbol) <*> (%"." *> term)
+	let application: LambdaParser = curry(Lambda.Application) <^> (%"(" *> term) <*> (%" " *> term) <* %")"
+	return variable <|> abstraction <|> application
 }
 
 enum Lambda: CustomStringConvertible {
