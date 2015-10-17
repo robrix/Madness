@@ -10,11 +10,11 @@ final class ParserTests: XCTestCase {
 	// MARK: - Operations
 
 	func testParseRejectsPartialParses() {
-		assertNil(parse(%"x", "xy"))
+		assertNil(parse(%("x".characters), input: "xy".characters).right)
 	}
 
 	func testParseProducesParseTreesForFullParses() {
-		assertEqual(parse(%"x", "x"), "x")
+		assertEqual(parse(%"x", input: "x").right, "x")
 	}
 
 
@@ -24,12 +24,12 @@ final class ParserTests: XCTestCase {
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		let parser = %"foo"
-		assertAdvancedBy(parser, "foot", 3)
-		assertUnmatched(parser, "fo")
+		assertAdvancedBy(parser, input: "foot".characters, offset: 3)
+		assertUnmatched(parser, "fo".characters)
 	}
 
 	func testLiteralParsersProduceTheirArgument() {
-		assertTree(%"foo", "foot", ==, "foo")
+		assertTree(%"foo", "foot".characters, ==, "foo")
 	}
 
 
@@ -38,26 +38,26 @@ final class ParserTests: XCTestCase {
 	let digits = %("0"..."9")
 
 	func testRangeParsersParseAnyCharacterInTheirRange() {
-		assertTree(digits, "0", ==, "0")
-		assertTree(digits, "5", ==, "5")
-		assertTree(digits, "9", ==, "9")
+		assertTree(digits, "0".characters, ==, "0")
+		assertTree(digits, "5".characters, ==, "5")
+		assertTree(digits, "9".characters, ==, "9")
 	}
 
 	func testRangeParsersRejectCharactersOutsideTheRange() {
-		assertUnmatched(digits, "a")
+		assertUnmatched(digits, "a".characters)
 	}
 
 
 	// MARK: None
 
 	func testNoneDoesNotConsumeItsInput() {
-		assertTree(none() | %"a", "a", ==, "a")
+		assertTree(none() <|> %"a", "a", ==, "a")
 	}
 
 	func testNoneIsIdentityForAlternation() {
 		typealias Parser = Madness.Parser<String, String>.Function
-		let alternate: (Parser, Parser) -> Parser = { $0 | $1 }
-		let parser = reduce([%"a", %"b", %"c"], none(), alternate)
+		let alternate: (Parser, Parser) -> Parser = { $0 <|> $1 }
+		let parser = [%"a", %"b", %"c"].reduce(none(), combine: alternate)
 		assertTree(parser, "a", ==, "a")
 		assertTree(parser, "b", ==, "b")
 		assertTree(parser, "c", ==, "c")
@@ -67,10 +67,10 @@ final class ParserTests: XCTestCase {
 	// MARK: Any
 
 	func testAnyRejectsTheEmptyString() {
-		assertUnmatched(any, "")
+		assertUnmatched(any, "".characters)
 	}
 
 	func testAnyParsesAnySingleCharacter() {
-		assertTree(any, "🔥", ==, "🔥")
+		assertTree(any, "🔥".characters, ==, "🔥")
 	}
 }
