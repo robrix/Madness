@@ -12,11 +12,11 @@ func alternate<T, U, V>(left: Prism<Stream<T>, U>, right: Prism<Stream<T>, V>) -
 		backward: { $0.either(ifLeft: left.backward, ifRight: right.backward) })
 }
 
-func repeat<T, U>(parser: Prism<Stream<T>, U>) -> Prism<Stream<T>, [U]> {
+func `repeat`<T, U>(parser: Prism<Stream<T>, U>) -> Prism<Stream<T>, [U]> {
 	let forward: Stream<T> -> [U] = fix { f in
 		{ stream in parser.forward(stream).map { [ $0 ] + f(stream.rest) } ?? [] }
 	}
-	let backward: [U] -> Stream<T> = { reduce(lazy($0).map(parser.backward), nil, ++) }
+	let backward: [U] -> Stream<T> = { $0.lazy.map(parser.backward).reduce(nil, combine: ++) }
 	return Prism(
 		forward: { forward($0) },
 		backward: backward)

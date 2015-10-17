@@ -29,12 +29,12 @@
 		D49E34E51AFD7577006C0AB6 /* Stream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E34DF1AFD7483006C0AB6 /* Stream.framework */; };
 		D49E34E61AFD757B006C0AB6 /* Memo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E34DE1AFD7483006C0AB6 /* Memo.framework */; };
 		D49E34E71AFD757D006C0AB6 /* Stream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D49E34DF1AFD7483006C0AB6 /* Stream.framework */; };
+		D4B0BC2A1BD280E40023F660 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
 		D4BC5E021A98C8B4008C6851 /* Madness.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4BC5DF71A98C8B4008C6851 /* Madness.framework */; };
 		D4BC5E101A98C978008C6851 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47CD1A37E48800D23A6F /* Parser.swift */; };
 		D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC47C31A37E47C00D23A6F /* ParserTests.swift */; };
 		D4BC5E131A98C97C008C6851 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8B02D1A69B1A900943303 /* MapTests.swift */; };
 		D4BC5E161A98C9A6008C6851 /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
-		D4BC5E171A98C9A6008C6851 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
 		D4BC5E191A98C9C0008C6851 /* Either.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D11A37EF9800D23A6F /* Either.framework */; };
 		D4BC5E1A1A98C9C0008C6851 /* Prelude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4FC47D41A37EFCC00D23A6F /* Prelude.framework */; };
 		D4C0FB011AC5EDA500936032 /* Fixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0FAFE1AC5ECCE00936032 /* Fixtures.swift */; };
@@ -141,10 +141,9 @@
 			files = (
 				D4D5B0EE1A98E2B600BE42A2 /* Assertions.framework in Frameworks */,
 				D4BC5E161A98C9A6008C6851 /* Either.framework in Frameworks */,
-				D4BC5E171A98C9A6008C6851 /* Prelude.framework in Frameworks */,
+				D4B0BC2A1BD280E40023F660 /* Prelude.framework in Frameworks */,
 				D4BC5E021A98C8B4008C6851 /* Madness.framework in Frameworks */,
 				D49E34E61AFD757B006C0AB6 /* Memo.framework in Frameworks */,
-				D4BC5E171A98C9A6008C6851 /* Prelude.framework in Frameworks */,
 				D49E34E71AFD757D006C0AB6 /* Stream.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
