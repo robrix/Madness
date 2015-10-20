@@ -12,7 +12,7 @@ public func <|> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: P
 
 /// Parses either `left` or `right` and coalesces their trees.
 public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
+	return { $0.either(ifLeft: id, ifRight: id) } <^> alternate(left, right)
 }
 
 
