@@ -114,7 +114,7 @@ public func satisfy<C: CollectionType> (pred: C.Generator.Element -> Bool) -> Pa
 			if pred(parsed) {
 				return .Right((parsed, next))
 			} else {
-				return .Left(Error.leaf("Failed to parse " + String(parsed) + " with predicate at index", index))
+				return .Left(Error.leaf("Failed to parse \(String(parsed)) with predicate at index", index))
 			}
 		} else {
 			return .Left(Error.leaf("", index))
