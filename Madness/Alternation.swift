@@ -61,10 +61,6 @@ private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ r
 	}
 }
 
-/// Disjunction of two `Either`s.
-private func ||| <A, B> (a: Either<A, B>, b: Either<A, B>) -> Either<(A, A), B> {
-	return (a.right ?? b.right).map(Either<(A, A), B>.right) ?? (a.left &&& b.left).map(Either<(A, A), B>.left)!
-}
 
 /// Curried function that prepends a value to an array.
 private func prepend<T>(value: T) -> [T] -> [T] {
