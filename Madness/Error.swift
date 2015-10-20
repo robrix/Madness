@@ -63,6 +63,11 @@ public enum Error<I: ForwardIndexType>: CustomStringConvertible {
 
 /// MARK: - Annotations
 
+/// Annotate a parser with a name.
+public func <?> <C: CollectionType, T>(parser: Parser<C, T>.Function, name: String) -> Parser<C, T>.Function {
+	return describeAs(name)(parser)
+}
+
 /// Adds a name to parse errors.
 public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, index in
