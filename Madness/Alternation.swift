@@ -46,7 +46,7 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 
 // MARK: - Private
 
-/// Defines alternation for use in the `|` operator definitions above.
+/// Defines alternation for use in the `<|>` operator definitions above.
 private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
 	let a = left(input, index).map { (Either<T, U>.left($0), $1) }
 	let b = right(input, index).map { (Either<T, U>.right($0), $1) }
