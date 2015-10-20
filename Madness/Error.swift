@@ -61,6 +61,13 @@ public enum Error<I: ForwardIndexType>: CustomStringConvertible {
 }
 
 
+/// MARK: - Annotations
+
+/// Annotate a parser with a name.
+public func <?> <C: CollectionType, T>(parser: Parser<C, T>.Function, name: String) -> Parser<C, T>.Function {
+	return describeAs(name)(parser)
+}
+
 /// Adds a name to parse errors.
 public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, index in
@@ -68,6 +75,14 @@ public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T
 			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", index: $0.index, children: $0.children)) },
 			ifRight: Either.right)
 	}
+}
+
+
+// MARK: - Operators
+
+infix operator <?> {
+	associativity left
+	precedence 90
 }
 
 
