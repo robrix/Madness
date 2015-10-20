@@ -12,7 +12,7 @@ public func <|> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: P
 
 /// Parses either `left` or `right` and coalesces their trees.
 public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return alternate(left, right) |> map { $0.either(ifLeft: id, ifRight: id) }
+	return { $0.either(ifLeft: id, ifRight: id) } <^> alternate(left, right)
 }
 
 
@@ -46,17 +46,21 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 
 // MARK: - Private
 
-/// Defines alternation for use in the `|` operator definitions above.
+/// Defines alternation for use in the `<|>` operator definitions above.
 private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ right: Parser<C, U>.Function)(input: C, index: C.Index) -> Parser<C, Either<T, U>>.Result {
-	let a = left(input, index).map { (Either<T, U>.left($0), $1) }
-	let b = right(input, index).map { (Either<T, U>.right($0), $1) }
-	return (a ||| b).either(ifLeft: Error.withReason("no alternative matched:", index) >>> Either.left, ifRight: Either.right)
+	switch left(input, index) {
+	case let .Right(tree, index):
+		return .Right(.Left(tree), index)
+	case let .Left(left):
+		switch right(input, index) {
+		case let .Right(tree, index):
+			return .Right(.Right(tree), index)
+		case let .Left(right):
+			return .Left(Error.withReason("no alternative matched:", index)(left, right))
+		}
+	}
 }
 
-/// Disjunction of two `Either`s.
-private func ||| <A, B> (a: Either<A, B>, b: Either<A, B>) -> Either<(A, A), B> {
-	return (a.right ?? b.right).map(Either<(A, A), B>.right) ?? (a.left &&& b.left).map(Either<(A, A), B>.left)!
-}
 
 /// Curried function that prepends a value to an array.
 private func prepend<T>(value: T) -> [T] -> [T] {
