@@ -59,7 +59,7 @@ private func ||| <A, B> (a: Either<A, B>, b: Either<A, B>) -> Either<(A, A), B> 
 }
 
 /// Curried function that prepends a value to an array.
-private func prepend<T>(value: T) -> [T] -> [T] {
+func prepend<T>(value: T) -> [T] -> [T] {
 	return { [value] + $0 }
 }
 
