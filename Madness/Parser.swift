@@ -29,7 +29,6 @@ public func none<C: CollectionType, Tree>(string: String = "no way forward") -> 
 
 /// Returns a parser which parses any single character.
 public func any<C: CollectionType>(input: C, index: C.Index) -> Parser<C, C.Generator.Element>.Result {
-
 	if input.count > 0 {
 		let parsed = input[index]
 		let next = index.successor()
