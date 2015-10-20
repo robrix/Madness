@@ -104,6 +104,7 @@ func containsAt<C1: CollectionType, C2: CollectionType where C1.Generator.Elemen
 	return zip(range, needle).lazy.map { collection[$0] == $1 }.reduce(true) { $0 && $1 }
 }
 
+// Returns a parser that satisfies the given predicate
 public func satisfy<C: CollectionType> (pred: C.Generator.Element -> Bool) -> Parser<C, C.Generator.Element>.Function {
 	return { input, index in
 		if index != input.endIndex {
