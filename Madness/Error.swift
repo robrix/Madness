@@ -73,5 +73,13 @@ public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T
 }
 
 
+// MARK: - Operators
+
+infix operator <?> {
+	associativity left
+	precedence 90
+}
+
+
 import Either
 import Prelude
