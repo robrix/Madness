@@ -4,7 +4,7 @@ final class BenchmarkTests: XCTestCase {
 	func testBenchmarkingMeasuresStuffIGuess() {
 		let input = "λa.λb.a"
 		print(parse(lambda, input: input))
-		printMeasurements()
+		print(measurements.measurements)
 	}
 }
 

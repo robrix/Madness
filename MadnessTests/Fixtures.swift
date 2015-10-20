@@ -16,13 +16,15 @@ extension String : CollectionType {
 
 typealias LambdaParser = Parser<String, Lambda>.Function
 
+var measurements = Measurements()
+
 let lambda: LambdaParser = fix { term in
 	let symbol: Parser<String, String>.Function = String.lift(%("a"..."z"))
 
-	let variable: LambdaParser = benchmark("variable")(Lambda.Variable <^> symbol)
-	let abstraction: LambdaParser = benchmark("abstraction")(curry(Lambda.Abstraction) <^> (%"λ" *> symbol) <*> (%"." *> term))
-	let application: LambdaParser = benchmark("application")(curry(Lambda.Application) <^> (%"(" *> term) <*> (%" " *> term) <* %")")
-	return benchmark("lambda")(variable <|> abstraction <|> application)
+	let variable: LambdaParser = measurements.benchmark("variable")(Lambda.Variable <^> symbol)
+	let abstraction: LambdaParser = measurements.benchmark("abstraction")(curry(Lambda.Abstraction) <^> (%"λ" *> symbol) <*> (%"." *> term))
+	let application: LambdaParser = measurements.benchmark("application")(curry(Lambda.Application) <^> (%"(" *> term) <*> (%" " *> term) <* %")")
+	return measurements.benchmark("lambda")(variable <|> abstraction <|> application)
 }
 
 enum Lambda: CustomStringConvertible {
