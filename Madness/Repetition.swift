@@ -32,6 +32,14 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 	return ntimes(parser, n)
 }
 
+public func sepBy1<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
+	return prepend <^> parser <*> many(separator *> parser)
+}
+
+public func sepBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
+	return sepBy1(parser, separator) <|> pure([])
+}
+
 /// Parses `parser` the number of times specified in `interval`.
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
