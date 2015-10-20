@@ -22,12 +22,9 @@ public func double() -> DoubleParser {
 	
 	return minus >>- { sign in
 		digits >>- { digits in
-			let toDouble = { (chars: [Character]) in
-				chars.reduce(0.0, combine: { (num: Double, c: Character) in
-					return 10 * num + Double(String(c))!
-				})
-			}
-			let double = toDouble(digits)
+			let double = digits.reduce(0.0, combine: { num, char in
+				return 10 * num + Double(String(char))!
+			})
 
 			return pure(sign != nil ? double : -1 * double)
 		}
