@@ -19,14 +19,14 @@ public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Pars
 // MARK: - n-ary alternation
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
-public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C>(input: S) -> Parser<C, C>.Function {
-	return input.reduce(none()) { $0 <|> %$1 }
+public func oneOf<C: CollectionType, S: SequenceType where C.Generator.Element: Equatable, S.Generator.Element == C.Generator.Element>(input: S) -> Parser<C, C.Generator.Element>.Function {
+	return satisfy { c in input.contains(c) }
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.
 ///
 /// Each literal will only match the first time.
-public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: Set<C>) -> Parser<C, [C]>.Function {
+public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: Set<C.Generator.Element>) -> Parser<C, [C.Generator.Element]>.Function {
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
@@ -37,7 +37,7 @@ public func anyOf<C: CollectionType where C.Generator.Element: Equatable>(set: S
 /// Given a set of literals, parses an array of all matches in the order they were found.
 ///
 /// Each literal will be matched as many times as it is found.
-public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C>) -> Parser<C, [C]>.Function {
+public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input: Set<C.Generator.Element>) -> Parser<C, [C.Generator.Element]>.Function {
 	return oneOf(input) >>- { match in
 		prepend(match) <^> allOf(input) <|> pure([match])
 	}

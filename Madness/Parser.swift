@@ -107,7 +107,7 @@ func containsAt<C1: CollectionType, C2: CollectionType where C1.Generator.Elemen
 
 public func satisfy<C: CollectionType> (pred: C.Generator.Element -> Bool) -> Parser<C, C.Generator.Element>.Function {
 	return { input, index in
-		if input.count > 0 {
+		if input.count > 0 && index != input.endIndex {
 			let parsed = input[index]
 			let next = index.successor()
 			
