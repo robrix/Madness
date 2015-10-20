@@ -12,13 +12,9 @@ public typealias CharacterParser = Parser<String.CharacterView, Character>.Funct
 public typealias StringParser = Parser<String.CharacterView, String>.Function
 public typealias DoubleParser = Parser<String.CharacterView, Double>.Function
 
-public func digit() -> CharacterParser {
-	return oneOf("0123456789")
-}
-
-public func double() -> DoubleParser {
+public let double: DoubleParser = {
 	let minus = (%"-")|?
-	let digits = digit()+
+	let digits = digit+
 	
 	return minus >>- { sign in
 		digits >>- { digits in
@@ -29,7 +25,19 @@ public func double() -> DoubleParser {
 			return pure(sign != nil ? double : -1 * double)
 		}
 	}
-}
+}()
+
+public let digit: CharacterParser = oneOf("0123456789")
+
+public let space: CharacterParser = char(" ")
+
+public let newline: CharacterParser = char("\n")
+
+public let crlf: CharacterParser = char("\r")
+
+public let endOfLine: CharacterParser = newline <|> crlf
+
+public let tab: CharacterParser = char("\t")
 
 public func oneOf(input: String) -> CharacterParser {
 	return satisfy { input.characters.contains($0) }
@@ -37,26 +45,6 @@ public func oneOf(input: String) -> CharacterParser {
 
 public func noneOf(input: String) -> CharacterParser {
 	return satisfy { !input.characters.contains($0) }
-}
-
-public func space() -> CharacterParser {
-	return satisfy { $0 == " " }
-}
-
-public func newline() -> CharacterParser {
-	return satisfy { $0 == "\n" }
-}
-
-public func crlf() -> CharacterParser {
-	return satisfy { $0 == "\r" }
-}
-
-public func endOfLine() -> CharacterParser {
-	return newline() <|> crlf()
-}
-
-public func tab() -> CharacterParser {
-	return satisfy { $0 == "\t" }
 }
 
 public func char(input: Character) -> CharacterParser {
