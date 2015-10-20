@@ -13,7 +13,7 @@ public typealias StringParser = Parser<String.CharacterView, String>.Function
 public typealias DoubleParser = Parser<String.CharacterView, Double>.Function
 
 public func digit() -> CharacterParser {
-	return oneOf("123456789")
+	return oneOf("0123456789")
 }
 
 public func double() -> DoubleParser {
