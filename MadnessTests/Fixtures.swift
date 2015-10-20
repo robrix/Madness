@@ -19,10 +19,10 @@ typealias LambdaParser = Parser<String, Lambda>.Function
 let lambda: LambdaParser = fix { term in
 	let symbol: Parser<String, String>.Function = String.lift(%("a"..."z"))
 
-	let variable: LambdaParser = Lambda.Variable <^> symbol
-	let abstraction: LambdaParser = curry(Lambda.Abstraction) <^> (%"λ" *> symbol) <*> (%"." *> term)
-	let application: LambdaParser = curry(Lambda.Application) <^> (%"(" *> term) <*> (%" " *> term) <* %")"
-	return variable <|> abstraction <|> application
+	let variable: LambdaParser = benchmark("variable")(Lambda.Variable <^> symbol)
+	let abstraction: LambdaParser = benchmark("abstraction")(curry(Lambda.Abstraction) <^> (%"λ" *> symbol) <*> (%"." *> term))
+	let application: LambdaParser = benchmark("application")(curry(Lambda.Application) <^> (%"(" *> term) <*> (%" " *> term) <* %")")
+	return benchmark("lambda")(variable <|> abstraction <|> application)
 }
 
 enum Lambda: CustomStringConvertible {
