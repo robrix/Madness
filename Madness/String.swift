@@ -7,25 +7,47 @@
 //
 
 import Foundation
+import Prelude
 
 public typealias CharacterParser = Parser<String.CharacterView, Character>.Function
+public typealias CharacterArrayParser = Parser<String.CharacterView, [Character]>.Function
 public typealias StringParser = Parser<String.CharacterView, String>.Function
 public typealias DoubleParser = Parser<String.CharacterView, Double>.Function
 
-public let double: DoubleParser = {
-	let minus = (%"-")|?
-	let digits = digit+
-	
-	return minus >>- { sign in
-		digits >>- { digits in
-			let double = digits.reduce(0.0, combine: { num, char in
-				return 10 * num + Double(String(char))!
-			})
+public typealias IntParser = Parser<String.CharacterView, Int>.Function
 
-			return pure(sign != nil ? double : -1 * double)
-		}
-	}
+func maybePrepend<T>(value: T?) -> [T] -> [T] {
+	return { value != nil ? [value!] + $0 : $0 }
+}
+
+func concat<T>(value: [T]) -> [T] -> [T] {
+	return { value + $0 }
+}
+
+func concat2<T>(value: [T])(value2: [T]) -> [T] -> [T] {
+	return { value + value2 + $0 }
+}
+
+let someDigits: CharacterArrayParser = some(digit)
+
+public let int: CharacterArrayParser = {
+	let minus: Parser<String.CharacterView, Character?>.Function = char("-")|?
+	
+	return maybePrepend <^> minus <*> someDigits
 }()
+
+
+let decimal: CharacterArrayParser = prepend <^> %"." <*> someDigits
+
+let exp: StringParser = %"e" <|> %"e+" <|> %"e-" <|> %"E" <|> %"E+" <|> %"E-"
+
+let exponent: CharacterArrayParser = { s in { s.characters + $0 } } <^> exp <*> someDigits
+
+public let number: DoubleParser = { characters in Double(String(characters))! } <^>
+	(int
+	<|> (concat <^> int <*> decimal)
+	<|> (concat <^> int <*> exponent)
+	<|> (concat2 <^> int <*> decimal <*> exponent))
 
 public let digit: CharacterParser = oneOf("0123456789")
 
