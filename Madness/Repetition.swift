@@ -10,6 +10,7 @@ public postfix func * (string: String) -> Parser<String.CharacterView, [String]>
 	return { $0.map { String($0) } } <^> many(%(string.characters))
 }
 
+/// Parser `parser` 1 or more times.
 public func some<C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
 	return prepend <^> parser <*> many(parser)
 }
@@ -24,7 +25,6 @@ public postfix func + (string: String) -> Parser<String.CharacterView, [String]>
 	return some({ String($0) } <^> %(string.characters))
 }
 
-
 /// Parses `parser` exactly `n` times.
 ///
 /// `n` must be > 0 to make any sense.
@@ -32,10 +32,12 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 	return ntimes(parser, n)
 }
 
+/// Parses 1 or more `parser` separated by `separator`.
 public func sepBy1<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
 	return prepend <^> parser <*> many(separator *> parser)
 }
 
+/// Parses 0 or more `parser` separated by `separator`.
 public func sepBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
 	return sepBy1(parser, separator) <|> pure([])
 }
@@ -58,10 +60,12 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: H
 	return parser * (interval.start...decrement(interval.end))
 }
 
+/// Parses `parser` 0 or more times.
 public func many<C: CollectionType, T> (p: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
 	return prepend <^> p <*> delay { many(p) } <|> pure([])
 }
 
+/// Parses `parser` `n` number of times.
 public func ntimes<C: CollectionType, T> (p: Parser<C, T>.Function, _ n: Int) -> Parser<C, [T]>.Function {
 	guard n > 0 else { return pure([]) }
 	return prepend <^> p <*> delay { ntimes(p, n - 1) }
