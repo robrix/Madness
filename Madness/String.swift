@@ -75,7 +75,3 @@ public func noneOf(input: String) -> CharacterParser {
 public func char(input: Character) -> CharacterParser {
 	return satisfy { $0 == input }
 }
-
-public func string(input: String) -> StringParser {
-	return %input
-}
