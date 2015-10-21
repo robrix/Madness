@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class RepetitionTests: XCTestCase {
-	let zeroOrMore: Parser<String.CharacterView, [String]>.Function = (%"x")*
+	let zeroOrMore: Parser<String.CharacterView, [String]>.Function = many(%"x")
 
 	func testZeroOrMoreRepetitionAcceptsTheEmptyString() {
 		assertMatched(zeroOrMore, input: "".characters)
