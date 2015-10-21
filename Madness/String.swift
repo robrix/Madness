@@ -56,6 +56,8 @@ public let space: CharacterParser = char(" ")
 
 public let newline: CharacterParser = char("\n")
 
+public let cr = char("\r")
+
 public let crlf: CharacterParser = char("\r\n")
 
 public let endOfLine: CharacterParser = newline <|> crlf
