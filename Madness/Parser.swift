@@ -20,6 +20,11 @@ public func parse<Tree>(parser: Parser<String.CharacterView, Tree>.Function, inp
 	return parser(input.characters, input.startIndex).flatMap { $1 == input.endIndex ? .right($0) : .left(.leaf("finished parsing before end of input", $1)) }
 }
 
+public func lookAhead<C: CollectionType, T>(parser: Parser<C, T>.Function)(input: C, index: C.Index) -> Either<Error<C.Index>, ((), C.Index)> {
+	return parser(input, index).map(const(((), index)))
+}
+
+
 // MARK: - Terminals
 
 /// Returns a parser which never parses its input.
@@ -38,7 +43,6 @@ public func any<C: CollectionType>(input: C, index: C.Index) -> Parser<C, C.Gene
 		return .Left(Error.leaf("", index))
 	}
 }
-
 
 /// Returns a parser which parses a `literal` sequence of elements from the input.
 ///
