@@ -4,11 +4,13 @@ typealias Fibonacci = Parser<[Int], [Int]>.Function
 
 let fibonacci: (Int, Int) -> Fibonacci = fix { fibonacci in
 	{ (x: Int, y: Int) -> Fibonacci in
-		(%(x + y) >>- { (xy: Int) -> Fibonacci in
+        let combined: Parser<[Int], [Int]>.Function = %(x + y) >>- { (xy: Int) -> Fibonacci in
 			{ [ xy ] + $0 } <^> fibonacci(y, xy)
-		}) <|> { .right([], $1) }
+		}
+        
+        return combined <|> pure([])
 	}
 }
 
-parse(fibonacci(0, 1), input).right
+parse(fibonacci(0, 1), input: input).right
 
