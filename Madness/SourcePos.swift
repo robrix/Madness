@@ -2,25 +2,42 @@
 
 import Prelude
 
-struct SourcePos {
+public struct SourcePos<Index: ForwardIndexType> {
 	typealias Line = Int
 	typealias Column = Int
-	typealias SourceName = String
 
 	let line: Line
 	let column: Column
-}
-
-func updatePosCharacter(pos: SourcePos, char: Character) -> SourcePos {
-	if char == "\n" {
-		return SourcePos(line: pos.line + 1, column: pos.column)
-	} else if char == "\t" {
-		return SourcePos(line: pos.line, column: pos.column + 8 - ((pos.column - 1) % 8))
-	} else {
-		return SourcePos(line: pos.line, column: pos.column + 1)
+	let index: Index
+	
+	init(index: Index) {
+		line = 1
+		column = 1
+		self.index = index
+	}
+	
+	init(line: Line, column: Column, index: Index) {
+		self.line = line
+		self.column = column
+		self.index = index
 	}
 }
 
-func updatePosString(pos: SourcePos, string: String) -> SourcePos {
+func updateIndex<Index: ForwardIndexType>(pos: SourcePos<Index>, _ index: Index) -> SourcePos<Index> {
+	return SourcePos.init(line: pos.line, column: pos.column, index: index)
+}
+
+func updatePosCharacter(pos: SourcePos<String.Index>, _ char: Character) -> SourcePos<String.Index> {
+	let nextIndex = pos.index.successor()
+	if char == "\n" {
+		return SourcePos(line: pos.line + 1, column: pos.column, index: nextIndex)
+	} else if char == "\t" {
+		return SourcePos(line: pos.line, column: pos.column + 8 - ((pos.column - 1) % 8), index: nextIndex)
+	} else {
+		return SourcePos(line: pos.line, column: pos.column + 1, index: nextIndex)
+	}
+}
+
+func updatePosString(pos: SourcePos<String.Index>, string: String) -> SourcePos<String.Index> {
 	return string.characters.reduce(pos, combine: updatePosCharacter)
 }
