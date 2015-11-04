@@ -52,7 +52,7 @@ public enum Error<I: ForwardIndexType>: CustomStringConvertible {
 	}
 
 	private func describe(n: Int) -> String {
-		let description = String(count: n, repeatedValue: "\t" as Character) + "\(sourcePos): \(reason)"
+		let description = String(count: n, repeatedValue: "\t" as Character) + "\(sourcePos.index): \(reason)"
 		if children.count > 0 {
 			return description + "\n" + children.lazy.map { $0.describe(n + 1) }.joinWithSeparator("\n")
 		}
