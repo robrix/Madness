@@ -2,9 +2,10 @@
 
 import Prelude
 
+public typealias Line = Int
+public typealias Column = Int
+
 public struct SourcePos<Index: ForwardIndexType>: Equatable {
-	public typealias Line = Int
-	public typealias Column = Int
 
 	public let line: Line
 	public let column: Column
