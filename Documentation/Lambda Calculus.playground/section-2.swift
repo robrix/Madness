@@ -3,17 +3,17 @@ indirect enum Lambda: CustomStringConvertible {
 	case Abstraction(String, Lambda)
 	case Application(Lambda, Lambda)
     
-    static func variable(string: String) -> Lambda {
-        return .Variable(string)
-    }
+	static func variable(string: String) -> Lambda {
+		return .Variable(string)
+	}
     
-    static func abstraction(string: String, lambda: Lambda) -> Lambda {
-        return .Abstraction(string, lambda)
-    }
+	static func abstraction(string: String, lambda: Lambda) -> Lambda {
+		return .Abstraction(string, lambda)
+	}
     
-    static func application(left: Lambda, right: Lambda) -> Lambda {
-        return .Application(left, right)
-    }
+	static func application(left: Lambda, right: Lambda) -> Lambda {
+		return .Application(left, right)
+	}
 
 	var description: String {
 		switch self {
@@ -34,7 +34,7 @@ let lambda: LambdaParser = fix { lambda in
 
 	let variable: LambdaParser = Lambda.variable <^> symbol
 	let abstraction: LambdaParser = Lambda.abstraction <^> ( lift(pair) <*> (%"λ" *> symbol) <*> (%"." *> lambda) )
-    let application: LambdaParser = Lambda.application <^> ( lift(pair) <*> (%"(" *> lambda) <*> (%" " *> lambda) <* %")" )
+	let application: LambdaParser = Lambda.application <^> ( lift(pair) <*> (%"(" *> lambda) <*> (%" " *> lambda) <* %")" )
     
 	return variable <|> abstraction <|> application
 }

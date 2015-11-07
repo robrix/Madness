@@ -44,7 +44,7 @@ enum Node: CustomStringConvertible {
 
 	var description: String {
 		return analysis(
-            ifBlockquote: { "<blockquote>" + $0.lazy.map{ $0.description }.joinWithSeparator("") + "</blockquote>" },
+			ifBlockquote: { "<blockquote>" + $0.lazy.map{ $0.description }.joinWithSeparator("") + "</blockquote>" },
 			ifHeader: { "<h\($0)>\($1)</h\($0)>" },
 			ifParagraph: { "<p>\($0)</p>" })
 	}
@@ -61,9 +61,9 @@ let element: ElementParser = fix { element in
 
 		let octothorpes: IntParser = { $0.count } <^> (%"#" * (1..<7))
 		let header: NodeParser = prefix *> ( Node.header <^> (lift(pair) <*> octothorpes <*> (%" " *> restOfLine)) )
-        let paragraph: NodeParser = prefix *> ( Node.paragraph <^> texts )
+		let paragraph: NodeParser = prefix *> ( Node.paragraph <^> texts )
 		let blockquote: NodeParser = prefix *> { ( Node.blockquote <^> element(prefix *> %"> ")+ )($0, $1) }
-        
+		
 		return header <|> paragraph <|> blockquote
 	}
 }
