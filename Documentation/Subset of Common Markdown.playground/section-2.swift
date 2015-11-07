@@ -16,18 +16,6 @@ enum Node: CustomStringConvertible {
 	case Header(Int, String)
 	case Paragraph(String)
     
-    static func blockquote(nodes: [Node]) -> Node {
-        return .Blockquote(nodes)
-    }
-    
-    static func header(index: Int, string: String) -> Node {
-        return .Header(index, string)
-    }
-    
-    static func paragraph(text: String) -> Node {
-        return .Paragraph(text)
-    }
-
     func analysis<T>(ifBlockquote ifBlockquote: [Node] -> T, ifHeader: (Int, String) -> T, ifParagraph: String -> T) -> T {
 		switch self {
 		case let Blockquote(nodes):
@@ -38,7 +26,6 @@ enum Node: CustomStringConvertible {
 			return ifParagraph(text)
 		}
 	}
-
 
 	// MARK: Printable
 
@@ -60,9 +47,9 @@ let element: ElementParser = fix { element in
 	{ prefix in
 
 		let octothorpes: IntParser = { $0.count } <^> (%"#" * (1..<7))
-		let header: NodeParser = prefix *> ( Node.header <^> (lift(pair) <*> octothorpes <*> (%" " *> restOfLine)) )
-		let paragraph: NodeParser = prefix *> ( Node.paragraph <^> texts )
-		let blockquote: NodeParser = prefix *> { ( Node.blockquote <^> element(prefix *> %"> ")+ )($0, $1) }
+		let header: NodeParser = prefix *> ( Node.Header <^> (lift(pair) <*> octothorpes <*> (%" " *> restOfLine)) )
+		let paragraph: NodeParser = prefix *> ( Node.Paragraph <^> texts )
+		let blockquote: NodeParser = prefix *> { ( Node.Blockquote <^> element(prefix *> %"> ")+ )($0, $1) }
 		
 		return header <|> paragraph <|> blockquote
 	}
