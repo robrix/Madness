@@ -137,15 +137,14 @@ public func satisfy<C: CollectionType> (pred: C.Generator.Element -> Bool) -> Pa
 	}, pred)
 }
 
-public func tokenPrim<C: CollectionType> (nextPos: SourcePos<C.Index> -> C.Generator.Element -> SourcePos<C.Index>, _ pred: C.Generator.Element -> Bool) -> Parser<C, C.Generator.Element>.Function {
+public func tokenPrim<C: CollectionType> (nextPos: (SourcePos<C.Index>, C.Generator.Element) -> SourcePos<C.Index>, _ pred: C.Generator.Element -> Bool) -> Parser<C, C.Generator.Element>.Function {
 	return { input, sourcePos in
 		let index = sourcePos.index
 		if index != input.endIndex {
 			let parsed = input[index]
-			let next = index.successor()
 			
 			if pred(parsed) {
-				return .Right((parsed, updateIndex(sourcePos, next)))
+				return .Right((parsed, nextPos(sourcePos, parsed)))
 			} else {
 				return .Left(Error.leaf("Failed to parse \(String(parsed)) with predicate at index", sourcePos))
 			}
