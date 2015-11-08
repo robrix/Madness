@@ -1,35 +1,8 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-/// Parses `parser` 0 or more times.
-public postfix func * <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
-	return many(parser)
-}
-
-/// Creates a parser from `string`, and parses it 0 or more times.
-public postfix func * (string: String) -> Parser<String.CharacterView, [String]>.Function {
-	return { $0.map { String($0) } } <^> many(%(string.characters))
-}
-
 /// Parser `parser` 1 or more times.
 public func some<C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
 	return prepend <^> parser <*> many(parser)
-}
-
-/// Parses `parser` 1 or more times.
-public postfix func + <C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
-	return some(parser)
-}
-
-/// Creates a parser from `string`, and parses it 1 or more times.
-public postfix func + (string: String) -> Parser<String.CharacterView, [String]>.Function {
-	return some({ String($0) } <^> %(string.characters))
-}
-
-/// Parses `parser` exactly `n` times.
-///
-/// `n` must be > 0 to make any sense.
-public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> Parser<C, [T]>.Function {
-	return ntimes(parser, n)
 }
 
 /// Parses 1 or more `parser` separated by `separator`.
