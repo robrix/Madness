@@ -33,18 +33,13 @@ public func none<C: CollectionType, Tree>(string: String = "no way forward") -> 
 	return { _, sourcePos in Either.left(Error.leaf(string, sourcePos)) }
 }
 
-/// Returns a parser which parses any single character.
+// Returns a parser which parses any single character.
 public func any<C: CollectionType>(input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, C.Generator.Element>.Result {
-	let index = sourcePos.index
+	return satisfy { c in true }(input, sourcePos)
+}
 
-	if index != input.endIndex {
-		let parsed = input[index]
-		let next = index.successor()
-		
-		return .Right((parsed, updateIndex(sourcePos, next)))
-	} else {
-		return .Left(Error.leaf("", sourcePos))
-	}
+public func any(input: String.CharacterView, sourcePos: SourcePos<String.Index>) -> Parser<String.CharacterView, Character>.Result {
+	return satisfy { c in true }(input, sourcePos)
 }
 
 
@@ -54,7 +49,7 @@ public func any<C: CollectionType>(input: C, sourcePos: SourcePos<C.Index>) -> P
 public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (literal: C) -> Parser<C, C>.Function {
 	return { input, sourcePos in
 		if containsAt(input, index: sourcePos.index, needle: literal) {
-			return 	.Right(literal, updateIndex(sourcePos, sourcePos.index.advancedBy(literal.count)))
+			return .Right(literal, updateIndex(sourcePos, sourcePos.index.advancedBy(literal.count)))
 		} else {
 			return .Left(.leaf("expected \(literal)", sourcePos))
 		}
@@ -62,7 +57,13 @@ public prefix func % <C: CollectionType where C.Generator.Element: Equatable> (l
 }
 
 public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Function {
-	return String.init <^> %literal.characters
+	return { input, sourcePos in
+		if containsAt(input, index: sourcePos.index, needle: literal.characters) {
+			return .Right(literal, updatePosString(sourcePos, literal))
+		} else {
+			return .Left(.leaf("expected \(literal)", sourcePos))
+		}
+	}
 }
 
 /// Returns a parser which parses a `literal` element from the input.
@@ -123,7 +124,7 @@ func containsAt<C1: CollectionType, C2: CollectionType where C1.Generator.Elemen
 
 // Returns a parser that satisfies the given predicate
 public func satisfy(pred: Character -> Bool) -> Parser<String.CharacterView, Character>.Function {
-	let updatePos = curry(updatePosCharacter)
+	let updatePos = updatePosCharacter
 	let parser: Parser<String.CharacterView, Character>.Function = tokenPrim(updatePos, pred)
 	return parser
 
@@ -131,7 +132,9 @@ public func satisfy(pred: Character -> Bool) -> Parser<String.CharacterView, Cha
 
 // Returns a parser that satisfies the given predicate
 public func satisfy<C: CollectionType> (pred: C.Generator.Element -> Bool) -> Parser<C, C.Generator.Element>.Function {
-	return tokenPrim(curry({ x, y in x }), pred)
+	return tokenPrim({ oldPos, el in
+		updateIndex(oldPos, oldPos.index.advancedBy(1))
+	}, pred)
 }
 
 public func tokenPrim<C: CollectionType> (nextPos: SourcePos<C.Index> -> C.Generator.Element -> SourcePos<C.Index>, _ pred: C.Generator.Element -> Bool) -> Parser<C, C.Generator.Element>.Function {
