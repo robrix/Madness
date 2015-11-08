@@ -6,18 +6,17 @@ let lower = %("a"..."z")
 let upper = %("A"..."Z")
 let digit = %("0"..."9")
 let text = lower <|> upper <|> digit <|> ws
-let restOfLine: Parser<String, String>.Function = (text+ |> map { "".join($0) }) <* newline
-
+let restOfLine = { $0.joinWithSeparator("") } <^> text* <* newline
+let texts = { $0.joinWithSeparator("") } <^> (text <|> (%"" <* newline))+
 
 // MARK: - AST
 
-enum Node: Printable {
+enum Node: CustomStringConvertible {
 	case Blockquote([Node])
 	case Header(Int, String)
 	case Paragraph(String)
-
-
-	func analysis<T>(#ifBlockquote: [Node] -> T, ifHeader: (Int, String) -> T, ifParagraph: String -> T) -> T {
+    
+    func analysis<T>(ifBlockquote ifBlockquote: [Node] -> T, ifHeader: (Int, String) -> T, ifParagraph: String -> T) -> T {
 		switch self {
 		case let Blockquote(nodes):
 			return ifBlockquote(nodes)
@@ -28,12 +27,11 @@ enum Node: Printable {
 		}
 	}
 
-
 	// MARK: Printable
 
 	var description: String {
 		return analysis(
-			ifBlockquote: { "<blockquote>\n\t" + "\n\t".join(lazy($0).map { $0.description }) + "\n</blockquote>" },
+			ifBlockquote: { "<blockquote>" + $0.lazy.map{ $0.description }.joinWithSeparator("") + "</blockquote>" },
 			ifHeader: { "<h\($0)>\($1)</h\($0)>" },
 			ifParagraph: { "<p>\($0)</p>" })
 	}
@@ -42,26 +40,27 @@ enum Node: Printable {
 
 // MARK: - Parsing rules
 
-typealias NodeParser = Parser<String, ()>.Function -> Parser<String, Node>.Function
+typealias NodeParser = Parser<String.CharacterView, Node>.Function
+typealias ElementParser = StringParser -> NodeParser
 
-let element: NodeParser = fix { element in
+let element: ElementParser = fix { element in
 	{ prefix in
-		let prefixedElements: NodeParser = {
-			let each = (element(prefix *> $0) <|> (prefix *> $0 <*> newline)) |> map { $0.map { [ $0 ] } ?? [] }
-			return each+ |> map { Node.Blockquote(join([], $0)) }
-		}
 
-		let octothorpes: Parser<String, Int>.Function = (%"#" * (1..<7)) |> map { $0.count }
-		let header: Parser<String, Node>.Function = prefix *> octothorpes <*> (%" " *> restOfLine) |> map { (level: Int, title: String) in Node.Header(level, title) }
-		let paragraph: Parser<String, Node>.Function = (prefix *> restOfLine)+ |> map { Node.Paragraph("\n".join($0)) }
-		let blockquote: Parser<String, Node>.Function = prefix *> { prefixedElements(%"> ")($0, $1) }
-
+		let octothorpes: IntParser = { $0.count } <^> (%"#" * (1..<7))
+		let header: NodeParser = prefix *> ( Node.Header <^> (lift(pair) <*> octothorpes <*> (%" " *> restOfLine)) )
+		let paragraph: NodeParser = prefix *> ( Node.Paragraph <^> texts )
+		let blockquote: NodeParser = prefix *> { ( Node.Blockquote <^> element(prefix *> %"> ")+ )($0, $1) }
+		
 		return header <|> paragraph <|> blockquote
 	}
 }
 
-let ok: Parser<String, ()>.Function = { .right((), $1) }
-let parsed = parse(element(ok), "> # hello\n> \n> hello\n> there\n> \n> \n")
-if let translated = parsed.0.right {
-	translated.description
+let parser = element(pure(""))*
+if let parsed = parse(parser, input: "> # hello\n> \n> hello\n> there\n> \n> \n").right {
+    let description = parsed.reduce(""){ $0 + $1.description }
 }
+
+if let parsed = parse(parser, input: "This is a \nparagraph\n> # title\n> ### subtitle\n> a").right {
+    let description = parsed.reduce(""){ $0 + $1.description }
+}
+

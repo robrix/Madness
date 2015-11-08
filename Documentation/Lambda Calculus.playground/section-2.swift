@@ -2,7 +2,7 @@ indirect enum Lambda: CustomStringConvertible {
 	case Variable(String)
 	case Abstraction(String, Lambda)
 	case Application(Lambda, Lambda)
-
+    
 	var description: String {
 		switch self {
 		case let Variable(symbol):
@@ -15,15 +15,15 @@ indirect enum Lambda: CustomStringConvertible {
 	}
 }
 
+typealias LambdaParser = Parser<String.CharacterView, Lambda>.Function
 
-let lambda: Parser<String.CharacterView, Lambda>.Function = fix { lambda in
-	let symbol: Parser<String.CharacterView, String>.Function = %("a"..."z")
+let lambda: LambdaParser = fix { lambda in
+	let symbol: StringParser = %("a"..."z")
 
-	let variable: Parser<String.CharacterView, Lambda>.Function = symbol |> map { Lambda.Variable($0) }
-	let abstraction: Parser<String.CharacterView, Lambda>.Function = lift(pair) <*> (%"λ" *> symbol) <*> (%"." *> lambda) |> map { Lambda.Abstraction($0, $1) }
-    let application: Parser<String.CharacterView, Lambda>.Function = lift(pair) <*> (%"(" *> lambda) <*> (%" " *> lambda) <* %")" |> map { (function: Lambda, argument: Lambda) -> Lambda in
-		Lambda.Application(function, argument)
-	}
+	let variable: LambdaParser = Lambda.Variable <^> symbol
+	let abstraction: LambdaParser = Lambda.Abstraction <^> ( lift(pair) <*> (%"λ" *> symbol) <*> (%"." *> lambda) )
+	let application: LambdaParser = Lambda.Application <^> ( lift(pair) <*> (%"(" *> lambda) <*> (%" " *> lambda) <* %")" )
+    
 	return variable <|> abstraction <|> application
 }
 
