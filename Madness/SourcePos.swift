@@ -44,6 +44,6 @@ public func updatePosCharacter(pos: SourcePos<String.Index>, _ char: Character) 
 	}
 }
 
-func updatePosString(pos: SourcePos<String.Index>, string: String) -> SourcePos<String.Index> {
+func updatePosString(pos: SourcePos<String.Index>, _ string: String) -> SourcePos<String.Index> {
 	return string.characters.reduce(pos, combine: updatePosCharacter)
 }
