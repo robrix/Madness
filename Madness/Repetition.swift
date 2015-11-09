@@ -25,6 +25,13 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: C
 		<|> { interval.start <= 0 ? .Right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
+/// Parses `parser` exactly `n` times.		
+///
+/// `n` must be > 0 to make any sense.
+public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> Parser<C, [T]>.Function {
+	return ntimes(parser, n)
+}
+
 /// Parses `parser` the number of times specified in `interval`.
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n-1` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
