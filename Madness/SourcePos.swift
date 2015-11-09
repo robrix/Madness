@@ -26,7 +26,7 @@ public struct SourcePos<Index: ForwardIndexType>: Equatable {
 }
 	
 public func ==<Index>(first: SourcePos<Index>, other: SourcePos<Index>) -> Bool {
-	return first.line == other.line && first.column == other.line && first.line == other.line
+	return first.line == other.line && first.column == other.column && first.index == other.index
 }
 
 public func updateIndex<Index: ForwardIndexType>(pos: SourcePos<Index>, _ index: Index) -> SourcePos<Index> {
