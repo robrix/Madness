@@ -17,6 +17,10 @@ See `Madness.playground` for some examples of parsing with Madness.
 
 ## Use
 
+- **Lexing**
+
+	Madness can be used to write lexers, lexeme parsers, and scannerless parsers. @bencochran has built a [lexer and parser for the LLVM tutorial language, Kaleidoscope](https://github.com/bencochran/KaleidoscopeLang).
+
 - **Any**
 
 	```swift
