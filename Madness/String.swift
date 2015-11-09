@@ -39,16 +39,16 @@ public let int: CharacterArrayParser = {
 
 private let decimal: CharacterArrayParser = prepend <^> %"." <*> someDigits
 
-private let exp: StringParser = %"e" <|> %"e+" <|> %"e-" <|> %"E" <|> %"E+" <|> %"E-"
+private let exp: StringParser = %"e+" <|> %"e-" <|> %"e" <|> %"E+" <|> %"E-" <|> %"E"
 
 private let exponent: CharacterArrayParser = { s in { s.characters + $0 } } <^> exp <*> someDigits
 
 // Parses floating point numbers as doubles
 public let number: DoubleParser = { characters in Double(String(characters))! } <^>
-	(int
+	((concat2 <^> int <*> decimal <*> exponent)
 	<|> (concat <^> int <*> decimal)
 	<|> (concat <^> int <*> exponent)
-	<|> (concat2 <^> int <*> decimal <*> exponent))
+	<|> int)
 
 public let digit: CharacterParser = oneOf("0123456789")
 
