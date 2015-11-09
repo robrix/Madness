@@ -5,8 +5,8 @@ final class AlternationTests: XCTestCase {
 	// MARK: Alternation
 
 	func testAlternationParsesEitherAlternative() {
-		assertAdvancedBy(alternation, input: "xy".characters, offset: 1)
-		assertAdvancedBy(alternation, input: "yx".characters, offset: 1)
+		assertAdvancedBy(alternation, input: "xy".characters, lineOffset: 0, columnOffset: 1, offset: 1)
+		assertAdvancedBy(alternation, input: "yx".characters, lineOffset: 0, columnOffset: 1, offset: 1)
 	}
 
 	func testAlternationProducesTheParsedAlternative() {

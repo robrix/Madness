@@ -24,7 +24,7 @@ final class ParserTests: XCTestCase {
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		let parser = %"foo"
-		assertAdvancedBy(parser, input: "foot".characters, offset: 3)
+		assertAdvancedBy(parser, input: "foot".characters, lineOffset: 0, columnOffset: 3, offset: 3)
 		assertUnmatched(parser, "fo".characters)
 	}
 

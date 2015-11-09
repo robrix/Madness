@@ -14,14 +14,14 @@ final class ReductionTests: XCTestCase {
 
 	enum Value { case Null }
 
-	let constReduction = %"null" --> { _, _, _ in Value.Null }
+	let constReduction = %"null" --> { _, _, _, _ in Value.Null }
 
 	func testMapsConstFunctionOverInput() {
 		assertTree(constReduction, "null".characters, ==, Value.Null)
 	}
 
 
-	let reductionWithIndex = %"x" --> { "\($3.uppercaseString):\($0.startIndex.distanceTo($2.startIndex))..<\($0.startIndex.distanceTo($2.endIndex))" }
+	let reductionWithIndex = %"x" --> { "\($4.uppercaseString):\($0.startIndex.distanceTo($3.startIndex))..<\($0.startIndex.distanceTo($3.endIndex))" }
 
 	func testMapsParseTreesWithAFunctionWhichTakesTheSourceIndex() {
 		assertTree(reductionWithIndex, "x".characters, ==, "X:0..<1")

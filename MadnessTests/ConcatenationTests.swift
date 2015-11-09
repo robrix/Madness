@@ -8,7 +8,7 @@ final class ConcatenationTests: XCTestCase {
 	}
 
 	func testConcatenationParsesBothOperands() {
-		assertAdvancedBy(concatenation, input: "xyz".characters, offset: 2)
+		assertAdvancedBy(concatenation, input: "xyz".characters, lineOffset: 0, columnOffset: 2, offset: 2)
 	}
 
 	func testConcatenationProducesPairsOfTerms() {
@@ -48,6 +48,14 @@ func assertAdvancedBy<C: CollectionType, T>(parser: Parser<C, T>.Function, input
 
 	let x = assertNotNil(parser(input, pos).right, "should have parsed \(input) and advanced by \(offset). " + message, file: file, line: line)?.1
 	return assertEqual(x, newSourcePos, "should have parsed \(input) and advanced by \(offset). " + message, file, line)
+}
+
+func assertAdvancedBy<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, lineOffset: Line, columnOffset: Column, offset: C.Index.Distance, message: String = "", file: String = __FILE__, line: UInt = __LINE__) -> SourcePos<C.Index>? {
+	let pos = SourcePos(index: input.startIndex)
+	let newSourcePos: SourcePos<C.Index>? = SourcePos.init(line: pos.line.advancedBy(lineOffset), column: pos.column.advancedBy(columnOffset), index: pos.index.advancedBy(offset))
+
+	let x = assertNotNil(parser(input, pos).right, "should have parsed \(String(input)) and advanced by \(offset). " + message, file: file, line: line)?.1
+	return assertEqual(x, newSourcePos, "should have parsed \(String(input)) and advanced by \(offset). " + message, file, line)
 }
 
 
