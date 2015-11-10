@@ -76,7 +76,7 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Fixtures
 
-private let alternation = %"x" <|> (%"y" --> { _, _, _, _ in 1 })
+private let alternation = %"x" <|> (%"y" --> { _, _, _, _, _ in 1 })
 
 private let optional = (%"y")|? |> map { $0 ?? "" }
 private let prefixed = curry { $0 + $1 } <^> %"x" <*> optional
