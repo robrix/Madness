@@ -4,15 +4,17 @@ final class ErrorTests: XCTestCase {
 	func testLiftedParsersDoNotReportErrorsWhenTheyMatch() {
 		let parser = %"x"
 		let input = "x".characters
-		assert(parser(input, input.startIndex).right, !=, nil)
-		assert(parser(input, input.startIndex).left, ==, nil)
+		let sourcePos = SourcePos(index: input.startIndex)
+		assert(parser(input, sourcePos).right, !=, nil)
+		assert(parser(input, sourcePos).left, ==, nil)
 	}
 
 	func testLiftedParsersReportErrorsWhenTheyDoNotMatch() {
 		let parser = %"x"
 		let input = "y"
-		assert(parser(input.characters, input.startIndex).right, ==, nil)
-		assert(parser(input.characters, input.startIndex).left, !=, nil)
+		let sourcePos = SourcePos(index: input.startIndex)
+		assert(parser(input.characters, sourcePos).right, ==, nil)
+		assert(parser(input.characters, sourcePos).left, !=, nil)
 	}
 
 	func testParseError() {

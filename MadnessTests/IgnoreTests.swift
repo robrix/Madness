@@ -12,11 +12,11 @@ final class IgnoreTests: XCTestCase {
 	}
 
 	func testRepeatedIgnoredEmptyParsesAreDropped() {
-		assertTree(ignored* *> %"y", "y".characters, ==, "y")
+		assertTree(many(ignored) *> %"y", "y".characters, ==, "y")
 	}
 
 	func testRepeatedIgnoredParsesAreDropped() {
-		assertTree(ignored* *> %"y", "xxy".characters, ==, "y")
+		assertTree(many(ignored) *> %"y", "xxy".characters, ==, "y")
 	}
 }
 

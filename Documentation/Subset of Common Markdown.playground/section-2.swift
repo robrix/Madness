@@ -6,8 +6,8 @@ let lower = %("a"..."z")
 let upper = %("A"..."Z")
 let digit = %("0"..."9")
 let text = lower <|> upper <|> digit <|> ws
-let restOfLine = { $0.joinWithSeparator("") } <^> text* <* newline
-let texts = { $0.joinWithSeparator("") } <^> (text <|> (%"" <* newline))+
+let restOfLine = { $0.joinWithSeparator("") } <^> many(text) <* newline
+let texts = { $0.joinWithSeparator("") } <^> some(text <|> (%"" <* newline))
 
 // MARK: - AST
 
@@ -49,13 +49,13 @@ let element: ElementParser = fix { element in
 		let octothorpes: IntParser = { $0.count } <^> (%"#" * (1..<7))
 		let header: NodeParser = prefix *> ( Node.Header <^> (lift(pair) <*> octothorpes <*> (%" " *> restOfLine)) )
 		let paragraph: NodeParser = prefix *> ( Node.Paragraph <^> texts )
-		let blockquote: NodeParser = prefix *> { ( Node.Blockquote <^> element(prefix *> %"> ")+ )($0, $1) }
+		let blockquote: NodeParser = prefix *> { ( Node.Blockquote <^> some(element(prefix *> %"> ")) )($0, $1) }
 		
 		return header <|> paragraph <|> blockquote
 	}
 }
 
-let parser = element(pure(""))*
+let parser = many(element(pure("")))
 if let parsed = parse(parser, input: "> # hello\n> \n> hello\n> there\n> \n> \n").right {
     let description = parsed.reduce(""){ $0 + $1.description }
 }
