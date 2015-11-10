@@ -24,15 +24,18 @@ public struct SourcePos<Index: ForwardIndexType>: Equatable {
 	}
 
 }
-	
+
+/// Returns whether two SourcePos are equal.
 public func ==<Index>(first: SourcePos<Index>, other: SourcePos<Index>) -> Bool {
 	return first.line == other.line && first.column == other.column && first.index == other.index
 }
 
+/// Returns a new SourcePos advanced by the given index.
 public func updateIndex<Index: ForwardIndexType>(pos: SourcePos<Index>, _ index: Index) -> SourcePos<Index> {
 	return SourcePos.init(line: pos.line, column: pos.column, index: index)
 }
 
+/// Returns a new SourcePos with its line, column, and index advanced by the given character.
 public func updatePosCharacter(pos: SourcePos<String.Index>, _ char: Character) -> SourcePos<String.Index> {
 	let nextIndex = pos.index.successor()
 	if char == "\n" {
@@ -44,6 +47,7 @@ public func updatePosCharacter(pos: SourcePos<String.Index>, _ char: Character) 
 	}
 }
 
+/// Returns a new SourcePos with its line, column, and index advanced by the given string.
 func updatePosString(pos: SourcePos<String.Index>, _ string: String) -> SourcePos<String.Index> {
 	return string.characters.reduce(pos, combine: updatePosCharacter)
 }
