@@ -9,12 +9,6 @@ public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: (C, 
 	}
 }
 
-public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: (Range<Line>, Range<Column>, Range<C.Index>, T) -> U) -> Parser<C, U>.Function {
-	return parser --> { f($1, $2, $3, $4) }
-}
-
-
-
 /// Returns a parser which maps parse results.
 ///
 /// This enables e.g. adding identifiers for error handling.
