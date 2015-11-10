@@ -78,6 +78,6 @@ final class ParserTests: XCTestCase {
 	
 	func testSatisfyIncrementsLinesOverNewlineCharacters() {
 		let parser = any *> %"foo"
-		assertAdvancedBy(parser, input: "\nfoot".characters, lineOffset: 1, columnOffset: 3, offset: 4)
+		assertAdvancedBy(parser, input: "\nfoot".characters, lineOffset: 1, columnOffset: 2, offset: 4)
 	}
 }

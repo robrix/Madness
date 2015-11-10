@@ -42,7 +42,7 @@ public func updateIndex<Index: ForwardIndexType>(pos: SourcePos<Index>, _ index:
 public func updatePosCharacter(pos: SourcePos<String.Index>, _ char: Character) -> SourcePos<String.Index> {
 	let nextIndex = pos.index.successor()
 	if char == "\n" {
-		return SourcePos(line: pos.line + 1, column: pos.column, index: nextIndex)
+		return SourcePos(line: pos.line + 1, column: 0, index: nextIndex)
 	} else if char == "\t" {
 		return SourcePos(line: pos.line, column: pos.column + DefaultTabWidth - ((pos.column - 1) % DefaultTabWidth), index: nextIndex)
 	} else {
