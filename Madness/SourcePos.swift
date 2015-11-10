@@ -5,7 +5,10 @@ import Prelude
 public typealias Line = Int
 public typealias Column = Int
 
+var DefaultTabWidth = 8
+
 public struct SourcePos<Index: ForwardIndexType>: Equatable {
+
 
 	public let line: Line
 	public let column: Column
@@ -41,7 +44,7 @@ public func updatePosCharacter(pos: SourcePos<String.Index>, _ char: Character) 
 	if char == "\n" {
 		return SourcePos(line: pos.line + 1, column: pos.column, index: nextIndex)
 	} else if char == "\t" {
-		return SourcePos(line: pos.line, column: pos.column + 8 - ((pos.column - 1) % 8), index: nextIndex)
+		return SourcePos(line: pos.line, column: pos.column + DefaultTabWidth - ((pos.column - 1) % DefaultTabWidth), index: nextIndex)
 	} else {
 		return SourcePos(line: pos.line, column: pos.column + 1, index: nextIndex)
 	}
