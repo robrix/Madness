@@ -38,11 +38,6 @@ public func any<C: CollectionType>(input: C, sourcePos: SourcePos<C.Index>) -> P
 	return satisfy { c in true }(input, sourcePos)
 }
 
-public func any(input: String.CharacterView, sourcePos: SourcePos<String.Index>) -> Parser<String.CharacterView, Character>.Result {
-	return satisfy { c in true }(input, sourcePos)
-}
-
-
 /// Returns a parser which parses a `literal` sequence of elements from the input.
 ///
 /// This overload enables e.g. `%"xyz"` to produce `String -> (String, String)`.
