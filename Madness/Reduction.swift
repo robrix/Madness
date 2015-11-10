@@ -4,7 +4,7 @@
 public func --> <C: CollectionType, T, U>(parser: Parser<C, T>.Function, f: (C, Range<Line>, Range<Column>, Range<C.Index>, T) -> U) -> Parser<C, U>.Function {
 	return { input, inputPos in
 		parser(input, inputPos).map { output, outputPos in
-			(f(input, inputPos.line...outputPos.line, inputPos.column...outputPos.column, inputPos.index..<outputPos.index, output), outputPos)
+			(f(input, inputPos.line...outputPos.line, outputPos.column...outputPos.column, inputPos.index..<outputPos.index, output), outputPos)
 		}
 	}
 }
