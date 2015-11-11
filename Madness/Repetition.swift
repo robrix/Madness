@@ -64,15 +64,6 @@ private func decrement(x: ClosedInterval<Int>) -> ClosedInterval<Int> {
 }
 
 
-// MARK: - Operators
-
-/// Zero-or-more repetition operator.
-postfix operator * {}
-
-/// One-or-more repetition operator.
-postfix operator + {}
-
-
 // MARK: - Imports
 
 import Either
