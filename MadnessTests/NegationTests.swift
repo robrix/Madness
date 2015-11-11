@@ -15,11 +15,11 @@ class NegationTests: XCTestCase {
 	let upToBang: CharacterArrayParser = many(not(%"!") *> any) <* many(any)
 
 	func testNegativeLooaheadAccumulation() {
-		assertTree(upToBang, "x y! z".characters, ==, ["x", " ", "y"])
+		assertTree(upToBang, "xy!z".characters, ==, ["x", "y"])
 	}
 
 	func testNegativeLooaheadAccumulationWithoutMatch() {
-		assertTree(upToBang, "x y z".characters, ==, ["x", " ", "y", " ", "z"])
+		assertTree(upToBang, "xyz".characters, ==, ["x", "y", "z"])
     }
 }
 
