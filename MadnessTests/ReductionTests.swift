@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 final class ReductionTests: XCTestCase {
-	let reduction = %"x" --> { $2.uppercaseString }
+	let reduction = %"x" --> { $4.uppercaseString }
 
 	func testMapsParseTreesWithAFunction() {
 		assertTree(reduction, "x".characters, ==, "X")
@@ -14,14 +14,14 @@ final class ReductionTests: XCTestCase {
 
 	enum Value { case Null }
 
-	let constReduction = %"null" --> { _ in Value.Null }
+	let constReduction = %"null" --> { _, _, _, _, _ in Value.Null }
 
 	func testMapsConstFunctionOverInput() {
 		assertTree(constReduction, "null".characters, ==, Value.Null)
 	}
 
 
-	let reductionWithIndex = %"x" --> { "\($2.uppercaseString):\($0.startIndex.distanceTo($1.startIndex))..<\($0.startIndex.distanceTo($1.endIndex))" }
+	let reductionWithIndex = %"x" --> { "\($4.uppercaseString):\($0.startIndex.distanceTo($3.startIndex))..<\($0.startIndex.distanceTo($3.endIndex))" }
 
 	func testMapsParseTreesWithAFunctionWhichTakesTheSourceIndex() {
 		assertTree(reductionWithIndex, "x".characters, ==, "X:0..<1")

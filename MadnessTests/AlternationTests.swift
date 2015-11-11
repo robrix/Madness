@@ -5,8 +5,8 @@ final class AlternationTests: XCTestCase {
 	// MARK: Alternation
 
 	func testAlternationParsesEitherAlternative() {
-		assertAdvancedBy(alternation, input: "xy".characters, offset: 1)
-		assertAdvancedBy(alternation, input: "yx".characters, offset: 1)
+		assertAdvancedBy(alternation, input: "xy".characters, lineOffset: 0, columnOffset: 1, offset: 1)
+		assertAdvancedBy(alternation, input: "yx".characters, lineOffset: 0, columnOffset: 1, offset: 1)
 	}
 
 	func testAlternationProducesTheParsedAlternative() {
@@ -76,7 +76,7 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Fixtures
 
-private let alternation = %"x" <|> (%"y" --> { _, _, _ in 1 })
+private let alternation = %"x" <|> (%"y" --> { _, _, _, _, _ in 1 })
 
 private let optional = (%"y")|? |> map { $0 ?? "" }
 private let prefixed = curry { $0 + $1 } <^> %"x" <*> optional

@@ -2,19 +2,19 @@
 
 /// A composite error.
 public enum Error<I: ForwardIndexType>: CustomStringConvertible {
-	indirect case Branch(String, I, [Error])
+	indirect case Branch(String, SourcePos<I>, [Error])
 
 	/// Constructs a leaf error, e.g. for terminal parsers.
-	public static func leaf(reason: String, _ index: I) -> Error {
-		return .Branch(reason, index, [])
+	public static func leaf(reason: String, _ sourcePos: SourcePos<I>) -> Error {
+		return .Branch(reason, sourcePos, [])
 	}
 
-	public static func withReason(reason: String, _ index: I) -> (Error, Error) -> Error {
-		return { Error(reason: reason, index: index, children: [$0, $1]) }
+	public static func withReason(reason: String, _ sourcePos: SourcePos<I>) -> (Error, Error) -> Error {
+		return { Error(reason: reason, sourcePos: sourcePos, children: [$0, $1]) }
 	}
 
-	public init(reason: String, index: I, children: [Error]) {
-		self = .Branch(reason, index, children)
+	public init(reason: String, sourcePos: SourcePos<I>, children: [Error]) {
+		self = .Branch(reason, sourcePos, children)
 	}
 
 
@@ -25,10 +25,10 @@ public enum Error<I: ForwardIndexType>: CustomStringConvertible {
 		}
 	}
 
-	public var index: I {
+	public var sourcePos: SourcePos<I> {
 		switch self {
-		case let .Branch(_, i, _):
-			return i
+		case let .Branch(_, sourcePos, _):
+			return sourcePos
 		}
 	}
 
@@ -52,7 +52,7 @@ public enum Error<I: ForwardIndexType>: CustomStringConvertible {
 	}
 
 	private func describe(n: Int) -> String {
-		let description = String(count: n, repeatedValue: "\t" as Character) + "\(index): \(reason)"
+		let description = String(count: n, repeatedValue: "\t" as Character) + "\(sourcePos.index): \(reason)"
 		if children.count > 0 {
 			return description + "\n" + children.lazy.map { $0.describe(n + 1) }.joinWithSeparator("\n")
 		}
@@ -72,7 +72,7 @@ public func <?> <C: CollectionType, T>(parser: Parser<C, T>.Function, name: Stri
 public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, index in
 		parser(input, index).either(
-			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", index: $0.index, children: $0.children)) },
+			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", sourcePos: $0.sourcePos, children: $0.children)) },
 			ifRight: Either.right)
 	}
 }

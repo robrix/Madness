@@ -24,7 +24,7 @@ final class ParserTests: XCTestCase {
 
 	func testLiteralParsersParseAPrefixOfTheInput() {
 		let parser = %"foo"
-		assertAdvancedBy(parser, input: "foot".characters, offset: 3)
+		assertAdvancedBy(parser, input: "foot".characters, lineOffset: 0, columnOffset: 3, offset: 3)
 		assertUnmatched(parser, "fo".characters)
 	}
 
@@ -72,5 +72,12 @@ final class ParserTests: XCTestCase {
 
 	func testAnyParsesAnySingleCharacter() {
 		assertTree(any, "🔥".characters, ==, "🔥")
+	}
+	
+	// MARK: satisfy
+	
+	func testSatisfyIncrementsLinesOverNewlineCharacters() {
+		let parser = any *> %"foo"
+		assertAdvancedBy(parser, input: "\nfoot".characters, lineOffset: 1, columnOffset: 2, offset: 4)
 	}
 }

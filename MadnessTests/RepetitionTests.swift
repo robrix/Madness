@@ -28,7 +28,7 @@ final class RepetitionTests: XCTestCase {
 	}
 
 
-	let oneOrMore = (%"x")+
+	let oneOrMore = some(%"x")
 
 	func testOneOrMoreRepetitionRejectsTheEmptyString() {
 		assertUnmatched(oneOrMore, "".characters)
@@ -54,7 +54,7 @@ final class RepetitionTests: XCTestCase {
 	}
 
 	func testExactlyNRepetitionParsesStopsAtN() {
-		assertAdvancedBy(exactlyN, input: "xxxx".characters, offset: 3)
+		assertAdvancedBy(exactlyN, input: "xxxx".characters, lineOffset: 0, columnOffset: 3, offset: 3)
 	}
 
 
@@ -66,7 +66,7 @@ final class RepetitionTests: XCTestCase {
 
 	func testZeroToNRepetitionParsesUpToButNotIncludingNTrees() {
 		assertTree(zeroToN, "xxx".characters, ==, ["x"])
-		assertAdvancedBy(zeroToN, input: "xxx".characters, offset: 1)
+		assertAdvancedBy(zeroToN, input: "xxx".characters, lineOffset: 0, columnOffset: 1, offset: 1)
 	}
 
 
@@ -92,7 +92,7 @@ final class RepetitionTests: XCTestCase {
 	}
 
 	func testMToNRepetitionMatchesUpToButNotIncludingN() {
-		assertAdvancedBy(mToN, input: "xxxx".characters, offset: 2)
+		assertAdvancedBy(mToN, input: "xxxx".characters, lineOffset: 0, columnOffset: 2, offset: 2)
 	}
 
 
@@ -112,7 +112,7 @@ final class RepetitionTests: XCTestCase {
 
 	func testZeroToNClosedRepetitionParsesUpToNTrees() {
 		assertTree(zeroToNClosed, "xxx".characters, ==, ["x", "x"])
-		assertAdvancedBy(zeroToNClosed, input: "xxx".characters, offset: 2)
+		assertAdvancedBy(zeroToNClosed, input: "xxx".characters, lineOffset: 0, columnOffset: 2, offset: 2)
 	}
 
 
@@ -138,20 +138,20 @@ final class RepetitionTests: XCTestCase {
 	}
 
 	func testMToNClosedRepetitionMatchesUpToN() {
-		assertAdvancedBy(mToNClosed, input: "xxxx".characters, offset: 3)
+		assertAdvancedBy(mToNClosed, input: "xxxx".characters, lineOffset: 0, columnOffset: 3, offset: 3)
 	}
 
 
 	let closedNToN = %"x" * (2...2)
 
 	func testClosedNToNRepetitionMatchesUpToN() {
-		assertAdvancedBy(closedNToN, input: "xxx".characters, offset: 2)
+		assertAdvancedBy(closedNToN, input: "xxx".characters, lineOffset: 0, columnOffset: 2, offset: 2)
 	}
 
 
 	// MARK: Repetition shorthand
 
-	let zeroOrMoreSimple = "x"*
+	let zeroOrMoreSimple = many(%"x")
 
 	func testZeroOrMoreSimpleRepetitionAcceptsTheEmptyString() {
 		assertMatched(zeroOrMoreSimple, input: "".characters)
@@ -178,7 +178,7 @@ final class RepetitionTests: XCTestCase {
 	}
 
 
-	let oneOrMoreSimple = "x"+
+	let oneOrMoreSimple = some(%"x")
 
 	func testOneOrMoreSimpleRepetitionRejectsTheEmptyString() {
 		assertUnmatched(oneOrMoreSimple, "".characters)
