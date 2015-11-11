@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// This parser succeeds iff `parser` fails. This parser does not consume any input.
-public func notFollowedBy<C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, ()>.Function {
+public func not<C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, ()>.Function {
 	return { input, index in
 		return parser(input, index).either(
 			ifLeft: { _ in Either.Right((), index) },
