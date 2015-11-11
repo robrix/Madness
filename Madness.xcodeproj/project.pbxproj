@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B8219A941BF1DF05000006F1 /* Negation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A931BF1DF05000006F1 /* Negation.swift */; };
 		B8219A951BF1DF0A000006F1 /* Negation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A931BF1DF05000006F1 /* Negation.swift */; };
+		B8219A981BF1ED07000006F1 /* NegationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A971BF1ED07000006F1 /* NegationTests.swift */; };
+		B88CCA091BF2C17700979677 /* NegationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A971BF1ED07000006F1 /* NegationTests.swift */; };
 		B8E0AB871BF098DD002B5C8B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E0AB861BF098DD002B5C8B /* StringTests.swift */; };
 		B8E0AB881BF098DD002B5C8B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E0AB861BF098DD002B5C8B /* StringTests.swift */; };
 		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; };
@@ -81,6 +83,7 @@
 
 /* Begin PBXFileReference section */
 		B8219A931BF1DF05000006F1 /* Negation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Negation.swift; sourceTree = "<group>"; };
+		B8219A971BF1ED07000006F1 /* NegationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegationTests.swift; sourceTree = "<group>"; };
 		B8E0AB861BF098DD002B5C8B /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		D1E153551BD5B78E00627E39 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreTests.swift; sourceTree = "<group>"; };
@@ -214,6 +217,7 @@
 				D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */,
 				D4D328481A9AFE2700216D7E /* ErrorTests.swift */,
 				D4C8B02D1A69B1A900943303 /* MapTests.swift */,
+				B8219A971BF1ED07000006F1 /* NegationTests.swift */,
 				D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */,
 				D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */,
 				D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */,
@@ -428,6 +432,7 @@
 				D4C0FB011AC5EDA500936032 /* Fixtures.swift in Sources */,
 				B8E0AB881BF098DD002B5C8B /* StringTests.swift in Sources */,
 				D4BC5E131A98C97C008C6851 /* MapTests.swift in Sources */,
+				B88CCA091BF2C17700979677 /* NegationTests.swift in Sources */,
 				D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */,
 				D4C2EDB21A98D5DB00054FAA /* AlternationTests.swift in Sources */,
 				D421A2AA1A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */,
@@ -462,6 +467,7 @@
 				D4C0FB021AC5EDA600936032 /* Fixtures.swift in Sources */,
 				B8E0AB871BF098DD002B5C8B /* StringTests.swift in Sources */,
 				D4C2EDB91A98D82200054FAA /* RepetitionTests.swift in Sources */,
+				B8219A981BF1ED07000006F1 /* NegationTests.swift in Sources */,
 				D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */,
 				D4D328491A9AFE2700216D7E /* ErrorTests.swift in Sources */,
 				D4C2EDB11A98D5DB00054FAA /* AlternationTests.swift in Sources */,
