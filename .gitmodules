@@ -7,3 +7,9 @@
 [submodule "Carthage/Checkouts/Assertions"]
 	path = Carthage/Checkouts/Assertions
 	url = https://github.com/antitypical/Assertions.git
+[submodule "Carthage/Checkouts/Memo"]
+	path = Carthage/Checkouts/Memo
+	url = https://github.com/robrix/Memo.git
+[submodule "Carthage/Checkouts/Stream"]
+	path = Carthage/Checkouts/Stream
+	url = https://github.com/antitypical/Stream.git

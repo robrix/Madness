@@ -1,1 +1,2 @@
-github "robrix/Either" ~> 1.2.2
+github "robrix/Either" ~> 1.3
+github "antitypical/Stream" ~> 0.1
