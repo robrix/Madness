@@ -42,7 +42,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: H
 
 /// Parses `parser` 0 or more times.
 public func many<C: CollectionType, T> (p: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
-	return prepend <^> p <*> delay { many(p) } <|> pure([])
+	return prepend <^> require(p) <*> delay { many(p) } <|> pure([])
 }
 
 /// Parses `parser` `n` number of times.
@@ -61,6 +61,18 @@ private func decrement(x: Int) -> Int {
 
 private func decrement(x: ClosedInterval<Int>) -> ClosedInterval<Int> {
 	return decrement(x.start)...decrement(x.end)
+}
+
+/// Fails iff `parser` does not consume input, otherwise pass through its results
+private func require<C: CollectionType, T> (parser: Parser<C,T>.Function) -> Parser<C, T>.Function {
+	return { (input, sourcePos) in
+		return parser(input, sourcePos).flatMap { resultInput, resultPos in
+			if sourcePos.index == resultPos.index {
+				return Either.Left(Error.leaf("parser did not consume input when required", sourcePos))
+			}
+			return Either.Right((resultInput, resultPos))
+		}
+	}
 }
 
 

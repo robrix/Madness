@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B8219A941BF1DF05000006F1 /* Negation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A931BF1DF05000006F1 /* Negation.swift */; };
+		B8219A951BF1DF0A000006F1 /* Negation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A931BF1DF05000006F1 /* Negation.swift */; };
+		B8219A981BF1ED07000006F1 /* NegationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A971BF1ED07000006F1 /* NegationTests.swift */; };
+		B88CCA091BF2C17700979677 /* NegationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A971BF1ED07000006F1 /* NegationTests.swift */; };
 		D1A6B7F91BE01B8F00B4858C /* SourcePos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */; };
 		D1A6B7FA1BE01B8F00B4858C /* SourcePos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */; };
 		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; };
 		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; settings = {ASSET_TAGS = (); }; };
 		B8E0AB871BF098DD002B5C8B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E0AB861BF098DD002B5C8B /* StringTests.swift */; };
 		B8E0AB881BF098DD002B5C8B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E0AB861BF098DD002B5C8B /* StringTests.swift */; };
+		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; };
 		D421A2A91A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */; };
 		D421A2AA1A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */; };
 		D421A2AC1A9A9540009AC3B1 /* ReductionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */; };
@@ -81,6 +86,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B8219A931BF1DF05000006F1 /* Negation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Negation.swift; sourceTree = "<group>"; };
+		B8219A971BF1ED07000006F1 /* NegationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegationTests.swift; sourceTree = "<group>"; };
 		D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePos.swift; sourceTree = "<group>"; };
 		B8E0AB861BF098DD002B5C8B /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		D1E153551BD5B78E00627E39 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -188,6 +195,7 @@
 				D4C2EDA61A98D38E00054FAA /* Concatenation.swift */,
 				D4D3284B1A9AFE6000216D7E /* Error.swift */,
 				D4C2EDBB1A98D8F800054FAA /* Map.swift */,
+				B8219A931BF1DF05000006F1 /* Negation.swift */,
 				D47B10751A9A9A1C006701A8 /* Reduction.swift */,
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
 				D4FC47B41A37E47C00D23A6F /* Supporting Files */,
@@ -215,6 +223,7 @@
 				D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */,
 				D4D328481A9AFE2700216D7E /* ErrorTests.swift */,
 				D4C8B02D1A69B1A900943303 /* MapTests.swift */,
+				B8219A971BF1ED07000006F1 /* NegationTests.swift */,
 				D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */,
 				D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */,
 				D4C2EDB81A98D82200054FAA /* RepetitionTests.swift */,
@@ -415,6 +424,7 @@
 				D4C2EDAC1A98D4DE00054FAA /* Concatenation.swift in Sources */,
 				D1A6B7FA1BE01B8F00B4858C /* SourcePos.swift in Sources */,
 				D47B10771A9A9A1C006701A8 /* Reduction.swift in Sources */,
+				B8219A951BF1DF0A000006F1 /* Negation.swift in Sources */,
 				D4C2EDB61A98D65300054FAA /* Repetition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +439,7 @@
 				D4C0FB011AC5EDA500936032 /* Fixtures.swift in Sources */,
 				B8E0AB881BF098DD002B5C8B /* StringTests.swift in Sources */,
 				D4BC5E131A98C97C008C6851 /* MapTests.swift in Sources */,
+				B88CCA091BF2C17700979677 /* NegationTests.swift in Sources */,
 				D4BC5E121A98C97C008C6851 /* ParserTests.swift in Sources */,
 				D4C2EDB21A98D5DB00054FAA /* AlternationTests.swift in Sources */,
 				D421A2AA1A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */,
@@ -444,6 +455,7 @@
 				D4DE2EE61ABCB2D000D3D70A /* Error.swift in Sources */,
 				D4C2EDAE1A98D52B00054FAA /* Alternation.swift in Sources */,
 				D4FC47CE1A37E48800D23A6F /* Parser.swift in Sources */,
+				B8219A941BF1DF05000006F1 /* Negation.swift in Sources */,
 				D4C2EDBC1A98D8F800054FAA /* Map.swift in Sources */,
 				D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */,
 				D1A6B7F91BE01B8F00B4858C /* SourcePos.swift in Sources */,
@@ -463,6 +475,7 @@
 				D4C0FB021AC5EDA600936032 /* Fixtures.swift in Sources */,
 				B8E0AB871BF098DD002B5C8B /* StringTests.swift in Sources */,
 				D4C2EDB91A98D82200054FAA /* RepetitionTests.swift in Sources */,
+				B8219A981BF1ED07000006F1 /* NegationTests.swift in Sources */,
 				D4FC47C41A37E47C00D23A6F /* ParserTests.swift in Sources */,
 				D4D328491A9AFE2700216D7E /* ErrorTests.swift in Sources */,
 				D4C2EDB11A98D5DB00054FAA /* AlternationTests.swift in Sources */,

@@ -191,8 +191,25 @@ final class RepetitionTests: XCTestCase {
 	func testOneOrMoreSimpleRepetitonParsesMultipleMatchedStrings() {
 		assertTree(oneOrMoreSimple, "xxy".characters, ==, ["x", "x"])
 	}
+
+
+	let zeroOrMoreLookAhead = many(not(%"x"))
+
+	func testZeroOrMoreSkipsLookAhead() {
+		assertTree(zeroOrMoreLookAhead, "yyy".characters, ==, [])
+	}
+
+
+	let oneOrMoreLookAhead = some(not(%"x"))
+
+	func testOneOrMoreFailsLookAhead() {
+		assertUnmatched(oneOrMoreLookAhead, "yyy".characters)
+	}
 }
 
+private func == (left: [()], right: [()]) -> Bool {
+	return left.count == right.count
+}
 
 // MARK: - Imports
 
