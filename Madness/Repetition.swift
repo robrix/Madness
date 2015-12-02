@@ -15,6 +15,11 @@ public func sepBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ sepa
 	return sepBy1(parser, separator) <|> pure([])
 }
 
+/// Parses 1 or more `parser` ended by `separator`.
+public func endBy1<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
+	return some(parser <* separator)
+}
+
 /// Parses `parser` the number of times specified in `interval`.
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
