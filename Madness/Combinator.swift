@@ -6,6 +6,6 @@ public func between<C: CollectionType, T, U, V>(open: Parser<C, T>.Function, _ c
 }
 
 ///
-public func manyTill<C: CollectionType, T, U>(parser: Parser<C, T>.Function)(_ end: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
+public func manyTill<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ end: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
 	return many(parser) <* end
 }
