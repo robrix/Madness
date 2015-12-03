@@ -211,7 +211,7 @@ final class RepetitionTests: XCTestCase {
 	let numbers = endBy1(digit, %".")
 	
 	func testOneOrMoreRepetitionWithEndRejectsTheEmptyString() {
-		assertUnmatched(numbers, ".".characters)
+		assertUnmatched(numbers, "".characters)
 	}
 	
 	func testOneOrMoreRepetitionWithEndParsesASingleMatchedString() {
@@ -220,6 +220,22 @@ final class RepetitionTests: XCTestCase {
 	
 	func testOneOrMoreRepetitionWithEndParsesMultipleMatchedStrings() {
 		assertTree(numbers, "0.1.2.".characters, ==, ["0", "1", "2"])
+	}
+	
+	// MARK: - endBy
+	
+	let numbers2 = endBy(digit, %".")
+	
+	func testZeroOrMoreRepetitionWithEndAcceptsTheEmptyString() {
+		assertMatched(numbers2, input: "".characters)
+	}
+	
+	func testZeroOrMoreRepetitionWithEndParsesASingleMatchedString() {
+		assertTree(numbers2, "0.".characters, ==, ["0"])
+	}
+	
+	func testZeroOrMoreRepetitionWithEndParsesMultipleMatchedStrings() {
+		assertTree(numbers2, "0.1.2.".characters, ==, ["0", "1", "2"])
 	}
 }
 
