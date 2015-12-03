@@ -14,6 +14,18 @@ final class CombinatorTests: XCTestCase {
 		assertTree(braces(%""), "{}".characters, ==, "")
 	}
 	
+	// MARK: - manyTill
+	
+	let digits = manyTill(digit, %",")
+	
+	func testManyTillCombinatorParsesElementsUntilEndParser(){
+		assertTree(digits, "123,".characters, ==, ["1", "2", "3"])
+	}
+	
+	func testManyTillCombinatorAcceptsEmptyString(){
+		assertTree(digits, ",".characters, ==, [])
+	}
+	
 }
 
 
