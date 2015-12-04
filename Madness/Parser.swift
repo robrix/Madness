@@ -35,11 +35,11 @@ public func none<C: CollectionType, Tree>(string: String = "no way forward") -> 
 
 // Returns a parser which parses any single character.
 public func any<C: CollectionType>(input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, C.Generator.Element>.Result {
-	return satisfy { c in true }(input, sourcePos)
+	return satisfy { _ in true }(input, sourcePos)
 }
 
 public func any(input: String.CharacterView, sourcePos: SourcePos<String.Index>) -> Parser<String.CharacterView, Character>.Result {
-	return satisfy { c in true }(input, sourcePos)
+	return satisfy { _ in true }(input, sourcePos)
 }
 
 
@@ -106,8 +106,7 @@ private func memoize<T>(f: () -> T) -> () -> T {
 }
 
 public func delay<C: CollectionType, T>(parser: () -> Parser<C, T>.Function) -> Parser<C, T>.Function {
-	let memoized = memoize(parser)
-	return { memoized()($0, $1) }
+	return { memoize(parser)()($0, $1) }
 }
 
 
@@ -124,10 +123,7 @@ func containsAt<C1: CollectionType, C2: CollectionType where C1.Generator.Elemen
 
 // Returns a parser that satisfies the given predicate
 public func satisfy(pred: Character -> Bool) -> Parser<String.CharacterView, Character>.Function {
-	let updatePos = updatePosCharacter
-	let parser: Parser<String.CharacterView, Character>.Function = tokenPrim(updatePos, pred)
-	return parser
-
+	return tokenPrim(updatePosCharacter, pred)
 }
 
 // Returns a parser that satisfies the given predicate
