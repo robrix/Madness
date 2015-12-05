@@ -5,7 +5,7 @@ public func between<C: CollectionType, T, U, V>(open: Parser<C, T>.Function, _ c
 	return { open *> $0 <* close }
 }
 
-///
+/// Parses 0 or more `parser` until `end`. Returns the list of values returned by `parser`.
 public func manyTill<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ end: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
 	return many(parser) <* end
 }
