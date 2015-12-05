@@ -7,16 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		849DC2381C0F21D0004C1A1E /* Combinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849DC2371C0F21D0004C1A1E /* Combinator.swift */; };
+		849DC2391C0F21D0004C1A1E /* Combinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849DC2371C0F21D0004C1A1E /* Combinator.swift */; };
+		849DC23A1C0F21E1004C1A1E /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; };
+		849DC23C1C0F224D004C1A1E /* CombinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849DC23B1C0F224D004C1A1E /* CombinatorTests.swift */; };
+		849DC23D1C0F224D004C1A1E /* CombinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849DC23B1C0F224D004C1A1E /* CombinatorTests.swift */; };
 		B8219A941BF1DF05000006F1 /* Negation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A931BF1DF05000006F1 /* Negation.swift */; };
 		B8219A951BF1DF0A000006F1 /* Negation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A931BF1DF05000006F1 /* Negation.swift */; };
 		B8219A981BF1ED07000006F1 /* NegationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A971BF1ED07000006F1 /* NegationTests.swift */; };
 		B88CCA091BF2C17700979677 /* NegationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8219A971BF1ED07000006F1 /* NegationTests.swift */; };
-		D1A6B7F91BE01B8F00B4858C /* SourcePos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */; };
-		D1A6B7FA1BE01B8F00B4858C /* SourcePos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */; };
-		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; };
-		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; settings = {ASSET_TAGS = (); }; };
 		B8E0AB871BF098DD002B5C8B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E0AB861BF098DD002B5C8B /* StringTests.swift */; };
 		B8E0AB881BF098DD002B5C8B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8E0AB861BF098DD002B5C8B /* StringTests.swift */; };
+		D1A6B7F91BE01B8F00B4858C /* SourcePos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */; };
+		D1A6B7FA1BE01B8F00B4858C /* SourcePos.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */; };
 		D1E153561BD5B78E00627E39 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E153551BD5B78E00627E39 /* String.swift */; };
 		D421A2A91A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */; };
 		D421A2AA1A9A8E33009AC3B1 /* IgnoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */; };
@@ -86,10 +89,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		849DC2371C0F21D0004C1A1E /* Combinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Combinator.swift; sourceTree = "<group>"; };
+		849DC23B1C0F224D004C1A1E /* CombinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CombinatorTests.swift; sourceTree = "<group>"; };
 		B8219A931BF1DF05000006F1 /* Negation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Negation.swift; sourceTree = "<group>"; };
 		B8219A971BF1ED07000006F1 /* NegationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NegationTests.swift; sourceTree = "<group>"; };
-		D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePos.swift; sourceTree = "<group>"; };
 		B8E0AB861BF098DD002B5C8B /* StringTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
+		D1A6B7F81BE01B8F00B4858C /* SourcePos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SourcePos.swift; sourceTree = "<group>"; };
 		D1E153551BD5B78E00627E39 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		D421A2A81A9A8E33009AC3B1 /* IgnoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IgnoreTests.swift; sourceTree = "<group>"; };
 		D421A2AB1A9A9540009AC3B1 /* ReductionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReductionTests.swift; path = MadnessTests/ReductionTests.swift; sourceTree = SOURCE_ROOT; };
@@ -198,6 +203,7 @@
 				B8219A931BF1DF05000006F1 /* Negation.swift */,
 				D47B10751A9A9A1C006701A8 /* Reduction.swift */,
 				D4C2EDB31A98D63600054FAA /* Repetition.swift */,
+				849DC2371C0F21D0004C1A1E /* Combinator.swift */,
 				D4FC47B41A37E47C00D23A6F /* Supporting Files */,
 				D1E153551BD5B78E00627E39 /* String.swift */,
 			);
@@ -221,6 +227,7 @@
 				D4C2EDB01A98D5DB00054FAA /* AlternationTests.swift */,
 				D49092791A98F11A00275C79 /* CollectionTests.swift */,
 				D4C2EDA81A98D49500054FAA /* ConcatenationTests.swift */,
+				849DC23B1C0F224D004C1A1E /* CombinatorTests.swift */,
 				D4D328481A9AFE2700216D7E /* ErrorTests.swift */,
 				D4C8B02D1A69B1A900943303 /* MapTests.swift */,
 				B8219A971BF1ED07000006F1 /* NegationTests.swift */,
@@ -417,7 +424,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849DC23A1C0F21E1004C1A1E /* String.swift in Sources */,
 				D4DE2EE71ABCB2D100D3D70A /* Error.swift in Sources */,
+				849DC2391C0F21D0004C1A1E /* Combinator.swift in Sources */,
 				D4C2EDAF1A98D53400054FAA /* Alternation.swift in Sources */,
 				D4BC5E101A98C978008C6851 /* Parser.swift in Sources */,
 				D4C2EDBD1A98D8F800054FAA /* Map.swift in Sources */,
@@ -435,6 +444,7 @@
 			files = (
 				D4C2EDAB1A98D4D600054FAA /* ConcatenationTests.swift in Sources */,
 				D4C2EDBA1A98D82200054FAA /* RepetitionTests.swift in Sources */,
+				849DC23D1C0F224D004C1A1E /* CombinatorTests.swift in Sources */,
 				D490927B1A98F11A00275C79 /* CollectionTests.swift in Sources */,
 				D4C0FB011AC5EDA500936032 /* Fixtures.swift in Sources */,
 				B8E0AB881BF098DD002B5C8B /* StringTests.swift in Sources */,
@@ -459,6 +469,7 @@
 				D4C2EDBC1A98D8F800054FAA /* Map.swift in Sources */,
 				D4C2EDA71A98D38E00054FAA /* Concatenation.swift in Sources */,
 				D1A6B7F91BE01B8F00B4858C /* SourcePos.swift in Sources */,
+				849DC2381C0F21D0004C1A1E /* Combinator.swift in Sources */,
 				D47B10761A9A9A1C006701A8 /* Reduction.swift in Sources */,
 				D1E153561BD5B78E00627E39 /* String.swift in Sources */,
 				D4C2EDB71A98D65400054FAA /* Repetition.swift in Sources */,
@@ -471,6 +482,7 @@
 			files = (
 				D4C2EDAA1A98D4D400054FAA /* ConcatenationTests.swift in Sources */,
 				D4C8B02E1A69B1A900943303 /* MapTests.swift in Sources */,
+				849DC23C1C0F224D004C1A1E /* CombinatorTests.swift in Sources */,
 				D490927A1A98F11A00275C79 /* CollectionTests.swift in Sources */,
 				D4C0FB021AC5EDA600936032 /* Fixtures.swift in Sources */,
 				B8E0AB871BF098DD002B5C8B /* StringTests.swift in Sources */,

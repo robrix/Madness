@@ -205,6 +205,38 @@ final class RepetitionTests: XCTestCase {
 	func testOneOrMoreFailsLookAhead() {
 		assertUnmatched(oneOrMoreLookAhead, "yyy".characters)
 	}
+	
+	// MARK: - endBy1
+	
+	let numbers = endBy1(digit, %".")
+	
+	func testOneOrMoreRepetitionWithEndRejectsTheEmptyString() {
+		assertUnmatched(numbers, "".characters)
+	}
+	
+	func testOneOrMoreRepetitionWithEndParsesASingleMatchedString() {
+		assertTree(numbers, "0.".characters, ==, ["0"])
+	}
+	
+	func testOneOrMoreRepetitionWithEndParsesMultipleMatchedStrings() {
+		assertTree(numbers, "0.1.2.".characters, ==, ["0", "1", "2"])
+	}
+	
+	// MARK: - endBy
+	
+	let numbers2 = endBy(digit, %".")
+	
+	func testZeroOrMoreRepetitionWithEndAcceptsTheEmptyString() {
+		assertMatched(numbers2, input: "".characters)
+	}
+	
+	func testZeroOrMoreRepetitionWithEndParsesASingleMatchedString() {
+		assertTree(numbers2, "0.".characters, ==, ["0"])
+	}
+	
+	func testZeroOrMoreRepetitionWithEndParsesMultipleMatchedStrings() {
+		assertTree(numbers2, "0.1.2.".characters, ==, ["0", "1", "2"])
+	}
 }
 
 private func == (left: [()], right: [()]) -> Bool {
