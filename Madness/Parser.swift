@@ -106,7 +106,8 @@ private func memoize<T>(f: () -> T) -> () -> T {
 }
 
 public func delay<C: CollectionType, T>(parser: () -> Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return { memoize(parser)()($0, $1) }
+	let memoized = memoize(parser)
+	return { memoized()($0, $1) }
 }
 
 
