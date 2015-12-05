@@ -15,12 +15,12 @@ public func sepBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ sepa
 	return sepBy1(parser, separator) <|> pure([])
 }
 
-/// Parses 1 or more `parser` ended by `separator`.
+/// Parses 1 or more `parser` ended by `terminator`.
 public func endBy1<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ terminator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
 	return some(parser <* terminator)
 }
 
-/// Parses 0 or more `parser` ended by `separator`.
+/// Parses 0 or more `parser` ended by `terminator`.
 public func endBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ terminator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
 	return many(parser <* terminator)
 }
