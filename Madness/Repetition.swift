@@ -16,13 +16,13 @@ public func sepBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ sepa
 }
 
 /// Parses 1 or more `parser` ended by `separator`.
-public func endBy1<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
-	return some(parser <* separator)
+public func endBy1<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ terminator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
+	return some(parser <* terminator)
 }
 
 /// Parses 0 or more `parser` ended by `separator`.
-public func endBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ separator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
-	return many(parser <* separator)
+public func endBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ terminator: Parser<C, U>.Function) -> Parser<C, [T]>.Function {
+	return many(parser <* terminator)
 }
 
 /// Parses `parser` the number of times specified in `interval`.
