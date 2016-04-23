@@ -6,12 +6,14 @@
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "9A760A1EBAC1979D46EF016B1BE84D98E53C16FF" : 0,
     "7FCD68358D0D5A67F26F2A5E7B31EB3EF0CB2C00" : 0,
+    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : 0,
     "D5FA66743146831DA2A20C0EAE4583EF424D9041" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "16056085-48A1-4F20-BAB0-335120B8B6C5",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "9A760A1EBAC1979D46EF016B1BE84D98E53C16FF" : "Madness\/Carthage\/Checkouts\/Prelude\/",
     "7FCD68358D0D5A67F26F2A5E7B31EB3EF0CB2C00" : "Madness\/",
+    "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F" : "Madness\/Carthage\/Checkouts\/Assertions\/",
     "D5FA66743146831DA2A20C0EAE4583EF424D9041" : "Madness\/Carthage\/Checkouts\/Either\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Madness",
@@ -22,6 +24,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:robrix\/Madness.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7FCD68358D0D5A67F26F2A5E7B31EB3EF0CB2C00"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/antitypical\/Assertions.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "840BFB2A2F183FC5B01E0B21BB0D3D8EF3F6803F"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/robrix\/Prelude.git",

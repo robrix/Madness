@@ -23,8 +23,8 @@ public func <^ <C: CollectionType, T, U> (left: T, right: Parser<C, U>.Function)
 }
 
 /// Curried `<^>`. Returns a parser which applies `f` to transform the output of `parser`.
-public func map<C: CollectionType, T, U>(f: T -> U)(_ parser: Parser<C, T>.Function) -> Parser<C, U>.Function {
-	return f <^> parser
+public func map<C: CollectionType, T, U>(f: T -> U) -> Parser<C, T>.Function -> Parser<C, U>.Function {
+	return { f <^> $0 }
 }
 
 
