@@ -24,8 +24,8 @@ private func concat<T>(value: [T]) -> [T] -> [T] {
 	return { value + $0 }
 }
 
-private func concat2<T>(value: [T])(value2: [T]) -> [T] -> [T] {
-	return { value + value2 + $0 }
+private func concat2<T>(value: [T]) -> [T] -> [T] -> [T] {
+	return { value2 in { value + value2 + $0 } }
 }
 
 private let someDigits: CharacterArrayParser = some(digit)

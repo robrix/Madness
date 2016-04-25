@@ -47,16 +47,18 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 // MARK: - Private
 
 /// Defines alternation for use in the `<|>` operator definitions above.
-private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ right: Parser<C, U>.Function)(input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, Either<T, U>>.Result {
-	switch left(input, sourcePos) {
-	case let .Right(tree, sourcePos):
-		return .Right(.Left(tree), sourcePos)
-	case let .Left(left):
-		switch right(input, sourcePos) {
+private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
+	return { input, sourcePos in
+		switch left(input, sourcePos) {
 		case let .Right(tree, sourcePos):
-			return .Right(.Right(tree), sourcePos)
-		case let .Left(right):
-			return .Left(Error.withReason("no alternative matched:", sourcePos)(left, right))
+			return .Right(.Left(tree), sourcePos)
+		case let .Left(left):
+			switch right(input, sourcePos) {
+			case let .Right(tree, sourcePos):
+				return .Right(.Right(tree), sourcePos)
+			case let .Left(right):
+				return .Left(Error.withReason("no alternative matched:", sourcePos)(left, right))
+			}
 		}
 	}
 }

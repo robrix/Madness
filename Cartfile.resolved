@@ -1,4 +1,3 @@
-github "antitypical/Assertions" "v1.1-beta.1"
-github "robrix/Box" "18d05a56845837eea90a36854c67de2520983bf8"
-github "robrix/Prelude" "180e9ae5e60ec47abd8f3e0fa68cafbbbd160abe"
-github "robrix/Either" "b31d1eec2bccf0688ecba8ab3140358293cc16c1"
+github "antitypical/Assertions" "690f7c2df6ed4e2a2e857abc52d7c4629bccf3e9"
+github "robrix/Prelude" "1.6.0"
+github "robrix/Either" "b976b93404d1a8cd04769b4bf20f710749e6b74c"

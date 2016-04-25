@@ -69,11 +69,13 @@ public func <?> <C: CollectionType, T>(parser: Parser<C, T>.Function, name: Stri
 }
 
 /// Adds a name to parse errors.
-public func describeAs<C: CollectionType, T>(name: String)(_ parser: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return { input, index in
-		parser(input, index).either(
-			ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", sourcePos: $0.sourcePos, children: $0.children)) },
-			ifRight: Either.right)
+public func describeAs<C: CollectionType, T>(name: String) -> Parser<C, T>.Function -> Parser<C, T>.Function {
+	return { parser in
+		{ input, index in
+			parser(input, index).either(
+				ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", sourcePos: $0.sourcePos, children: $0.children)) },
+				ifRight: Either.right)
+		}
 	}
 }
 
