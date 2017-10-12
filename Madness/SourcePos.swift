@@ -1,7 +1,5 @@
 //  Copyright (c) 2014 Josh Vera. All rights reserved.
 
-import Prelude
-
 public typealias Line = Int
 public typealias Column = Int
 

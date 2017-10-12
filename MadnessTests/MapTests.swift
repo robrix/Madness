@@ -39,7 +39,7 @@ final class MapTests: XCTestCase {
 			{ n in
 				let line: Parser<String, String>.Function = (%"\t" * n) *> item
 				return line >>- { itemContent in
-					(many(tree(n + 1)) |> map { children in Tree(itemContent, children) })
+					map({ children in Tree(itemContent, children) })(many(tree(n + 1)))
 				}
 			}
 		}
@@ -52,7 +52,7 @@ final class MapTests: XCTestCase {
 		]
 
 		for (input, actual) in fixtures {
-			if let parsed = parse(tree(0), input: input).right {
+			if let parsed = parse(tree(0), input: input).value {
 				XCTAssertEqual(parsed, actual)
 			} else {
 				XCTFail("expected to parse \(input) as \(actual) but failed to parse")
@@ -66,7 +66,7 @@ final class MapTests: XCTestCase {
 		]
 
 		for input in failures {
-			XCTAssert(parse(tree(0), input: input).right == nil)
+			XCTAssert(parse(tree(0), input: input).value == nil)
 		}
 
 	}
@@ -92,7 +92,7 @@ final class MapTests: XCTestCase {
 	}
 
 	func testCurriedMap() {
-		assertTree(%123 |> map({ String($0) }), [123], ==, "123")
+		assertTree(map({ String($0) })(%123), [123], ==, "123")
 	}
 
 
@@ -107,5 +107,4 @@ final class MapTests: XCTestCase {
 // MARK: - Imports
 
 import Madness
-import Prelude
 import XCTest

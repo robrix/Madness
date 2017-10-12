@@ -1,3 +1,1 @@
-github "antitypical/Assertions" "690f7c2df6ed4e2a2e857abc52d7c4629bccf3e9"
-github "robrix/Prelude" "1.6.0"
-github "robrix/Either" "b976b93404d1a8cd04769b4bf20f710749e6b74c"
+github "antitypical/Result" "1.0.2"

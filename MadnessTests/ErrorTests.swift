@@ -5,31 +5,29 @@ final class ErrorTests: XCTestCase {
 		let parser = %"x"
 		let input = "x".characters
 		let sourcePos = SourcePos(index: input.startIndex)
-		assert(parser(input, sourcePos).right, !=, nil)
-		assert(parser(input, sourcePos).left, ==, nil)
+		XCTAssertNotNil(parser(input, sourcePos).value)
+		XCTAssertNil(parser(input, sourcePos).error)
 	}
 
 	func testLiftedParsersReportErrorsWhenTheyDoNotMatch() {
 		let parser = %"x"
 		let input = "y"
 		let sourcePos = SourcePos(index: input.startIndex)
-		assert(parser(input.characters, sourcePos).right, ==, nil)
-		assert(parser(input.characters, sourcePos).left, !=, nil)
+		XCTAssertNil(parser(input.characters, sourcePos).value)
+		XCTAssertNotNil(parser(input.characters, sourcePos).error)
 	}
 
 	func testParseError() {
-		assert(parse(lambda, input: "λx.").left?.depth, ==, 5)
+		XCTAssertEqual(parse(lambda, input: "λx.").error?.depth, 5)
 	}
 
 	func testParseNaming() {
-		assert(parse(lambda |> describeAs("lambda"), input: "λx.").left, !=, nil)
+		XCTAssertNotNil(parse(describeAs("lambda")(lambda), input: "λx.").error)
 	}
 }
 
 
 // MARK: - Imports
 
-import Assertions
 import Madness
-import Prelude
 import XCTest

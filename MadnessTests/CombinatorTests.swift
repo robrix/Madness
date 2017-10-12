@@ -31,6 +31,5 @@ final class CombinatorTests: XCTestCase {
 
 // MARK: - Imports
 
-import Assertions
 import Madness
 import XCTest

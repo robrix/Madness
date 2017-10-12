@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Prelude
 
 public typealias CharacterParser = Parser<String.CharacterView, Character>.Function
 public typealias CharacterArrayParser = Parser<String.CharacterView, [Character]>.Function

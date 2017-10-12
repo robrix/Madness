@@ -23,6 +23,5 @@ final class IgnoreTests: XCTestCase {
 
 // MARK: - Imports
 
-import Assertions
 import Madness
 import XCTest

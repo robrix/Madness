@@ -19,7 +19,7 @@ public func <^> <C: CollectionType, T, U> (f: T -> U, parser: Parser<C, T>.Funct
 
 /// Returns a parser which first parses `right`, replacing successful parses with `left`.
 public func <^ <C: CollectionType, T, U> (left: T, right: Parser<C, U>.Function) -> Parser<C, T>.Function {
-	return const(left) <^> right
+	return { _ in left } <^> right
 }
 
 /// Curried `<^>`. Returns a parser which applies `f` to transform the output of `parser`.
@@ -34,18 +34,18 @@ public func map<C: CollectionType, T, U>(f: T -> U) -> Parser<C, T>.Function -> 
 ///
 /// When combining parsers with `>>-`, allows constant values to be injected into the parser chain.
 public func pure<C: CollectionType, T>(value: T) -> Parser<C, T>.Function {
-	return { _, index in .Right(value, index) }
+	return { _, index in .Success((value, index)) }
 }
 
 
 // MARK: - lift
 
 public func lift<C: CollectionType, T, U, V>(f: (T, U) -> V) -> Parser<C, T -> U -> V>.Function {
-	return pure(curry(f))
+	return pure({ t in { u in f(t, u) } })
 }
 
 public func lift<C: CollectionType, T, U, V, W>(f: (T, U, V) -> W) -> Parser<C, T -> U -> V -> W>.Function {
-	return pure(curry(f))
+	return pure({ t in { u in { v in f(t, u, v) } } })
 }
 
 
@@ -77,5 +77,4 @@ infix operator <^ {
 }
 
 
-import Either
-import Prelude
+import Result

@@ -5,14 +5,9 @@ public postfix func |? <C: CollectionType, T> (parser: Parser<C, T>.Function) ->
     return { $0.first } <^> parser * (0...1)
 }
 
-/// Parses either `left` or `right`.
-public func <|> <C: CollectionType, T, U> (left: Parser<C, T>.Function, right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
-	return alternate(left, right)
-}
-
 /// Parses either `left` or `right` and coalesces their trees.
 public func <|> <C: CollectionType, T> (left: Parser<C, T>.Function, right: Parser<C, T>.Function) -> Parser<C, T>.Function {
-	return { $0.either(ifLeft: id, ifRight: id) } <^> alternate(left, right)
+	return alternate(left, right)
 }
 
 
@@ -47,17 +42,17 @@ public func allOf<C: CollectionType where C.Generator.Element: Equatable>(input:
 // MARK: - Private
 
 /// Defines alternation for use in the `<|>` operator definitions above.
-private func alternate<C: CollectionType, T, U>(left: Parser<C, T>.Function, _ right: Parser<C, U>.Function) -> Parser<C, Either<T, U>>.Function {
+private func alternate<C: CollectionType, T>(left: Parser<C, T>.Function, _ right: Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, sourcePos in
 		switch left(input, sourcePos) {
-		case let .Right(tree, sourcePos):
-			return .Right(.Left(tree), sourcePos)
-		case let .Left(left):
+		case let .Success(tree, sourcePos):
+			return .Success(tree, sourcePos)
+		case let .Failure(left):
 			switch right(input, sourcePos) {
-			case let .Right(tree, sourcePos):
-				return .Right(.Right(tree), sourcePos)
-			case let .Left(right):
-				return .Left(Error.withReason("no alternative matched:", sourcePos)(left, right))
+			case let .Success(tree, sourcePos):
+				return .Success(tree, sourcePos)
+			case let .Failure(right):
+				return .Failure(Error.withReason("no alternative matched:", sourcePos)(left, right))
 			}
 		}
 	}
@@ -84,5 +79,4 @@ infix operator <|> {
 
 // MARK: - Imports
 
-import Either
-import Prelude
+import Result
