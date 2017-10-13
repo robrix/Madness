@@ -1,7 +1,7 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
 /// A composite error.
-public enum Error<I: ForwardIndexType>: CustomStringConvertible {
+public enum Error<I: ForwardIndexType>: ErrorType, CustomStringConvertible {
 	indirect case Branch(String, SourcePos<I>, [Error])
 
 	/// Constructs a leaf error, e.g. for terminal parsers.
@@ -72,9 +72,9 @@ public func <?> <C: CollectionType, T>(parser: Parser<C, T>.Function, name: Stri
 public func describeAs<C: CollectionType, T>(name: String) -> Parser<C, T>.Function -> Parser<C, T>.Function {
 	return { parser in
 		{ input, index in
-			parser(input, index).either(
-				ifLeft: { Either.left(Error(reason: "\(name): \($0.reason)", sourcePos: $0.sourcePos, children: $0.children)) },
-				ifRight: Either.right)
+			parser(input, index).mapError {
+				Error(reason: "\(name): \($0.reason)", sourcePos: $0.sourcePos, children: $0.children)
+			}
 		}
 	}
 }
@@ -86,7 +86,3 @@ infix operator <?> {
 	associativity left
 	precedence 90
 }
-
-
-import Either
-import Prelude

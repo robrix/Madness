@@ -9,12 +9,8 @@ final class AlternationTests: XCTestCase {
 		assertAdvancedBy(alternation, input: "yx".characters, lineOffset: 0, columnOffset: 1, offset: 1)
 	}
 
-	func testAlternationProducesTheParsedAlternative() {
-		assertTree(alternation, "xy".characters, ==, Either.left("x"))
-	}
-
 	func testAlternationOfASingleTypeCoalescesTheParsedValue() {
-		assertTree(%"x" <|> %"y", "xy", ==, "x")
+		assertTree(alternation, "xy".characters, ==, "x")
 
 	}
 
@@ -76,12 +72,12 @@ final class AlternationTests: XCTestCase {
 
 // MARK: - Fixtures
 
-private let alternation = %"x" <|> (%"y" --> { _, _, _, _, _ in 1 })
+private let alternation = %"x" <|> %"y"
 
-private let optional = (%"y")|? |> map { $0 ?? "" }
-private let prefixed = curry { $0 + $1 } <^> %"x" <*> optional
-private let suffixed = curry { $0 + $1 } <^> optional <*> %"z"
-private let sandwiched = curry { $0 + $1 } <^> prefixed <*> %"z"
+private let optional = map({ $0 ?? "" })((%"y")|?)
+private let prefixed = { x in { y in x + y } } <^> %"x" <*> optional
+private let suffixed = { x in { y in x + y } } <^> optional <*> %"z"
+private let sandwiched = { x in { y in x + y } } <^> prefixed <*> %"z"
 
 private let arrayOfChars: Set<Character> = ["x", "y", "z"]
 private let chars: String = "xyz"
@@ -91,8 +87,6 @@ private let all: Parser<String.CharacterView, [Character]>.Function  = allOf(arr
 
 // MARK: - Imports
 
-import Assertions
-import Either
 import Madness
-import Prelude
+import Result
 import XCTest

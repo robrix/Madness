@@ -25,6 +25,5 @@ class NegationTests: XCTestCase {
 
 // MARK: - Imports
 
-import Assertions
 import Madness
 import XCTest

@@ -1,1 +1,1 @@
-github "robrix/Either" "b976b93404d1a8cd04769b4bf20f710749e6b74c"
+github "antitypical/Result" ~> 1.0.2

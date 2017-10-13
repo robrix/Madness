@@ -1,3 +1,2 @@
-import Either
 import Madness
-import Prelude
+import Result

@@ -18,15 +18,9 @@
       </FileRef>
    </Group>
    <FileRef
+      location = "group:Carthage/Checkouts/Result/Result.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Madness.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Assertions/Assertions.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Either/Either.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Carthage/Checkouts/Prelude/Prelude.xcodeproj">
    </FileRef>
 </Workspace>

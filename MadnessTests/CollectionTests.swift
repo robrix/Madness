@@ -10,18 +10,16 @@ final class CollectionTests: XCTestCase {
 			{ (x: Int, y: Int) -> Fibonacci in
 				(%(x + y) >>- { (xy: Int) -> Fibonacci in
 					{ [ xy ] + $0 } <^> fibonacci(y, xy)
-				}) <|> { .Right([], $1) }
+				}) <|> { .Success(([], $1)) }
 			}
 		}
 
-		assert(parse(fibonacci(0, 1), input: input).right, ==, input)
+		XCTAssertEqual(parse(fibonacci(0, 1), input: input).value!, input)
 	}
 }
 
 
 // MARK: - Imports
 
-import Assertions
 import Madness
-import Prelude
 import XCTest

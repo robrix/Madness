@@ -1,9 +1,3 @@
-[submodule "Carthage/Checkouts/Prelude"]
-	path = Carthage/Checkouts/Prelude
-	url = https://github.com/robrix/Prelude.git
-[submodule "Carthage/Checkouts/Either"]
-	path = Carthage/Checkouts/Either
-	url = https://github.com/robrix/Either.git
-[submodule "Carthage/Checkouts/Assertions"]
-	path = Carthage/Checkouts/Assertions
-	url = https://github.com/antitypical/Assertions.git
+[submodule "Carthage/Checkouts/Result"]
+	path = Carthage/Checkouts/Result
+	url = https://github.com/antitypical/Result.git

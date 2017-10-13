@@ -2,7 +2,7 @@
 
 /// Parser `parser` 1 or more times.
 public func some<C: CollectionType, T> (parser: Parser<C, T>.Function) -> Parser<C, [T]>.Function {
-	return prepend <^> parser <*> many(parser)
+	return prepend <^> require(parser) <*> many(parser)
 }
 
 /// Parses 1 or more `parser` separated by `separator`.
@@ -29,10 +29,10 @@ public func endBy<C: CollectionType, T, U>(parser: Parser<C, T>.Function, _ term
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0...n` means at most `n` repetitions; `m...Int.max` means at least `m` repetitions; and `m...n` means between `m` and `n` repetitions (inclusive).
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: ClosedInterval<Int>) -> Parser<C, [T]>.Function {
-	if interval.end <= 0 { return { .Right([], $1) } }
+	if interval.end <= 0 { return { .Success(([], $1)) } }
 
 	return (parser >>- { x in { [x] + $0 } <^> (parser * decrement(interval)) })
-		<|> { interval.start <= 0 ? .Right([], $1) : .left(.leaf("expected at least \(interval.start) matches", $1)) }
+		<|> { interval.start <= 0 ? .Success(([], $1)) : .Failure(.leaf("expected at least \(interval.start) matches", $1)) }
 }
 
 /// Parses `parser` exactly `n` times.		
@@ -46,7 +46,7 @@ public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, n: Int) -> 
 ///
 /// \param interval  An interval specifying the number of repetitions to perform. `0..<n` means at most `n-1` repetitions; `m..<Int.max` means at least `m` repetitions; and `m..<n` means at least `m` and fewer than `n` repetitions; `n..<n` is an error.
 public func * <C: CollectionType, T> (parser: Parser<C, T>.Function, interval: HalfOpenInterval<Int>) -> Parser<C, [T]>.Function {
-	if interval.isEmpty { return { .left(.leaf("cannot parse an empty interval of repetitions", $1)) } }
+	if interval.isEmpty { return { .Failure(.leaf("cannot parse an empty interval of repetitions", $1)) } }
 	return parser * (interval.start...decrement(interval.end))
 }
 
@@ -78,9 +78,9 @@ private func require<C: CollectionType, T> (parser: Parser<C,T>.Function) -> Par
 	return { (input, sourcePos) in
 		return parser(input, sourcePos).flatMap { resultInput, resultPos in
 			if sourcePos.index == resultPos.index {
-				return Either.Left(Error.leaf("parser did not consume input when required", sourcePos))
+				return Result.Failure(Error.leaf("parser did not consume input when required", sourcePos))
 			}
-			return Either.Right((resultInput, resultPos))
+			return Result.Success((resultInput, resultPos))
 		}
 	}
 }
@@ -88,5 +88,4 @@ private func require<C: CollectionType, T> (parser: Parser<C,T>.Function) -> Par
 
 // MARK: - Imports
 
-import Either
-import Prelude
+import Result

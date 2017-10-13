@@ -1,20 +1,18 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-import Assertions
-import Either
 import Madness
-import Prelude
+import Result
 import XCTest
 
 final class ParserTests: XCTestCase {
 	// MARK: - Operations
 
 	func testParseRejectsPartialParses() {
-		assertNil(parse(%("x".characters), input: "xy".characters).right)
+		XCTAssertNil(parse(%("x".characters), input: "xy".characters).value)
 	}
 
 	func testParseProducesParseTreesForFullParses() {
-		assertEqual(parse(%"x", input: "x").right, "x")
+		XCTAssertEqual(parse(%"x", input: "x").value, "x")
 	}
 
 

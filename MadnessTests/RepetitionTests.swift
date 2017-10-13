@@ -245,6 +245,5 @@ private func == (left: [()], right: [()]) -> Bool {
 
 // MARK: - Imports
 
-import Assertions
 import Madness
 import XCTest
