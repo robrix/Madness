@@ -21,44 +21,44 @@ final class ConcatenationTests: XCTestCase {
 
 
 
-func matches<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C) -> Bool {
+func matches<C: Collection, T>(_ parser: Parser<C, T>.Function, input: C) -> Bool {
 	return parser(input, SourcePos(index: input.startIndex)).value != nil
 }
 
-func doesNotMatch<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C) -> Bool {
+func doesNotMatch<C: Collection, T>(_ parser: Parser<C, T>.Function, input: C) -> Bool {
 	return parser(input, SourcePos(index: input.startIndex)).value == nil
 }
 
-func assertUnmatched<C: CollectionType, T>(parser: Parser<C, T>.Function, _ input: C, message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
+func assertUnmatched<C: Collection, T>(_ parser: Parser<C, T>.Function, _ input: C, message: String = "", file: StaticString = #file, line: UInt = #line) {
 	XCTAssertNil(parser(input, SourcePos(index: input.startIndex)).value, "should not have matched \(input). " + message, file: file, line: line)
 }
 
-func assertMatched<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
+func assertMatched<C: Collection, T>(_ parser: Parser<C, T>.Function, input: C, message: String = "", file: StaticString = #file, line: UInt = #line) {
 	XCTAssertNotNil(parser(input, SourcePos(index: input.startIndex)).value, "should have matched \(input). " + message, file: file, line: line)
 }
 
-func assertTree<C: CollectionType, T>(parser: Parser<C, T>.Function, _ input: C, _ match: (T, T) -> Bool, _ tree: T, message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
+func assertTree<C: Collection, T>(_ parser: Parser<C, T>.Function, _ input: C, _ match: @escaping (T, T) -> Bool, _ tree: T, message: String = "", file: StaticString = #file, line: UInt = #line) {
 	let parsed: Parser<C, T>.Result = parser(input, SourcePos(index: input.startIndex))
 	let value = parsed.value?.0
 	XCTAssert(value.map { match($0, tree) } ?? false, "should have parsed \(input) as \(tree). " + message, file: file, line: line)
 }
 
-func assertAdvancedBy<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, offset: C.Index.Distance, message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
+func assertAdvancedBy<C: Collection, T>(_ parser: Parser<C, T>.Function, input: C, offset: C.IndexDistance, message: String = "", file: StaticString = #file, line: UInt = #line) {
 	let pos = SourcePos(index: input.startIndex)
-	let newSourcePos: SourcePos<C.Index>? = SourcePos.init(line: pos.line, column: pos.column, index: pos.index.advancedBy(offset))
+	let newSourcePos: SourcePos<C.Index>? = SourcePos(line: pos.line, column: pos.column, index: input.index(pos.index, offsetBy: offset))
 
 	let value = parser(input, pos).value
 	XCTAssertNotNil(value, "should have parsed \(input) and advanced by \(offset). " + message, file: file, line: line)
 	XCTAssertEqual(value?.1, newSourcePos, "should have parsed \(input) and advanced by \(offset). " + message, file: file, line: line)
 }
 
-func assertAdvancedBy<C: CollectionType, T>(parser: Parser<C, T>.Function, input: C, lineOffset: Line, columnOffset: Column, offset: C.Index.Distance, message: String = "", file: String = __FILE__, line: UInt = __LINE__) {
+func assertAdvancedBy<C: Collection, T>(_ parser: Parser<C, T>.Function, input: C, lineOffset: Line, columnOffset: Column, offset: C.IndexDistance, message: String = "", file: StaticString = #file, line: UInt = #line) {
 	let pos = SourcePos(index: input.startIndex)
-	let newSourcePos: SourcePos<C.Index>? = SourcePos.init(line: pos.line.advancedBy(lineOffset), column: pos.column.advancedBy(columnOffset), index: pos.index.advancedBy(offset))
+	let newSourcePos: SourcePos<C.Index>? = SourcePos(line: pos.line + lineOffset, column: pos.column + columnOffset, index: input.index(pos.index, offsetBy: offset))
 
 	let value = parser(input, pos).value
-	XCTAssertNotNil(value, "should have parsed \(String(input)) and advanced by \(offset). " + message, file: file, line: line)
-	XCTAssertEqual(value?.1, newSourcePos, "should have parsed \(String(input)) and advanced by \(offset). " + message, file: file, line: line)
+	XCTAssertNotNil(value, "should have parsed \(String(describing: input)) and advanced by \(offset). " + message, file: file, line: line)
+	XCTAssertEqual(value?.1, newSourcePos, "should have parsed \(String(describing: input)) and advanced by \(offset). " + message, file: file, line: line)
 }
 
 

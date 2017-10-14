@@ -4,7 +4,7 @@ final class CombinatorTests: XCTestCase {
 	
 	// MARK: - between
 	
-	let braces: StringParser -> StringParser = between(%"{", %"}")
+	let braces: (@escaping StringParser) -> StringParser = between(%"{", %"}")
 	
 	func testBetweenCombinatorParsesSandwichedString(){
 		assertTree(braces(%"a"), "{a}".characters, ==, "a")

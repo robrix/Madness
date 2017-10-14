@@ -10,7 +10,7 @@ final class CollectionTests: XCTestCase {
 			{ (x: Int, y: Int) -> Fibonacci in
 				(%(x + y) >>- { (xy: Int) -> Fibonacci in
 					{ [ xy ] + $0 } <^> fibonacci(y, xy)
-				}) <|> { .Success(([], $1)) }
+					}) <|> { .success(([], $1)) }
 			}
 		}
 

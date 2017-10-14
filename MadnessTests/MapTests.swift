@@ -14,9 +14,9 @@ private struct Tree<T: Equatable>: Equatable, CustomStringConvertible {
 
 	var description: String {
 		let space = " "
-		let valueString = values.map({ String($0) }).joinWithSeparator(space)
+		let valueString = values.map({ String(describing: $0) }).joined(separator: space)
 		return children.count > 0 ?
-			"(\(valueString) \(children.map({ String($0) }).joinWithSeparator(space)))"
+			"(\(valueString) \(children.map({ String(describing: $0) }).joined(separator: space)))"
 		:	"(\(valueString))"
 	}
 }
@@ -35,7 +35,7 @@ final class MapTests: XCTestCase {
 
 	func testFlatMap() {
 		let item: Parser<String, String>.Function = %"-" *> String.lift(%("a"..."z")) <* %"\n"
-		let tree: Int -> Parser<String, Tree<String>>.Function = fix { tree in
+		let tree: (Int) -> Parser<String, Tree<String>>.Function = fix { tree in
 			{ n in
 				let line: Parser<String, String>.Function = (%"\t" * n) *> item
 				return line >>- { itemContent in
