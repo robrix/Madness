@@ -1,4 +1,4 @@
-func toComponent(string: String) -> CGFloat {
+func toComponent(_ string: String) -> CGFloat {
   return CGFloat(strtol(string, nil, 16)) / 255
 }
 
@@ -12,11 +12,11 @@ let component2: Parser<String.CharacterView, CGFloat>.Function = toComponent <^>
 let three: Parser<String.CharacterView, [CGFloat]>.Function = component1 * 3
 let six: Parser<String.CharacterView, [CGFloat]>.Function = component2 * 3
 
-let colour: Parser<String.CharacterView, NSColor>.Function = %"#" *> (six <|> three) |> map {
+let colour: Parser<String.CharacterView, NSColor>.Function = map({
 	NSColor(calibratedRed: $0[0], green: $0[1], blue: $0[2], alpha: 1)
-}
+})(%"#" *> (six <|> three))
 
-let reddish = parse(colour, input: "#d52a41").right
-let greenish = parse(colour, input: "#5a2").right
-let blueish = parse(colour, input: "#5e8ca1").right
+let reddish = parse(colour, input: "#d52a41").value
+let greenish = parse(colour, input: "#5a2").value
+let blueish = parse(colour, input: "#5e8ca1").value
 
