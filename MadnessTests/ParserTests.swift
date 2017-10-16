@@ -53,12 +53,10 @@ final class ParserTests: XCTestCase {
 	}
 
 	func testNoneIsIdentityForAlternation() {
-		typealias Parser = Madness.Parser<String, String>.Function
-		let alternate: (Parser, Parser) -> Parser = { $0 <|> $1 }
-		let parser = [%"a", %"b", %"c"].reduce(none(), combine: alternate)
-		assertTree(parser, "a", ==, "a")
-		assertTree(parser, "b", ==, "b")
-		assertTree(parser, "c", ==, "c")
+		let parser = [%"a", %"b", %"c"].reduce(none(), <|>)
+		assertTree(parser, "a".characters, ==, "a")
+		assertTree(parser, "b".characters, ==, "b")
+		assertTree(parser, "c".characters, ==, "c")
 	}
 
 

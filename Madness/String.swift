@@ -15,15 +15,15 @@ public typealias DoubleParser = Parser<String.CharacterView, Double>.Function
 
 public typealias IntParser = Parser<String.CharacterView, Int>.Function
 
-private func maybePrepend<T>(value: T?) -> [T] -> [T] {
+private func maybePrepend<T>(_ value: T?) -> ([T]) -> [T] {
 	return { value != nil ? [value!] + $0 : $0 }
 }
 
-private func concat<T>(value: [T]) -> [T] -> [T] {
+private func concat<T>(_ value: [T]) -> ([T]) -> [T] {
 	return { value + $0 }
 }
 
-private func concat2<T>(value: [T]) -> [T] -> [T] -> [T] {
+private func concat2<T>(_ value: [T]) -> ([T]) -> ([T]) -> [T] {
 	return { value2 in { value + value2 + $0 } }
 }
 
@@ -63,14 +63,14 @@ public let endOfLine: CharacterParser = newline <|> crlf
 
 public let tab: CharacterParser = char("\t")
 
-public func oneOf(input: String) -> CharacterParser {
+public func oneOf(_ input: String) -> CharacterParser {
 	return satisfy { input.characters.contains($0) }
 }
 
-public func noneOf(input: String) -> CharacterParser {
+public func noneOf(_ input: String) -> CharacterParser {
 	return satisfy { !input.characters.contains($0) }
 }
 
-public func char(input: Character) -> CharacterParser {
+public func char(_ input: Character) -> CharacterParser {
 	return satisfy { $0 == input }
 }
