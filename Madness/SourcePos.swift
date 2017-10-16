@@ -30,7 +30,7 @@ public func ==<Index>(first: SourcePos<Index>, other: SourcePos<Index>) -> Bool 
 }
 
 /// Returns a new SourcePos advanced by the given index.
-public func updateIndex<Index: Comparable>(_ pos: SourcePos<Index>, _ index: Index) -> SourcePos<Index> {
+public func updateIndex<Index>(_ pos: SourcePos<Index>, _ index: Index) -> SourcePos<Index> {
 	return SourcePos.init(line: pos.line, column: pos.column, index: index)
 }
 

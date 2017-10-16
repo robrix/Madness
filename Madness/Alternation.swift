@@ -21,7 +21,7 @@ public func oneOf<C: Collection, S: Sequence>(_ input: S) -> Parser<C, C.Iterato
 /// Given a set of literals, parses an array of any matches in the order they were found.
 ///
 /// Each literal will only match the first time.
-public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function where C.Iterator.Element: Equatable {
+public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function {
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
@@ -32,7 +32,7 @@ public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C
 /// Given a set of literals, parses an array of all matches in the order they were found.
 ///
 /// Each literal will be matched as many times as it is found.
-public func allOf<C: Collection>(_ input: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function where C.Iterator.Element: Equatable {
+public func allOf<C: Collection>(_ input: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function {
 	return oneOf(input) >>- { match in
 		prepend(match) <^> allOf(input) <|> pure([match])
 	}
@@ -46,11 +46,11 @@ private func alternate<C: Collection, T>(_ left: @escaping Parser<C, T>.Function
 	return { input, sourcePos in
 		switch left(input, sourcePos) {
 		case let .success(tree, sourcePos):
-			return .success(tree, sourcePos)
+			return .success((tree, sourcePos))
 		case let .failure(left):
 			switch right(input, sourcePos) {
 			case let .success(tree, sourcePos):
-				return .success(tree, sourcePos)
+				return .success((tree, sourcePos))
 			case let .failure(right):
 				return .failure(Error.withReason("no alternative matched:", sourcePos)(left, right))
 			}

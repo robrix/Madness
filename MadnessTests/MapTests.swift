@@ -21,7 +21,7 @@ private struct Tree<T: Equatable>: Equatable, CustomStringConvertible {
 	}
 }
 
-private func == <T: Equatable> (left: Tree<T>, right: Tree<T>) -> Bool {
+private func == <T> (left: Tree<T>, right: Tree<T>) -> Bool {
 	return left.values == right.values && left.children == right.children
 }
 
