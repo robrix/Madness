@@ -1,0 +1,50 @@
+language: objective-c
+osx_image: xcode9
+branches:
+  only:
+    - master
+xcode_workspace: Madness.xcworkspace
+script:
+  - script/cibuild
+matrix:
+  include:
+    - xcode_scheme: Madness-Mac
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build test"
+        - XCODE_DESTINATION="arch=x86_64"
+    - xcode_scheme: Madness-Mac
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build"
+        - XCODE_DESTINATION="arch=x86_64"
+        - XCODE_PLAYGROUND="Documentation/Collections.playground"
+        - JOB=Collections.playground
+    - xcode_scheme: Madness-Mac
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build"
+        - XCODE_DESTINATION="arch=x86_64"
+        - XCODE_PLAYGROUND="Documentation/Colours.playground"
+        - JOB=Colours.playground
+    - xcode_scheme: Madness-Mac
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build"
+        - XCODE_DESTINATION="arch=x86_64"
+        - XCODE_PLAYGROUND="Documentation/Lambda Calculus.playground"
+        - JOB=Lambda Calculus.playground
+    - xcode_scheme: Madness-Mac
+      env:
+        - XCODE_SDK=macosx
+        - XCODE_ACTION="build"
+        - XCODE_DESTINATION="arch=x86_64"
+        - XCODE_PLAYGROUND="Documentation/Subset of Common Markdown.playground"
+        - JOB=Subset of Common Markdown.playground
+    - xcode_scheme: Madness-iOS
+      env:
+        - XCODE_SDK=iphonesimulator
+        - XCODE_ACTION="build-for-testing test-without-building"
+        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 8,OS=11"
+notifications:
+  email: false
