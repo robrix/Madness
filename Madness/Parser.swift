@@ -53,7 +53,7 @@ public func any(_ input: String.CharacterView, sourcePos: SourcePos<String.Index
 public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Iterator.Element: Equatable {
 	return { input, sourcePos in
 		if containsAt(input, index: sourcePos.index, needle: literal) {
-			return .success(literal, updateIndex(sourcePos, input.index(sourcePos.index, offsetBy: literal.count)))
+			return .success((literal, updateIndex(sourcePos, input.index(sourcePos.index, offsetBy: literal.count))))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -63,7 +63,7 @@ public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where
 public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Function {
 	return { input, sourcePos in
 		if containsAt(input, index: sourcePos.index, needle: literal.characters) {
-			return .success(literal, updatePosString(input, sourcePos, literal))
+			return .success((literal, updatePosString(input, sourcePos, literal)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}

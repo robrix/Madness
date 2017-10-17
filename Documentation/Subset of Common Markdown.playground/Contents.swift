@@ -1,3 +1,5 @@
+import Madness
+
 // MARK: - Lexing rules
 
 let newline = %"\n"
@@ -62,9 +64,11 @@ let element: ElementParser = fix { element in
 let parser = many(element(pure("")))
 if let parsed = parse(parser, input: "> # hello\n> \n> hello\n> there\n> \n> \n").value {
     let description = parsed.reduce(""){ $0 + $1.description }
+	print(description)
 }
 
 if let parsed = parse(parser, input: "This is a \nparagraph\n> # title\n> ### subtitle\n> a").value {
     let description = parsed.reduce(""){ $0 + $1.description }
+	print(description)
 }
 

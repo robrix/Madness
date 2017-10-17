@@ -1,12 +1,6 @@
 //  Copyright (c) 2015 Rob Rix. All rights reserved.
 
-// Extend String to be a CollectionType of CharacterView
-extension String : Collection {
-	// Swift crashes if we don't override count
-	public var count: String.IndexDistance {
-		return characters.count
-	}
-
+extension String {
 	public static func lift<A>(_ parser: @escaping Parser<String.CharacterView, A>.Function) -> Parser<String, A>.Function {
 		return {
 			parser($0.characters, $1)
@@ -27,13 +21,14 @@ func fix<T, U>(_ f: @escaping (@escaping (T) -> U) -> (T) -> U) -> (T) -> U {
 
 typealias LambdaParser = Parser<String, Lambda>.Function
 
-let lambda: LambdaParser = fix { term in
+func lambda(_ input: String, sourcePos: SourcePos<String.Index>) -> Parser<String, Lambda>.Result {
 	let symbol: Parser<String, String>.Function = String.lift(%("a"..."z"))
 
 	let variable: LambdaParser = Lambda.variable <^> symbol
-	let abstraction: LambdaParser = { x in { y in Lambda.abstraction(x, y) } } <^> (%"λ" *> symbol) <*> (%"." *> term)
-	let application: LambdaParser = { x in { y in Lambda.application(x, y) } } <^> (%"(" *> term) <*> (%" " *> term) <* %")"
-	return variable <|> abstraction <|> application
+	let abstraction: LambdaParser = { x in { y in Lambda.abstraction(x, y) } } <^> (%"λ" *> symbol) <*> (%"." *> lambda)
+	let application: LambdaParser = { x in { y in Lambda.application(x, y) } } <^> (%"(" *> lambda) <*> (%" " *> lambda) <* %")"
+	let parser: LambdaParser = variable <|> abstraction <|> application
+	return parser(input, sourcePos)
 }
 
 enum Lambda: CustomStringConvertible {
