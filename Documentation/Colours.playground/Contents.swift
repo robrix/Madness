@@ -1,3 +1,7 @@
+import Cocoa
+import Darwin
+import Madness
+
 func toComponent(_ string: String) -> CGFloat {
   return CGFloat(strtol(string, nil, 16)) / 255
 }

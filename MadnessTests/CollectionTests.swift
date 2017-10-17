@@ -7,11 +7,12 @@ final class CollectionTests: XCTestCase {
 		typealias Fibonacci = Parser<[Int], [Int]>.Function
 
 		func fibonacci(_ x: Int, _ y: Int) -> Fibonacci {
-			return (%(x + y) >>- { (xy: Int) -> Fibonacci in
+			let combined: Fibonacci = %(x + y) >>- { (xy: Int) -> Fibonacci in
 				{ [ xy ] + $0 } <^> fibonacci(y, xy)
-			}) <|> { .success(([], $1)) }
+			}
+			return combined <|> pure([])
 		}
-
+		
 		XCTAssertEqual(parse(fibonacci(0, 1), input: input).value!, input)
 	}
 }
