@@ -45,6 +45,6 @@ matrix:
       env:
         - XCODE_SDK=iphonesimulator
         - XCODE_ACTION="build-for-testing test-without-building"
-        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 8,OS=11"
+        - XCODE_DESTINATION="platform=iOS Simulator,name=iPhone X,OS=11"
 notifications:
   email: false
