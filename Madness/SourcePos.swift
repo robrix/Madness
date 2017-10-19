@@ -33,7 +33,7 @@ extension SourcePos: Equatable {
 
 /// Returns a new SourcePos advanced by the given index.
 public func updateIndex<Index>(_ pos: SourcePos<Index>, _ index: Index) -> SourcePos<Index> {
-	return SourcePos.init(line: pos.line, column: pos.column, index: index)
+	return SourcePos(line: pos.line, column: pos.column, index: index)
 }
 
 /// Returns a new SourcePos with its line, column, and index advanced by the given character.
