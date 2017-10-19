@@ -1,8 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-public struct ResultResult<T, Error : Swift.Error> {
-	public typealias t = Result<T, Error>
-}
+// Swift has no way to resolve to `Result.Result` inside `Parser.Result`.
+public typealias ParserResult<C: Collection, Tree> = Result<(Tree, SourcePos<C.Index>), Error<C.Index>>
 
 /// Convenience for describing the types of parser combinators.
 ///
@@ -12,7 +11,7 @@ public enum Parser<C: Collection, Tree> {
 	public typealias Function = (C, SourcePos<C.Index>) -> Result
 
 	/// The type produced by parser combinators.
-	public typealias Result = ResultResult<(Tree, SourcePos<C.Index>), Error<C.Index>>.t
+	public typealias Result = ParserResult<C, Tree>
 }
 
 /// Parses `input` with `parser`, returning the parse trees or `nil` if nothing could be parsed, or if parsing did not consume the entire input.
