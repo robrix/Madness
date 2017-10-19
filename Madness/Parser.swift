@@ -51,7 +51,7 @@ public func any(_ input: String.CharacterView, sourcePos: SourcePos<String.Index
 /// This overload enables e.g. `%"xyz"` to produce `String -> (String, String)`.
 public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Iterator.Element: Equatable {
 	return { input, sourcePos in
-		if containsAt(input, index: sourcePos.index, needle: literal) {
+		if input[sourcePos.index...].starts(with: literal) {
 			return .success((literal, updateIndex(sourcePos, input.index(sourcePos.index, offsetBy: literal.count))))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
@@ -61,7 +61,7 @@ public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where
 
 public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Function {
 	return { input, sourcePos in
-		if containsAt(input, index: sourcePos.index, needle: literal.characters) {
+		if input[sourcePos.index...].starts(with: literal.characters) {
 			return .success((literal, updatePosString(input, sourcePos, literal)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
@@ -111,30 +111,6 @@ private func memoize<T>(_ f: @escaping () -> T) -> () -> T {
 public func delay<C: Collection, T>(_ parser: @escaping () -> Parser<C, T>.Function) -> Parser<C, T>.Function {
 	let memoized = memoize(parser)
 	return { memoized()($0, $1) }
-}
-
-
-// MARK: - Private
-
-/// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
-func containsAt<C1: Collection, C2: Collection>(_ collection: C1, index: C1.Index, needle: C2) -> Bool where C1.Iterator.Element == C2.Iterator.Element, C1.Iterator.Element: Equatable {
-	var index1 = index
-	var index2 = needle.startIndex
-	
-	while index1 < collection.endIndex && index2 < needle.endIndex {
-		if collection[index1] != needle[index2] {
-			return false
-		}
-		
-		index1 = collection.index(after: index1)
-		index2 = needle.index(after: index2)
-	}
-	
-	if index2 < needle.endIndex {
-		return false
-	}
-	
-	return true
 }
 
 // Returns a parser that satisfies the given predicate
