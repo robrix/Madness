@@ -5,7 +5,7 @@ public typealias Column = Int
 
 var DefaultTabWidth = 8
 
-public struct SourcePos<Index: Comparable>: Equatable {
+public struct SourcePos<Index: Comparable> {
 	public let line: Line
 	public let column: Column
 	public let index: Index
@@ -24,9 +24,11 @@ public struct SourcePos<Index: Comparable>: Equatable {
 
 }
 
-/// Returns whether two SourcePos are equal.
-public func ==<Index>(first: SourcePos<Index>, other: SourcePos<Index>) -> Bool {
-	return first.line == other.line && first.column == other.column && first.index == other.index
+extension SourcePos: Equatable {
+	/// Returns whether two SourcePos are equal.
+	public static func ==(first: SourcePos, other: SourcePos) -> Bool {
+		return first.line == other.line && first.column == other.column && first.index == other.index
+	}
 }
 
 /// Returns a new SourcePos advanced by the given index.
