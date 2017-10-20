@@ -14,14 +14,14 @@ public func <|> <C: Collection, T> (left: @escaping Parser<C, T>.Function, right
 // MARK: - n-ary alternation
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
-public func oneOf<C: Collection, S: Sequence>(_ input: S) -> Parser<C, C.Iterator.Element>.Function where C.Iterator.Element: Equatable, S.Iterator.Element == C.Iterator.Element {
-	return satisfy { c in input.contains(c) }
+public func oneOf<C: Collection, S: Sequence>(_ input: S) -> Parser<C, C.Element>.Function where C.Element: Equatable, S.Element == C.Element {
+	return satisfy(input.contains)
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.
 ///
 /// Each literal will only match the first time.
-public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function {
+public func anyOf<C: Collection>(_ set: Set<C.Element>) -> Parser<C, [C.Element]>.Function {
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
@@ -32,7 +32,7 @@ public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C
 /// Given a set of literals, parses an array of all matches in the order they were found.
 ///
 /// Each literal will be matched as many times as it is found.
-public func allOf<C: Collection>(_ input: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function {
+public func allOf<C: Collection>(_ input: Set<C.Element>) -> Parser<C, [C.Element]>.Function {
 	return oneOf(input) >>- { match in
 		prepend(match) <^> allOf(input) <|> pure([match])
 	}
@@ -44,17 +44,13 @@ public func allOf<C: Collection>(_ input: Set<C.Iterator.Element>) -> Parser<C, 
 /// Defines alternation for use in the `<|>` operator definitions above.
 private func alternate<C: Collection, T>(_ left: @escaping Parser<C, T>.Function, _ right: @escaping Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, sourcePos in
-		switch left(input, sourcePos) {
-		case let .success(tree, sourcePos):
-			return .success((tree, sourcePos))
-		case let .failure(left):
-			switch right(input, sourcePos) {
-			case let .success(tree, sourcePos):
-				return .success((tree, sourcePos))
-			case let .failure(right):
-				return .failure(Error.withReason("no alternative matched:", sourcePos)(left, right))
+		return left(input, sourcePos)
+			.flatMapError { left in
+				return right(input, sourcePos)
+					.mapError { right in
+						return Error.withReason("no alternative matched:", sourcePos)(left, right)
+					}
 			}
-		}
 	}
 }
 

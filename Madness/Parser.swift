@@ -1,8 +1,7 @@
 //  Copyright (c) 2014 Rob Rix. All rights reserved.
 
-public struct ResultResult<T, Error : Swift.Error> {
-	public typealias t = Result<T, Error>
-}
+// Swift has no way to resolve to `Result.Result` inside `Parser.Result`.
+public typealias ParserResult<C: Collection, Tree> = Result<(Tree, SourcePos<C.Index>), Error<C.Index>>
 
 /// Convenience for describing the types of parser combinators.
 ///
@@ -12,7 +11,7 @@ public enum Parser<C: Collection, Tree> {
 	public typealias Function = (C, SourcePos<C.Index>) -> Result
 
 	/// The type produced by parser combinators.
-	public typealias Result = ResultResult<(Tree, SourcePos<C.Index>), Error<C.Index>>.t
+	public typealias Result = ParserResult<C, Tree>
 }
 
 /// Parses `input` with `parser`, returning the parse trees or `nil` if nothing could be parsed, or if parsing did not consume the entire input.
@@ -38,7 +37,7 @@ public func none<C: Collection, Tree>(_ string: String = "no way forward") -> Pa
 }
 
 // Returns a parser which parses any single character.
-public func any<C: Collection>(_ input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, C.Iterator.Element>.Result {
+public func any<C: Collection>(_ input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, C.Element>.Result {
 	return satisfy { _ in true }(input, sourcePos)
 }
 
@@ -50,10 +49,10 @@ public func any(_ input: String.CharacterView, sourcePos: SourcePos<String.Index
 /// Returns a parser which parses a `literal` sequence of elements from the input.
 ///
 /// This overload enables e.g. `%"xyz"` to produce `String -> (String, String)`.
-public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Iterator.Element: Equatable {
+public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Element: Equatable {
 	return { input, sourcePos in
-		if containsAt(input, index: sourcePos.index, needle: literal) {
-			return .success((literal, updateIndex(sourcePos, input.index(sourcePos.index, offsetBy: literal.count))))
+		if input[sourcePos.index...].starts(with: literal) {
+			return .success((literal, sourcePos.advanced(by: literal.count, from: input)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -62,8 +61,8 @@ public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where
 
 public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Function {
 	return { input, sourcePos in
-		if containsAt(input, index: sourcePos.index, needle: literal.characters) {
-			return .success((literal, updatePosString(input, sourcePos, literal)))
+		if input[sourcePos.index...].starts(with: literal.characters) {
+			return .success((literal, sourcePos.advanced(by: literal, from: input)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -71,10 +70,10 @@ public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Fu
 }
 
 /// Returns a parser which parses a `literal` element from the input.
-public prefix func % <C: Collection> (literal: C.Iterator.Element) -> Parser<C, C.Iterator.Element>.Function where C.Iterator.Element: Equatable {
+public prefix func % <C: Collection> (literal: C.Element) -> Parser<C, C.Element>.Function where C.Element: Equatable {
 	return { input, sourcePos in
 		if sourcePos.index != input.endIndex && input[sourcePos.index] == literal {
-			return .success((literal, updateIndex(sourcePos, input.index(after: sourcePos.index))))
+			return .success((literal, sourcePos.advanced(by: 1, from: input)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -89,7 +88,7 @@ public prefix func %(range: ClosedRange<Character>) -> Parser<String.CharacterVi
 		
 		if index < input.endIndex && range.contains(input[index]) {
 			let string = String(input[index])
-			return .success((string, updateIndex(sourcePos, input.index(after: index))))
+			return .success((string, sourcePos.advanced(by: 1, from: input)))
 		} else {
 			return .failure(.leaf("expected an element in range \(range)", sourcePos))
 		}
@@ -114,50 +113,24 @@ public func delay<C: Collection, T>(_ parser: @escaping () -> Parser<C, T>.Funct
 	return { memoized()($0, $1) }
 }
 
-
-// MARK: - Private
-
-/// Returns `true` iff `collection` contains all of the elements in `needle` in-order and contiguously, starting from `index`.
-func containsAt<C1: Collection, C2: Collection>(_ collection: C1, index: C1.Index, needle: C2) -> Bool where C1.Iterator.Element == C2.Iterator.Element, C1.Iterator.Element: Equatable {
-	var index1 = index
-	var index2 = needle.startIndex
-	
-	while index1 < collection.endIndex && index2 < needle.endIndex {
-		if collection[index1] != needle[index2] {
-			return false
-		}
-		
-		index1 = collection.index(after: index1)
-		index2 = needle.index(after: index2)
-	}
-	
-	if index2 < needle.endIndex {
-		return false
-	}
-	
-	return true
-}
-
 // Returns a parser that satisfies the given predicate
 public func satisfy(_ pred: @escaping (Character) -> Bool) -> Parser<String.CharacterView, Character>.Function {
-	return tokenPrim(updatePosCharacter, pred)
+	return tokenPrim(pred) { $0.advanced(by: $1, from: $2) }
 }
 
 // Returns a parser that satisfies the given predicate
-public func satisfy<C: Collection> (_ pred: @escaping (C.Iterator.Element) -> Bool) -> Parser<C, C.Iterator.Element>.Function {
-	return tokenPrim({ input, oldPos, el in
-		updateIndex(oldPos, input.index(after: oldPos.index))
-	}, pred)
+public func satisfy<C: Collection> (_ pred: @escaping (C.Element) -> Bool) -> Parser<C, C.Element>.Function {
+	return tokenPrim(pred) { $0.advanced(by: 1, from: $2) }
 }
 
-public func tokenPrim<C: Collection> (_ nextPos: @escaping (C, SourcePos<C.Index>, C.Iterator.Element) -> SourcePos<C.Index>, _ pred: @escaping (C.Iterator.Element) -> Bool) -> Parser<C, C.Iterator.Element>.Function {
+public func tokenPrim<C: Collection> (_ pred: @escaping (C.Element) -> Bool, _ nextPos: @escaping (SourcePos<C.Index>, C.Element, C) -> SourcePos<C.Index>) -> Parser<C, C.Element>.Function {
 	return { input, sourcePos in
 		let index = sourcePos.index
 		if index != input.endIndex {
 			let parsed = input[index]
 			
 			if pred(parsed) {
-				return .success((parsed, nextPos(input, sourcePos, parsed)))
+				return .success((parsed, nextPos(sourcePos, parsed, input)))
 			} else {
 				return .failure(Error.leaf("Failed to parse \(String(describing: parsed)) with predicate at index", sourcePos))
 			}
