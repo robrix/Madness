@@ -37,7 +37,7 @@ public func none<C: Collection, Tree>(_ string: String = "no way forward") -> Pa
 }
 
 // Returns a parser which parses any single character.
-public func any<C: Collection>(_ input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, C.Iterator.Element>.Result {
+public func any<C: Collection>(_ input: C, sourcePos: SourcePos<C.Index>) -> Parser<C, C.Element>.Result {
 	return satisfy { _ in true }(input, sourcePos)
 }
 
@@ -49,7 +49,7 @@ public func any(_ input: String.CharacterView, sourcePos: SourcePos<String.Index
 /// Returns a parser which parses a `literal` sequence of elements from the input.
 ///
 /// This overload enables e.g. `%"xyz"` to produce `String -> (String, String)`.
-public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Iterator.Element: Equatable {
+public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Element: Equatable {
 	return { input, sourcePos in
 		if input[sourcePos.index...].starts(with: literal) {
 			return .success((literal, sourcePos.advanced(by: literal.count, from: input)))
@@ -70,7 +70,7 @@ public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Fu
 }
 
 /// Returns a parser which parses a `literal` element from the input.
-public prefix func % <C: Collection> (literal: C.Iterator.Element) -> Parser<C, C.Iterator.Element>.Function where C.Iterator.Element: Equatable {
+public prefix func % <C: Collection> (literal: C.Element) -> Parser<C, C.Element>.Function where C.Element: Equatable {
 	return { input, sourcePos in
 		if sourcePos.index != input.endIndex && input[sourcePos.index] == literal {
 			return .success((literal, sourcePos.advanced(by: 1, from: input)))
@@ -119,11 +119,11 @@ public func satisfy(_ pred: @escaping (Character) -> Bool) -> Parser<String.Char
 }
 
 // Returns a parser that satisfies the given predicate
-public func satisfy<C: Collection> (_ pred: @escaping (C.Iterator.Element) -> Bool) -> Parser<C, C.Iterator.Element>.Function {
+public func satisfy<C: Collection> (_ pred: @escaping (C.Element) -> Bool) -> Parser<C, C.Element>.Function {
 	return tokenPrim(pred) { $0.advanced(by: 1, from: $2) }
 }
 
-public func tokenPrim<C: Collection> (_ pred: @escaping (C.Iterator.Element) -> Bool, _ nextPos: @escaping (SourcePos<C.Index>, C.Iterator.Element, C) -> SourcePos<C.Index>) -> Parser<C, C.Iterator.Element>.Function {
+public func tokenPrim<C: Collection> (_ pred: @escaping (C.Element) -> Bool, _ nextPos: @escaping (SourcePos<C.Index>, C.Element, C) -> SourcePos<C.Index>) -> Parser<C, C.Element>.Function {
 	return { input, sourcePos in
 		let index = sourcePos.index
 		if index != input.endIndex {

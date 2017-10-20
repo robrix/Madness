@@ -14,14 +14,14 @@ public func <|> <C: Collection, T> (left: @escaping Parser<C, T>.Function, right
 // MARK: - n-ary alternation
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
-public func oneOf<C: Collection, S: Sequence>(_ input: S) -> Parser<C, C.Iterator.Element>.Function where C.Iterator.Element: Equatable, S.Iterator.Element == C.Iterator.Element {
+public func oneOf<C: Collection, S: Sequence>(_ input: S) -> Parser<C, C.Element>.Function where C.Element: Equatable, S.Element == C.Element {
 	return satisfy { c in input.contains(c) }
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.
 ///
 /// Each literal will only match the first time.
-public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function {
+public func anyOf<C: Collection>(_ set: Set<C.Element>) -> Parser<C, [C.Element]>.Function {
 	return oneOf(set) >>- { match in
 		var rest = set
 		rest.remove(match)
@@ -32,7 +32,7 @@ public func anyOf<C: Collection>(_ set: Set<C.Iterator.Element>) -> Parser<C, [C
 /// Given a set of literals, parses an array of all matches in the order they were found.
 ///
 /// Each literal will be matched as many times as it is found.
-public func allOf<C: Collection>(_ input: Set<C.Iterator.Element>) -> Parser<C, [C.Iterator.Element]>.Function {
+public func allOf<C: Collection>(_ input: Set<C.Element>) -> Parser<C, [C.Element]>.Function {
 	return oneOf(input) >>- { match in
 		prepend(match) <^> allOf(input) <|> pure([match])
 	}
