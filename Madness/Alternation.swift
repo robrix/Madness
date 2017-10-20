@@ -15,7 +15,7 @@ public func <|> <C: Collection, T> (left: @escaping Parser<C, T>.Function, right
 
 /// Alternates over a sequence of literals, coalescing their parse trees.
 public func oneOf<C: Collection, S: Sequence>(_ input: S) -> Parser<C, C.Element>.Function where C.Element: Equatable, S.Element == C.Element {
-	return satisfy { c in input.contains(c) }
+	return satisfy(input.contains)
 }
 
 /// Given a set of literals, parses an array of any matches in the order they were found.
