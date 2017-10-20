@@ -52,7 +52,7 @@ public func any(_ input: String.CharacterView, sourcePos: SourcePos<String.Index
 public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where C.Iterator.Element: Equatable {
 	return { input, sourcePos in
 		if input[sourcePos.index...].starts(with: literal) {
-			return .success((literal, updateIndex(sourcePos, input.index(sourcePos.index, offsetBy: literal.count))))
+			return .success((literal, sourcePos.advanced(by: literal.count, from: input)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -62,7 +62,7 @@ public prefix func % <C: Collection> (literal: C) -> Parser<C, C>.Function where
 public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Function {
 	return { input, sourcePos in
 		if input[sourcePos.index...].starts(with: literal.characters) {
-			return .success((literal, updatePosString(input, sourcePos, literal)))
+			return .success((literal, sourcePos.advanced(by: literal, from: input)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -73,7 +73,7 @@ public prefix func %(literal: String) -> Parser<String.CharacterView, String>.Fu
 public prefix func % <C: Collection> (literal: C.Iterator.Element) -> Parser<C, C.Iterator.Element>.Function where C.Iterator.Element: Equatable {
 	return { input, sourcePos in
 		if sourcePos.index != input.endIndex && input[sourcePos.index] == literal {
-			return .success((literal, updateIndex(sourcePos, input.index(after: sourcePos.index))))
+			return .success((literal, sourcePos.advanced(by: 1, from: input)))
 		} else {
 			return .failure(.leaf("expected \(literal)", sourcePos))
 		}
@@ -88,7 +88,7 @@ public prefix func %(range: ClosedRange<Character>) -> Parser<String.CharacterVi
 		
 		if index < input.endIndex && range.contains(input[index]) {
 			let string = String(input[index])
-			return .success((string, updateIndex(sourcePos, input.index(after: index))))
+			return .success((string, sourcePos.advanced(by: 1, from: input)))
 		} else {
 			return .failure(.leaf("expected an element in range \(range)", sourcePos))
 		}
@@ -115,24 +115,22 @@ public func delay<C: Collection, T>(_ parser: @escaping () -> Parser<C, T>.Funct
 
 // Returns a parser that satisfies the given predicate
 public func satisfy(_ pred: @escaping (Character) -> Bool) -> Parser<String.CharacterView, Character>.Function {
-	return tokenPrim(updatePosCharacter, pred)
+	return tokenPrim(pred) { $0.advanced(by: $1, from: $2) }
 }
 
 // Returns a parser that satisfies the given predicate
 public func satisfy<C: Collection> (_ pred: @escaping (C.Iterator.Element) -> Bool) -> Parser<C, C.Iterator.Element>.Function {
-	return tokenPrim({ input, oldPos, el in
-		updateIndex(oldPos, input.index(after: oldPos.index))
-	}, pred)
+	return tokenPrim(pred) { $0.advanced(by: 1, from: $2) }
 }
 
-public func tokenPrim<C: Collection> (_ nextPos: @escaping (C, SourcePos<C.Index>, C.Iterator.Element) -> SourcePos<C.Index>, _ pred: @escaping (C.Iterator.Element) -> Bool) -> Parser<C, C.Iterator.Element>.Function {
+public func tokenPrim<C: Collection> (_ pred: @escaping (C.Iterator.Element) -> Bool, _ nextPos: @escaping (SourcePos<C.Index>, C.Iterator.Element, C) -> SourcePos<C.Index>) -> Parser<C, C.Iterator.Element>.Function {
 	return { input, sourcePos in
 		let index = sourcePos.index
 		if index != input.endIndex {
 			let parsed = input[index]
 			
 			if pred(parsed) {
-				return .success((parsed, nextPos(input, sourcePos, parsed)))
+				return .success((parsed, nextPos(sourcePos, parsed, input)))
 			} else {
 				return .failure(Error.leaf("Failed to parse \(String(describing: parsed)) with predicate at index", sourcePos))
 			}
