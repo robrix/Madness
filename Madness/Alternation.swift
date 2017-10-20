@@ -44,17 +44,13 @@ public func allOf<C: Collection>(_ input: Set<C.Element>) -> Parser<C, [C.Elemen
 /// Defines alternation for use in the `<|>` operator definitions above.
 private func alternate<C: Collection, T>(_ left: @escaping Parser<C, T>.Function, _ right: @escaping Parser<C, T>.Function) -> Parser<C, T>.Function {
 	return { input, sourcePos in
-		switch left(input, sourcePos) {
-		case let .success(tree, sourcePos):
-			return .success((tree, sourcePos))
-		case let .failure(left):
-			switch right(input, sourcePos) {
-			case let .success(tree, sourcePos):
-				return .success((tree, sourcePos))
-			case let .failure(right):
-				return .failure(Error.withReason("no alternative matched:", sourcePos)(left, right))
+		return left(input, sourcePos)
+			.flatMapError { left in
+				return right(input, sourcePos)
+					.mapError { right in
+						return Error.withReason("no alternative matched:", sourcePos)(left, right)
+					}
 			}
-		}
 	}
 }
 
